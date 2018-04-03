@@ -4,7 +4,9 @@
 <title>Three.js Modeling</title>
 <style>
 </style>
-<script src="three.min.js"></script>
+<script src="js/three.min.js"></script>
+<script src="js/OrbitControls.js"></script>
+
 <script>
 
 /* This is a starter file for experimenting with 3D animated models in three.js.
@@ -20,7 +22,7 @@
 
 "use strict";
 
-var scene, camera, renderer;  // Three.js rendering basics.
+var container, scene, camera, renderer, controls, stats;  // Three.js rendering basics.
 
 var canvas;  // The canvas on which the image is rendered.
 
@@ -184,6 +186,8 @@ function createScene() {
   camera = new THREE.PerspectiveCamera(45, canvas.width/canvas.height, 1, 30);
   camera.position.z = 15;
 
+  controls = new THREE.OrbitControls( camera, renderer.domElement );
+
   // create some lights and add them to the scene.
 
   // dim light shining from above
@@ -216,63 +220,36 @@ function createScene() {
 
 
 function createTree() {
+  var tree = new THREE.Object3D();
 
+  var trunk = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.2,0.2,1,16,1),
+      new THREE.MeshLambertMaterial({
+          color: 0x885522
+      })
+  );
+  trunk.position.y = 0.5;  // move base up to origin
 
-var tree = new THREE.Object3D();
+  var leaves = new THREE.Mesh(
+      new THREE.ConeGeometry(.7,2,16,3),
+      new THREE.MeshPhongMaterial({
+          color: 0x00BB00,
+          specular: 0x002000,
+          shininess: 5
+      })
+  );
+  leaves.position.y = 2;  // move bottom of cone to top of trunk
 
-var trunk = new THREE.Mesh(
-    new THREE.CylinderGeometry(0.2,0.2,1,16,1),
-    new THREE.MeshLambertMaterial({
-        color: 0x885522
-    })
-);
-trunk.position.y = 0.5;  // move base up to origin
-
-var leaves = new THREE.Mesh(
-    new THREE.ConeGeometry(.7,2,16,3),
-    new THREE.MeshPhongMaterial({
-        color: 0x00BB00,
-        specular: 0x002000,
-        shininess: 5
-    })
-);
-leaves.position.y = 2;  // move bottom of cone to top of trunk
-
-tree.add(trunk);
-tree.add(leaves);
-return tree;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  tree.add(trunk);
+  tree.add(leaves);
+  return tree;
 }
 
-
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+}
 
 function createWorld(carModel) {
    // Create the main diskworld model.
@@ -280,50 +257,28 @@ function createWorld(carModel) {
 
    // The base of the world; everything else is on the top of this cylinder.
    var ground = new THREE.Mesh(
-        new THREE.CylinderGeometry(5.5, 5.5, 0.5, 64, 1),
-        new THREE.MeshLambertMaterial( { color: 0x00CC55 } )
+        new THREE.PlaneGeometry(5.5, 10, 32),
+        new THREE.MeshBasicMaterial( { color: 0x00CC55, side: THREE.DoubleSide } )
    );
 
-   ground.position.y = -0.3; // Puts top of cylinder just below the xz-plane.
-   diskworldModel.add(ground);   //0 child
-   var road = new THREE.Mesh(
-       new THREE.RingGeometry(3.3,4.8,64,1),
-       new THREE.MeshLambertMaterial( { color: 0x777799 })
-   );
 
-   road.rotation.x = -Math.PI/2;
-   diskworldModel.add(road);    //1st child
+   diskworldModel.add(ground);
+   var tree = createTree();
+   for (var i = 0; i < 10; i++) {
+     var newTree = tree.clone();
+     var x = getRandomInt(-2.75,2.8);
+     var y = getRandomInt(-5,5);
+     var scale = getRandomInt(0.25,1.1);
+     newTree.position.x = x;
+     newTree.position.y = y;
+     newTree.scale.set(scale,scale,scale);
+     diskworldModel.add(newTree);
 
-
-   var diskCar = carModel.clone();
-   // First two children are the axles; we need these to animate them.
-   // diskworldAxle1 = diskCar.children[0];
-   // diskworldAxle2 = diskCar.children[1];
-   diskCar.scale.set(0.3,0.3,0.3);
-
-   // puts car on the road, near the edge of the disk.
-   diskCar.position.set(0,0.3,-4);
-   // rotating carRotator about the y-axis will move the car along the road.
-
-   var carRotator = new THREE.Object3D();
-   carRotator.add(diskCar);
-   diskworldModel.add(carRotator);
+   }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+   // diskworldModel.add(tree);
+   // diskworldModel.add(newTree);
    return diskworldModel;
 
 }
