@@ -32,7 +32,7 @@ var currentModel = STARTER;
 
 
 // Nodes in the scene graphs that are modified as part of the animation:
-var sphereRotator;  // The sphere is a child of this object; rotating
+//var sphereRotator;  // The sphere is a child of this object; rotating
                     // this object about the y-axis rotates the sphere.
 
 var animating = false;  // This is set to true when an animation is running.
@@ -201,7 +201,7 @@ function createScene() {
   axleModel.scale.set(2,2,2);
   models[CAR] = car;
 
-  var world = createWorld(car);
+  var world = createWorld();
   models[WORLD] = world;
 
   doFrame();
@@ -236,36 +236,69 @@ function createTree() {
 }
 
 function getRandomInt(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+  return Math.random() * (max - min) + min; //The maximum is exclusive and the minimum is inclusive
 }
 
-function createWorld(carModel) {
+function createWorld() {
    // Create the main diskworld model.
    var diskworldModel = new THREE.Object3D();
 
    // The base of the world; everything else is on the top of this cylinder.
-   var ground = new THREE.Mesh(
-        new THREE.PlaneGeometry(5.5, 10, 32),
+   var middle = new THREE.Mesh(
+        // new THREE.PlaneGeometry(5.5, 10, 32),
+        new THREE.PlaneGeometry(5,10,4,4),
         new THREE.MeshBasicMaterial( { color: 0x00CC55, side: THREE.DoubleSide } )
    );
 
+   var boundary1 = new THREE.Mesh(
+        // new THREE.PlaneGeometry(5.5, 10, 32),
+        new THREE.PlaneGeometry(3,10,4,4),
+        new THREE.MeshBasicMaterial( { color: 0x00CC55, side: THREE.DoubleSide } )
+   );
 
-   diskworldModel.add(ground);
+   //53D989
+   // var ground2 = ground.clone();
+   var boundary2 = boundary1.clone();
+
+   // var ground = new THREE.Object3D();
+
+   boundary1.position.x = -4;
+   boundary2.position.x = 4;
+
+   middle.rotation.x = -Math.PI/2;
+   boundary1.rotation.x = -Math.PI/2;
+   boundary2.rotation.x = -Math.PI/2;
+
+   // ground.add(middle, boundary1, boundary2);
+
+   diskworldModel.add(middle, boundary1, boundary2);
+
    var tree = createTree();
-   for (var i = 0; i < 10; i++) {
+   for (var i = 0; i < 15; i++) {
      var newTree = tree.clone();
-     var x = getRandomInt(-2.75,2.8);
-     var y = getRandomInt(-5,5);
-     var scale = getRandomInt(0.25,1.1);
+     var x = getRandomInt(-6,-2.5);
+     var y = 0.01;
+     var z = getRandomInt(-5,5);
+     var scale = 1;
      newTree.position.x = x;
      newTree.position.y = y;
+     newTree.position.z = z;
      newTree.scale.set(scale,scale,scale);
      diskworldModel.add(newTree);
-
    }
 
+   for (var i = 0; i < 15; i++) {
+     var newTree = tree.clone();
+     var x = getRandomInt(2.5,6);
+     var y = 0.01;
+     var z = getRandomInt(-5,5);
+     var scale = 1;
+     newTree.position.x = x;
+     newTree.position.y = y;
+     newTree.position.z = z;
+     newTree.scale.set(scale,scale,scale);
+     diskworldModel.add(newTree);
+   }
 
    // diskworldModel.add(tree);
    // diskworldModel.add(newTree);
@@ -296,15 +329,24 @@ function updateForFrame() {
     ax2.rotation.z += 0.05;
   }
   else if (currentModel == WORLD) {
+    var rotator = models[WORLD].children;
+
+
+    // Need to be able to reuse objects, so that you don't
+    // have to keep on creating more 
+    for (var i=0; i<rotator.length; i++) {
+      rotator[i].position.z += 0.05;
+    }
+
     // OOP would be better
-    var rotator = models[WORLD].children[2];
-    var car = rotator.children[0];
-    car.children[0].rotation.z += 0.05;
-    car.children[1].rotation.z += 0.05;
+    // var rotator = models[WORLD].children[2];
+    // var car = rotator.children[0];
+    // car.children[0].rotation.z += 0.05;
+    // car.children[1].rotation.z += 0.05;
 
     //global variables as below are BAD; use the SCENE graph structure
     //diskworldAxle2.rotation.z += 0.05;
-    rotator.rotation.y += 0.007;
+    // rotator.rotation.y += 0.007;
 
   } else {
     //sphereRotator.rotation.y += 0.03;
