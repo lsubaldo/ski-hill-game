@@ -1,7 +1,7 @@
 function createCoin(image) {
 
   var coin = new THREE.Object3D();
-  var coinTexture = THREE.ImageUtils.loadTexture(image);  //'images/GN.png'
+  var coinTexture = THREE.ImageUtils.loadTexture('images/GN.png');  //'images/GN.png'
   var materials = [];
 
   materials.push(new THREE.MeshLambertMaterial({ color: 0xC19A6B }));
