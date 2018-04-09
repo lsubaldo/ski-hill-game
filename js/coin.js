@@ -1,7 +1,7 @@
-function createCoin() {
+function createCoin(image) {
 
   var coin = new THREE.Object3D();
-  var coinTexture = THREE.ImageUtils.loadTexture('images/GN.png');
+  var coinTexture = THREE.ImageUtils.loadTexture(image);  //'images/GN.png'
   var materials = [];
 
   materials.push(new THREE.MeshLambertMaterial({ color: 0xC19A6B }));
@@ -13,7 +13,7 @@ function createCoin() {
   // materials.push(new THREE.MeshLambertMaterial({ map: coinTexture, color: 0xC19A6B }));
   // materials.push(new THREE.MeshLambertMaterial({ color: 0xC19A6B }));
   // materials.push(new THREE.MeshLambertMaterial({ color: 0xC19A6B }));
-  
+
   var base = new THREE.Mesh(
        new THREE.CylinderGeometry(5, 5, 0.75, 64, 1),
        new THREE.MeshFaceMaterial( materials ) // color: 0xC19A6B
