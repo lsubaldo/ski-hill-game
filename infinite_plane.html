@@ -9,12 +9,14 @@
 <body>
 
 <script src="js/Three.js"></script>
+<script src="js/three.min.js"></script>
 <script src="js/Detector.js"></script>
 <script src="js/Stats.js"></script>
 <script src="js/OrbitControls.js"></script>
 <script src="js/THREEx.KeyboardState.js"></script>
 <script src="js/THREEx.FullScreen.js"></script>
 <script src="js/THREEx.WindowResize.js"></script>
+<script src="js/emrys.js"></script>
 
 <!-- jQuery code to display an information button and box when clicked. -->
 <script src="js/jquery-1.9.1.js"></script>
@@ -24,7 +26,7 @@
 <script src="js/info.js"></script>
 <div id="infoButton"></div>
 <div id="infoBox" title="Demo Information">
-Infinite plane with movingCube and Chase camera
+Infinite plane with emrys and Chase camera
 </div>
 <!-- ------------------------------------------------------------ -->
 
@@ -39,7 +41,7 @@ Infinite plane with movingCube and Chase camera
 // MAIN
 
 // standard global variables
-var container, scene, camera, renderer, controls, stats;
+var container, emrys, scene, camera, renderer, controls, stats;
 var keyboard = new THREEx.KeyboardState();
 var clock = new THREE.Clock();
 var ground = []
@@ -93,7 +95,7 @@ function init()
 	var skyBoxGeometry = new THREE.CubeGeometry( 10000, 10000, 10000 );
 	var skyBoxMaterial = new THREE.MeshBasicMaterial( { color: 0x9999ff, side: THREE.BackSide } );
 	var skyBox = new THREE.Mesh( skyBoxGeometry, skyBoxMaterial );
-	// scene.add(skyBox);
+	scene.add(skyBox);
 	scene.fog = new THREE.FogExp2( 0x9999ff, 0.00025 );
 
 	////////////
@@ -101,23 +103,17 @@ function init()
 	////////////
 
 	// create an array with six textures for a cool cube
-	var materialArray = [];
-	materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'images/xpos.png' ) }));
-	materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'images/xneg.png' ) }));
-	materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'images/ypos.png' ) }));
-	materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'images/yneg.png' ) }));
-	materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'images/zpos.png' ) }));
-	materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'images/zneg.png' ) }));
-	var MovingCubeMat = new THREE.MeshFaceMaterial(materialArray);
-	var MovingCubeGeom = new THREE.CubeGeometry( 50, 50, 50, 1, 1, 1, materialArray );
-	MovingCube = new THREE.Mesh( MovingCubeGeom, MovingCubeMat );
-	MovingCube.position.set(0, 25.1, 0);
-	scene.add( MovingCube );
-		createTerrainMatrix();
+	createTerrainMatrix();
+	emrys = createEmrys();
+	emrys.position.y+=50
+	emrys.scale.set(30,30,30);
+	scene.add(emrys);
+
+
 
 }
 
-var MovingCube;
+
 
 function animate()
 {
@@ -134,19 +130,18 @@ function update()
 	// local transformations
 
 	// move forwards/backwards/left/right
-	MovingCube.translateZ( -moveDistance );
+	emrys.translateZ( -moveDistance );
 
 	// rotate left/right/up/down
 
 
-	var relativeCameraOffset = new THREE.Vector3(0,50,200);
+	var relativeCameraOffset = new THREE.Vector3(0,100, 400);
 
-	var cameraOffset = relativeCameraOffset.applyMatrix4( MovingCube.matrixWorld );
+	var cameraOffset = relativeCameraOffset.applyMatrix4( emrys.matrixWorld );
 
-	camera.position.x = cameraOffset.x;
-	camera.position.y = cameraOffset.y;
-	camera.position.z = cameraOffset.z;
-	camera.lookAt( MovingCube.position );
+	camera.position.x = emrys.position.x;
+	camera.position.y = emrys.position.y+100;
+	camera.position.z = emrys.position.z+200;
 	moveWithCamera();
 	//camera.updateMatrix();
 	//camera.updateProjectionMatrix();
