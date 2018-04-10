@@ -186,7 +186,7 @@ function createScene() {
   scene.add(viewpointLight);
 
   // create the model
-  var model = createBranch();
+  var model = createTree();
   scene.add(model);
 
   models[STARTER] = model;
@@ -335,6 +335,9 @@ function updateForFrame() {
     // Need to be able to reuse objects, so that you don't
     // have to keep on creating more
     for (var i=0; i<rotator.length; i++) {
+      if (rotator[i].position.z >= camera.position.z) {
+        rotator[i].position.z = -15;
+      }
       rotator[i].position.z += 0.05;
     }
 
