@@ -240,6 +240,8 @@ function createEmrys(){
 
   emrysOnSled.add(sled); 
 
+  emrysOnSled.rotation.y = Math.PI; 
+
   return emrysOnSled; 
 
 }
