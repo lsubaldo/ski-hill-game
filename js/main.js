@@ -185,8 +185,12 @@ function createScene() {
   viewpointLight.position.set(0,0,1);  // shines down the z-axis
   scene.add(viewpointLight);
 
+  var bottomlight = new THREE.DirectionalLight( 0xffffff, 0.8 );
+  bottomlight.position.set(0,-1,0);
+  scene.add(bottomlight);
+
   // create the model
-  var model = createTree();
+  var model = createCoin('images/F_S.png'); // 'images/GN.png'
   scene.add(model);
 
   models[STARTER] = model;
@@ -335,9 +339,6 @@ function updateForFrame() {
     // Need to be able to reuse objects, so that you don't
     // have to keep on creating more
     for (var i=0; i<rotator.length; i++) {
-      if (rotator[i].position.z >= camera.position.z) {
-        rotator[i].position.z = -15;
-      }
       rotator[i].position.z += 0.05;
     }
 
