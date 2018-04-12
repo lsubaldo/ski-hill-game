@@ -1,14 +1,14 @@
+"use strict";
+
 function createCoin(image) {
 
   var coin = new THREE.Object3D();
-  // var coinTexture = THREE.ImageUtils.loadTexture(image);  //'images/GN.png'
-
+  var coinTexture = new THREE.TextureLoader().load(image);  //'images/GN.png'
+  console.log(coinTexture);
   var materials = [];
   materials.push(new THREE.MeshLambertMaterial({ color: 0xC19A6B }));
-  materials.push(new THREE.MeshLambertMaterial({ color: 0xC19A6B }));
-  materials.push(new THREE.MeshLambertMaterial({ color: 0xC19A6B }));
-  // materials.push(new THREE.MeshLambertMaterial({ map: coinTexture, transparent: false, color: 0xC19A6B }));
-  // materials.push(new THREE.MeshLambertMaterial({ map: coinTexture, color: 0xC19A6B }));
+  materials.push(new THREE.MeshLambertMaterial({ map: coinTexture, transparent: false, color: 0xC19A6B }));
+  materials.push(new THREE.MeshLambertMaterial({ map: coinTexture, color: 0xC19A6B }));
 
   var base = new THREE.Mesh(
        new THREE.CylinderGeometry(5, 5, 0.75, 64, 1),

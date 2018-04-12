@@ -190,7 +190,7 @@ function createScene() {
   scene.add(bottomlight);
 
   // create the model
-  var model = createCoin('images/F_S.png'); // 'images/GN.png'
+  var model = createCoin('images/GN.png'); // 'images/GN.png'
   scene.add(model);
 
   models[STARTER] = model;
