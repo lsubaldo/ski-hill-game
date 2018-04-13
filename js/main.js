@@ -74,7 +74,7 @@ function createStarter() {
 
 // not best but because part of Axle and also Headlight
   var yellow = new THREE.MeshPhongMaterial({
-        color: 0xffff00,
+      color: 0xffff00,
       specular: 0x101010,
       shininess: 16
     });
@@ -189,8 +189,12 @@ function createScene() {
   bottomlight.position.set(0,-1,0);
   scene.add(bottomlight);
 
+  var topLight = new THREE.DirectionalLight( 0xffffff, 0.8 );
+  topLight.position.set(0,1,0);
+  scene.add(topLight);
+
   // create the model
-  var model = createCoin('images/GN.png'); // 'images/GN.png'
+  var model = createCoin('images/FS(1).png'); // 'images/GN.png'
   scene.add(model);
 
   models[STARTER] = model;
@@ -304,6 +308,8 @@ function createWorld() {
      diskworldModel.add(newTree);
    }
 
+   lineOfCoins(diskworldModel);
+
    // diskworldModel.add(tree);
    // diskworldModel.add(newTree);
    return diskworldModel;
@@ -323,7 +329,10 @@ function render() {
  *  for that frame.
  */
 function updateForFrame() {
-  if (currentModel == AXLE) {
+  if (currentModel == STARTER) {
+    models[STARTER].rotation.y += 0.025;
+  }
+  else if (currentModel == AXLE) {
     models[AXLE].rotation.z += 0.05;
   }
   else if (currentModel == CAR) {
@@ -338,8 +347,15 @@ function updateForFrame() {
 
     // Need to be able to reuse objects, so that you don't
     // have to keep on creating more
-    for (var i=0; i<rotator.length; i++) {
+    for (var i=0; i<rotator.length - 10; i++) {
       rotator[i].position.z += 0.05;
+    }
+
+    var coins = rotator.length - 10;
+
+    for (var i = coins; i < rotator.length; i++) {
+      rotator[i].position.z += 0.05;
+      rotator[i].rotation.y += 0.025;
     }
 
     // OOP would be better
