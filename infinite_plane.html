@@ -255,19 +255,19 @@ function createTerrainMatrix(){
 
 function moveWithCamera(){
         // loop through each of the 3 floors
-    for(var i=0; i<ground.length; i++) {
-			ground[i].position.z += 5;
-      //if the camera has moved past the entire square, move the square
-      if((ground[i].position.z - 1000)>camera.position.z){
-
-        ground[i].position.z-=2000;
-      }
-
-    }
+    // for(var i=0; i<ground.length; i++) {
+		// 	ground[i].position.z += 5;
+    //   //if the camera has moved past the entire square, move the square
+    //   if((ground[i].position.z - 1000)>camera.position.z){
+		//
+    //     ground[i].position.z-=2000;
+    //   }
+		//
+    // }
 
 		for (var i=0; i<trees.length; i++) {
 			trees[i].position.z += 5;
-			if (trees[i].position.z >= 1000 ) {
+			if (trees[i].position.z >= camera.position.z ) {
 				trees[i].position.z = -1000;
 			}
     }

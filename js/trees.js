@@ -34,7 +34,7 @@ function generateRandomTrees() {
   var trees = [];
 
   var tree = createTree();
-  for (var i = 0; i < 100; i++) {
+  for (var i = 0; i < 200; i++) {
     var newTree = tree.clone();
     var x = getRandomInt(-300,-150);
     var y = 0.01;
@@ -47,7 +47,7 @@ function generateRandomTrees() {
     trees.push(newTree);
   }
 
-  for (var i = 0; i < 100; i++) {
+  for (var i = 0; i < 200; i++) {
     var newTree = tree.clone();
     var x = getRandomInt(150,300);
     var y = 0.01;
