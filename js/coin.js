@@ -1,19 +1,28 @@
+"use strict";
+
+var tokens = ['images/SL(1).png', 'images/FS(1).png', 'images/GN(1).png'];
+
+var SL = 0;
+var FS = 1;
+var GN = 2;
+var BR = 3;
+
 function createCoin(image) {
 
   var coin = new THREE.Object3D();
-  // var coinTexture = THREE.ImageUtils.loadTexture(image);  //'images/GN.png'
-
+  var coinTexture = new THREE.TextureLoader().load(image);  //'images/GN.png'
+  console.log(coinTexture);
   var materials = [];
   materials.push(new THREE.MeshLambertMaterial({ color: 0xC19A6B }));
-  materials.push(new THREE.MeshLambertMaterial({ color: 0xC19A6B }));
-  materials.push(new THREE.MeshLambertMaterial({ color: 0xC19A6B }));
-  // materials.push(new THREE.MeshLambertMaterial({ map: coinTexture, transparent: false, color: 0xC19A6B }));
-  // materials.push(new THREE.MeshLambertMaterial({ map: coinTexture, color: 0xC19A6B }));
+  materials.push(new THREE.MeshLambertMaterial({ map: coinTexture, transparent: false, color: 0xC19A6B }));
+  materials.push(new THREE.MeshLambertMaterial({ map: coinTexture, color: 0xC19A6B }));
 
   var base = new THREE.Mesh(
-       new THREE.CylinderGeometry(5, 5, 0.75, 64, 1),
+       new THREE.CylinderGeometry(2.5, 2.5, 0.75, 64, 1),
        new THREE.MeshFaceMaterial( materials ) // color: 0xC19A6B
   );
+
+  base.rotateX(190);
 
   coin.add(base);
   return coin;
@@ -59,25 +68,43 @@ function createBranch() {
   piece3.rotation.z = Math.PI/3;
   branch.add(piece3);
 
-  // var piece4 = new THREE.Mesh(new THREE.BoxGeometry(0.5,0.5,0.5), brown);
-  // piece4.position.set(2.0,1.2,0);
-  // branch.add(piece4);
-
-  // var piece5 = new THREE.Mesh(new THREE.BoxGeometry(0.5,0.5,0.5), brown);
-  // piece5.position.set(2.5,1.3,0);
-  // branch.add(piece5);
-
-  // var piece6 = new THREE.Mesh(new THREE.BoxGeometry(0.5,0.5,0.5), brown);
-  // piece6.position.set(3.0,1.4,0);
-  // branch.add(piece6);
-
-  // var piece7 = new THREE.Mesh(new THREE.BoxGeometry(0.5,0.5,0.5), brown);
-  // piece7.position.set(2.0,0.8,0);
-  // branch.add(piece7);
-
-  // var piece8 = new THREE.Mesh(new THREE.BoxGeometry(0.5,0.5,0.5), brown);
-  // piece8.position.set(2.5,0.6,0);
-  // branch.add(piece8);
-
   return branch;
 }
+
+function lineOfCoins(model) {
+  // var coins = [];
+  var level = 0;
+  var num = 10; // getRandomInt(1, 10);
+  var coin = createCoin(tokens[level]);
+  var x = getRandomInt(-100, 100);
+  var y = 0.75;
+  var z = -500;
+  // var scale = 0.5;
+  for (var i = 0; i < num; i++) {
+    var c = coin.clone();
+    c.position.x = x;
+    c.position.y = y;
+    c.position.z = z;
+    // c.scale.set(scale,scale,scale);
+    model.add(c);
+    z -= 0.5;
+  }
+  // return coins;
+}
+
+// function render() {
+//     renderer.render(scene, camera);
+// }
+//
+// function updateForFrame() {
+//   models[STARTER].rotation.y += 0.025;
+// }
+//
+// function doFrame() {
+//   controls.update();
+//   if (animating) {
+//     updateForFrame();
+//   }
+//   render();
+//   requestAnimationFrame(doFrame);
+// }
