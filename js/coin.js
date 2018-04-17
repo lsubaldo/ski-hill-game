@@ -76,18 +76,18 @@ function lineOfCoins(model) {
   var level = 0;
   var num = 10; // getRandomInt(1, 10);
   var coin = createCoin(tokens[level]);
-  var x = getRandomInt(-100, 100);
-  var y = 0.75;
-  var z = -500;
-  // var scale = 0.5;
+  var x = getRandomInt(-140, 140);
+  var y = 15;
+  var z = getRandomInt(-120, -250);
+  var scale = 5;
   for (var i = 0; i < num; i++) {
     var c = coin.clone();
     c.position.x = x;
     c.position.y = y;
     c.position.z = z;
-    // c.scale.set(scale,scale,scale);
+    c.scale.set(scale,scale,scale);
     model.add(c);
-    z -= 0.5;
+    z -= 50;
   }
   // return coins;
 }

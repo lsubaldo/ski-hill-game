@@ -18,6 +18,7 @@
 <script src="js/THREEx.WindowResize.js"></script>
 <script src="js/emrys.js"></script>
 <script src="js/trees.js"></script>
+<script src="js/coin.js"></script>
 
 <!-- jQuery code to display an information button and box when clicked. -->
 <script src="js/jquery-1.9.1.js"></script>
@@ -51,6 +52,7 @@ var cube;
 
 var emrys;
 var trees = [];
+var coins;
 var loader = new THREE.TextureLoader();
 var particleSystem;
 //allow cross origin loading
@@ -58,7 +60,7 @@ loader.crossOrigin = true;
 
 
 
-var particleCount = 1800,
+var particleCount = 200,
     particles = new THREE.Geometry(),
     pMaterial = new THREE.PointsMaterial({
 	  color: 0xFFFFFF,
@@ -136,7 +138,17 @@ function init()
 		scene.add(trees[i]);
 	}
 
+  // var coin = createCoin('images/FS(1).png');
+	// coin.position.x = 20;
+	// coin.position.y = 12;
+	// coin.position.z = -200;
+	// coin.scale.set(5,5,5);
+	// scene.add(coin);
+	coins = new THREE.Object3D();
+	lineOfCoins(coins);
+	lineOfCoins(coins);
 
+	scene.add(coins);
 
 	// create the particle system
 
@@ -182,13 +194,12 @@ function update()
 	particleSystem.rotation.y += 0.01;
 	particleSystem.rotation.z += 0.01;
 
-  var pCount = particleCount;
-  while (pCount--) {
-
+  var pCount = particleCount--;
+  while (pCount >= 0) {
     // get the particle
     var particle =
       particles.vertices[pCount];
-
+		//console.log(particle);
     // check if we need to reset
     if (particle.position.x < -200) {
       particle.position.x = 200;
@@ -202,6 +213,8 @@ function update()
     // and the position
     particle.position.addSelf(
       particle.velocity);
+
+		pCount--;
   }
 
   // flag to the particle system
@@ -209,6 +222,11 @@ function update()
   particleSystem.
     geometry.
     __dirtyVertices = true;
+
+  for (var i=0; i<coins.children.length; i++) {
+		coins.children[i].rotation.y += 0.05;
+	}
+
 }
 
 function render()
@@ -234,23 +252,40 @@ function createTerrainMatrix(){
 		particles.vertices.push(particle);
 	}
 	particleSystem.sortParticles = true;
-	for (var z = 1000; z > -3000; z-=1000) {
-		var terrain = new THREE.Object3D();
-		// var floorTexture = new THREE.ImageUtils.loadTexture( 'images/checkerboard.jpg' );
-		// floorTexture.wrapS = floorTexture.wrapT = THREE.RepeatWrapping;
-		// floorTexture.repeat.set( 10, 10 );
-		var floorMaterial = new THREE.MeshBasicMaterial( { color: 0xA7C3D1, side: THREE.DoubleSide } );
-		var floorGeometry = new THREE.PlaneGeometry(300, 2000, 10, 10);
-		var floor = new THREE.Mesh(floorGeometry, floorMaterial);
-		floor.position.y = -0.5;
-		floor.rotation.x = Math.PI / 2;
-		floor.position.z = z
-		terrain.add(floor);
-		terrain.add(particleSystem);
 
-		scene.add(terrain);
-		ground.push(floor);
-	}
+	var terrain = new THREE.Object3D();
+	// var floorTexture = new THREE.ImageUtils.loadTexture( 'images/checkerboard.jpg' );
+	// floorTexture.wrapS = floorTexture.wrapT = THREE.RepeatWrapping;
+	// floorTexture.repeat.set( 10, 10 );
+	var floorMaterial = new THREE.MeshBasicMaterial( { color: 0xA7C3D1, side: THREE.DoubleSide } );
+	var floorGeometry = new THREE.PlaneGeometry(300, 20000, 10, 10);
+	var floor = new THREE.Mesh(floorGeometry, floorMaterial);
+	floor.position.y = -0.5;
+	floor.rotation.x = Math.PI / 2;
+	floor.position.z = 1000;
+	terrain.add(floor);
+	terrain.add(particleSystem);
+
+	scene.add(terrain);
+	ground.push(floor);
+
+// 	for (var z = 1000; z > -3000; z-=1000) {
+// 		var terrain = new THREE.Object3D();
+// 		// var floorTexture = new THREE.ImageUtils.loadTexture( 'images/checkerboard.jpg' );
+// 		// floorTexture.wrapS = floorTexture.wrapT = THREE.RepeatWrapping;
+// 		// floorTexture.repeat.set( 10, 10 );
+// 		var floorMaterial = new THREE.MeshBasicMaterial( { color: 0xA7C3D1, side: THREE.DoubleSide } );
+// 		var floorGeometry = new THREE.PlaneGeometry(300, 2000, 10, 10);
+// 		var floor = new THREE.Mesh(floorGeometry, floorMaterial);
+// 		floor.position.y = -0.5;
+// 		floor.rotation.x = Math.PI / 2;
+// 		floor.position.z = z
+// 		terrain.add(floor);
+// 		terrain.add(particleSystem);
+//
+// 		scene.add(terrain);
+// 		ground.push(floor);
+// 	}
 }
 
 function moveWithCamera(){
@@ -267,8 +302,8 @@ function moveWithCamera(){
 
 		for (var i=0; i<trees.length; i++) {
 			trees[i].position.z += 5;
-			if (trees[i].position.z >= camera.position.z ) {
-				trees[i].position.z = -1000;
+			if (trees[i].position.z > camera.position.z ) {
+				trees[i].position.z = -2000;
 			}
     }
 }
