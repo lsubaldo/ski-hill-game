@@ -34,29 +34,31 @@ function generateRandomTrees() {
   var trees = [];
 
   var tree = createTree();
-  for (var i = 0; i < 200; i++) {
+  for (var i = 0; i < 400; i++) {
     var newTree = tree.clone();
     var x = getRandomInt(-300,-150);
     var y = 0.01;
-    var z = getRandomInt(-1000,1000);
+    var z = getRandomInt(-2000,2000);
     var scale = 30;
     newTree.position.x = x;
     newTree.position.y = y;
     newTree.position.z = z;
     newTree.scale.set(scale,scale,scale);
+    newTree.rotation.x = Math.PI/6;
     trees.push(newTree);
   }
 
-  for (var i = 0; i < 200; i++) {
+  for (var i = 0; i < 400; i++) {
     var newTree = tree.clone();
     var x = getRandomInt(150,300);
     var y = 0.01;
-    var z = getRandomInt(-1000,1000);
+    var z = getRandomInt(-2000,2000);
     var scale = 30;
     newTree.position.x = x;
     newTree.position.y = y;
     newTree.position.z = z;
     newTree.scale.set(scale,scale,scale);
+    newTree.rotation.x = Math.PI/6;
     trees.push(newTree);
   }
 
