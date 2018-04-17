@@ -8,6 +8,8 @@
 </head>
 <body>
 
+<script type='text/javascript' src='js/DAT.GUI.min.js'></script>
+
 <script src="js/Three.js"></script>
 <script src="js/three.min.js"></script>
 <script src="js/Detector.js"></script>
@@ -56,9 +58,10 @@ var particleSystem;
 //allow cross origin loading
 loader.crossOrigin = true;
 
+var speed = 5; 
 
 
-var particleCount = 1800,
+var particleCount = 900,
     particles = new THREE.Geometry(),
     pMaterial = new THREE.PointsMaterial({
 	  color: 0xFFFFFF,
@@ -143,22 +146,31 @@ function init()
 	// create the particle system
 
 	document.addEventListener('keydown', handleKeyDown, false); 
-}
 
+	//var gui = new dat.GUI();
+
+}
 
 
 function handleKeyDown(event){
 	console.log(event.key); 
-	if (event.key == 'ArrowRight') emrys.position.x += 5; 
-	else if (event.key == 'ArrowLeft') emrys.position.x -= 5; 
+	if (event.key == 'ArrowRight') emrys.position.x += 10; 
+	else if (event.key == 'ArrowLeft') emrys.position.x -= 10; 
+	else if (event.key == 'ArrowUp') speed += 2; 
+	else if (event.key == 'ArrowDown') speed -= 2; 
+
+
+	if (speed < 0) speed = 0; 
 }
 
 
 function animate()
 {
-  requestAnimationFrame( animate );
+	requestAnimationFrame( animate );
+  
 	render();
 	update();
+
 }
 
 
@@ -180,7 +192,7 @@ function update()
 
 	var cameraOffset = relativeCameraOffset.applyMatrix4( emrys.matrixWorld );
 
-	camera.position.x = emrys.position.x;
+	//camera.position.x = emrys.position.x;
 	camera.position.y = emrys.position.y+100;
 	camera.position.z = emrys.position.z+200;
 	moveWithCamera();
@@ -277,7 +289,7 @@ function moveWithCamera(){
     // }
 
 		for (var i=0; i<trees.length; i++) {
-			trees[i].position.z += 5;
+			trees[i].position.z += speed;
 			if (trees[i].position.z >= camera.position.z ) {
 				trees[i].position.z = -1000;
 			}
