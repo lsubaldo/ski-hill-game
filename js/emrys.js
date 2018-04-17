@@ -227,16 +227,41 @@ function createEmrys(){
 
   var maroonMat = new THREE.MeshLambertMaterial ({
     color: 0x800000, 
-    shading:THREE.FlatShading
+    shading:THREE.FlatShading,
+    side: THREE.DoubleSide
   });
 
-  var sledGeom = new THREE.BoxGeometry(3.5, 0.2, 5); 
 
-  var sled = new THREE.Mesh(sledGeom, maroonMat); 
-  sled.position.x = 0;
-  sled.position.y = -1.6;
-  sled.position.z = 0; 
-  sled.add(sled); 
+  var botGeom = new THREE.CylinderGeometry(2, 2, 0.3, 20); 
+
+  var bot = new THREE.Mesh(botGeom, maroonMat); 
+  bot.position.x = 0;
+  bot.position.y = -1.6;
+  bot.position.z = 0; 
+  bot.scale.set(1, 1, 1.6); 
+  sled.add(bot); 
+
+  var points = [];
+  for ( var i = 0; i < 10; i ++ ) {
+    points.push( new THREE.Vector2( Math.sin( i * 0.2 ) * 10 + 5, ( i - 5 ) * 2 ) );
+  }
+  var edgeGeom1 = new THREE.LatheGeometry(points, 6, -0.64, 1.2); 
+
+  var edge1 = new THREE.Mesh(edgeGeom1, maroonMat); 
+  edge1.position.x = 0;
+  edge1.position.y = -1.8;
+  edge1.position.z = -2; 
+  edge1.scale.set(0.2, 0.1, 0.35); 
+  sled.add(edge1); 
+
+  var edgeGeom2 = new THREE.LatheGeometry(points, 6, 2.6, 1); 
+
+  var edge2 = new THREE.Mesh(edgeGeom2, maroonMat); 
+  edge2.position.x = -0.1;
+  edge2.position.y = -1.8;
+  edge2.position.z = 1.9; 
+  edge2.scale.set(0.2, 0.1, 0.35); 
+  sled.add(edge2); 
 
   emrysOnSled.add(sled); 
 
