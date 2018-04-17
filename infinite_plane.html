@@ -173,7 +173,8 @@ function handleKeyDown(event){
 	else if (event.key == 'ArrowUp') speed += 2; 
 	else if (event.key == 'ArrowDown') speed -= 2; 
 
-
+	if (emrys.position.x > 100) emrys.position.x = 100; 
+	else if (emrys.position.x < -100) emrys.position.x = -100; 
 	if (speed < 0) speed = 0; 
 }
 
@@ -191,6 +192,7 @@ function animate()
 function update()
 {
 
+
 	var delta = clock.getDelta(); // seconds.
 	var moveDistance = 200 * delta;
 
@@ -206,6 +208,8 @@ function update()
 
 	var cameraOffset = relativeCameraOffset.applyMatrix4( emrys.matrixWorld );
 
+
+
 	//camera.position.x = emrys.position.x;
 	camera.position.y = emrys.position.y+100;
 	camera.position.z = emrys.position.z+200;
@@ -213,23 +217,30 @@ function update()
 	//camera.updateMatrix();
 	//camera.updateProjectionMatrix();
 
+	for (var i=0; i<coins.children.length; i++) {
+		coins.children[i].rotation.y += 0.05;
+	}
+
 	stats.update();
 	//experiment to get snowFALL
 	particleSystem.rotation.x += 0.01;
 	particleSystem.rotation.y += 0.01;
 	particleSystem.rotation.z += 0.01;
 
+
+
   var pCount = particleCount--;
   while (pCount >= 0) {
     // get the particle
-    var particle =
-      particles.vertices[pCount];
+    var particle = particles.vertices[pCount];
 		//console.log(particle);
     // check if we need to reset
     if (particle.position.x < -200) {
       particle.position.x = 200;
       particle.velocity.x = 0;
     }
+
+    
 
     // update the velocity with
     // a splat of randomniz
@@ -248,9 +259,7 @@ function update()
     geometry.
     __dirtyVertices = true;
 
-  for (var i=0; i<coins.children.length; i++) {
-		coins.children[i].rotation.y += 0.05;
-	}
+  
 
 }
 
@@ -329,10 +338,7 @@ function moveWithCamera(){
 			trees[i].position.z += speed;
 			if (trees[i].position.z >= camera.position.z ) {
 				trees[i].position.z = -1000;
-			trees[i].position.z += 5;
-			if (trees[i].position.z > camera.position.z ) {
-				trees[i].position.z = -2000;
-			}
+
     }
 }
 }
