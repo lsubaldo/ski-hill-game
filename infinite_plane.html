@@ -74,6 +74,8 @@ var particleCount = 200,
 init();
 animate();
 
+window.addEventListener('load', init, false);
+
 // FUNCTIONS
 function init()
 {
@@ -152,9 +154,16 @@ function init()
 
 	// create the particle system
 
-
+	document.addEventListener('keydown', handleKeyDown, false); 
 }
 
+
+
+function handleKeyDown(event){
+	console.log(event.key); 
+	if (event.key == 'ArrowRight') emrys.position.x += 5; 
+	else if (event.key == 'ArrowLeft') emrys.position.x -= 5; 
+}
 
 
 function animate()
@@ -164,8 +173,10 @@ function animate()
 	update();
 }
 
+
 function update()
 {
+
 	var delta = clock.getDelta(); // seconds.
 	var moveDistance = 200 * delta;
 
