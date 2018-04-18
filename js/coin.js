@@ -72,9 +72,7 @@ function createBranch() {
 }
 
 function lineOfCoins(model, level) {
-  // var coins = [];
-  // var level = 0;
-  var num = 8; // getRandomInt(1, 10);
+  var num = 10; // getRandomInt(1, 10);
   var coin = createCoin(tokens[level]);
   var x = getRandomInt(-120, 120);
   var y = 40;
@@ -97,7 +95,7 @@ function obstacle(model, level) {
   var scale = 5;
   var branch = createBranch();
   for (var i = 0; i < num; i++) {
-    var x = getRandomInt(-140, 140);
+    var x = getRandomInt(-120, 120);
     var z = getRandomInt(-1500 * (level + 1), -3000 * (level + 1));
     var b = branch.clone();
     b.position.x = x;
