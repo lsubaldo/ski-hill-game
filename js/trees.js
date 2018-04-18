@@ -26,16 +26,18 @@ function createTree() {
   leaves.position.y = 2;  // move bottom of cone to top of trunk
 
   var snow = new THREE.Mesh(
-      new THREE.ConeGeometry(.7,2,16,3),
+      new THREE.ConeGeometry(.25,0.5,16,3),
       new THREE.MeshPhongMaterial({
-          color: 00xFFFFFF,
+          color: 0xFFFFFF,
           specular: 0x002000,
           shininess: 5
       })
   );
+  snow.position.y = 2.73;
 
   tree.add(trunk);
   tree.add(leaves);
+  tree.add(snow);
   return tree;
 }
 
