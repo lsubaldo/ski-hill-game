@@ -194,7 +194,7 @@ function createScene() {
   scene.add(topLight);
 
   // create the model
-  var model = createCoin('images/FS(1).png'); // 'images/GN.png'
+  var model = createTree(); // 'images/GN.png'
   scene.add(model);
 
   models[STARTER] = model;
@@ -217,31 +217,31 @@ function createScene() {
 
 
 
-function createTree() {
-  var tree = new THREE.Object3D();
-
-  var trunk = new THREE.Mesh(
-      new THREE.CylinderGeometry(0.2,0.2,1,16,1),
-      new THREE.MeshLambertMaterial({
-          color: 0x885522
-      })
-  );
-  trunk.position.y = 0.5;  // move base up to origin
-
-  var leaves = new THREE.Mesh(
-      new THREE.ConeGeometry(.7,2,16,3),
-      new THREE.MeshPhongMaterial({
-          color: 0x00BB00,
-          specular: 0x002000,
-          shininess: 5
-      })
-  );
-  leaves.position.y = 2;  // move bottom of cone to top of trunk
-
-  tree.add(trunk);
-  tree.add(leaves);
-  return tree;
-}
+// function createTree() {
+//   var tree = new THREE.Object3D();
+//
+//   var trunk = new THREE.Mesh(
+//       new THREE.CylinderGeometry(0.2,0.2,1,16,1),
+//       new THREE.MeshLambertMaterial({
+//           color: 0x885522
+//       })
+//   );
+//   trunk.position.y = 0.5;  // move base up to origin
+//
+//   var leaves = new THREE.Mesh(
+//       new THREE.ConeGeometry(.7,2,16,3),
+//       new THREE.MeshPhongMaterial({
+//           color: 0x00BB00,
+//           specular: 0x002000,
+//           shininess: 5
+//       })
+//   );
+//   leaves.position.y = 2;  // move bottom of cone to top of trunk
+//
+//   tree.add(trunk);
+//   tree.add(leaves);
+//   return tree;
+// }
 
 function getRandomInt(min, max) {
   return Math.random() * (max - min) + min; //The maximum is exclusive and the minimum is inclusive

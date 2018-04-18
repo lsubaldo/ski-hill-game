@@ -55,12 +55,13 @@ var cube;
 var emrys;
 var trees = [];
 var coins;
+var branches;
 var loader = new THREE.TextureLoader();
 var particleSystem;
 //allow cross origin loading
 loader.crossOrigin = true;
 
-var speed = 5; 
+var speed = 5;
 
 
 
@@ -145,21 +146,32 @@ function init()
 		scene.add(trees[i]);
 	}
 
-  // var coin = createCoin('images/FS(1).png');
-	// coin.position.x = 20;
-	// coin.position.y = 12;
-	// coin.position.z = -200;
-	// coin.scale.set(5,5,5);
-	// scene.add(coin);
 	coins = new THREE.Object3D();
-	lineOfCoins(coins);
-	lineOfCoins(coins);
+	lineOfCoins(coins, 0);
+	lineOfCoins(coins, 0);
+	lineOfCoins(coins, 0);
+	lineOfCoins(coins, 0);
+	lineOfCoins(coins, 1);
+	lineOfCoins(coins, 1);
+	lineOfCoins(coins, 1);
+	lineOfCoins(coins, 1);
+	lineOfCoins(coins, 2);
+	lineOfCoins(coins, 2);
+	lineOfCoins(coins, 2);
+	lineOfCoins(coins, 2);
 
 	scene.add(coins);
 
+	branches = new THREE.Object3D();
+	obstacle(branches, 0);
+	obstacle(branches, 1);
+	obstacle(branches, 2);
+
+	scene.add(branches);
+
 	// create the particle system
 
-	document.addEventListener('keydown', handleKeyDown, false); 
+	document.addEventListener('keydown', handleKeyDown, false);
 
 	//var gui = new dat.GUI();
 
@@ -167,22 +179,22 @@ function init()
 
 
 function handleKeyDown(event){
-	console.log(event.key); 
-	if (event.key == 'ArrowRight') emrys.position.x += 10; 
-	else if (event.key == 'ArrowLeft') emrys.position.x -= 10; 
-	else if (event.key == 'ArrowUp') speed += 2; 
-	else if (event.key == 'ArrowDown') speed -= 2; 
+	console.log(event.key);
+	if (event.key == 'ArrowRight') emrys.position.x += 10;
+	else if (event.key == 'ArrowLeft') emrys.position.x -= 10;
+	else if (event.key == 'ArrowUp') speed += 2;
+	else if (event.key == 'ArrowDown') speed -= 2;
 
-	if (emrys.position.x > 100) emrys.position.x = 100; 
-	else if (emrys.position.x < -100) emrys.position.x = -100; 
-	if (speed < 0) speed = 0; 
+	if (emrys.position.x > 100) emrys.position.x = 100;
+	else if (emrys.position.x < -100) emrys.position.x = -100;
+	if (speed < 0) speed = 0;
 }
 
 
 function animate()
 {
 	requestAnimationFrame( animate );
-  
+
 	render();
 	update();
 
@@ -203,12 +215,9 @@ function update()
 
 	// rotate left/right/up/down
 
-
 	var relativeCameraOffset = new THREE.Vector3(0,100, 400);
 
 	var cameraOffset = relativeCameraOffset.applyMatrix4( emrys.matrixWorld );
-
-
 
 	//camera.position.x = emrys.position.x;
 	camera.position.y = emrys.position.y+100;
@@ -217,8 +226,13 @@ function update()
 	//camera.updateMatrix();
 	//camera.updateProjectionMatrix();
 
-	for (var i=0; i<coins.children.length; i++) {
+	for (var i = 0; i < coins.children.length; i++) {
 		coins.children[i].rotation.y += 0.05;
+		coins.children[i].position.z += 5;
+	}
+
+	for (var i = 0; i < branches.children.length; i++) {
+		branches.children[i].position.z += 5;
 	}
 
 	stats.update();
@@ -240,7 +254,7 @@ function update()
       particle.velocity.x = 0;
     }
 
-    
+
 
     // update the velocity with
     // a splat of randomniz
@@ -259,7 +273,7 @@ function update()
     geometry.
     __dirtyVertices = true;
 
-  
+
 
 }
 
