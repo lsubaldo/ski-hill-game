@@ -349,12 +349,11 @@ function moveWithCamera(){
     // }
 
 		for (var i=0; i<trees.length; i++) {
-			trees[i].position.z += speed;
 			if (trees[i].position.z >= camera.position.z ) {
-				trees[i].position.z = -1000;
-
-    }
-}
+				trees[i].position.z -= 2000;
+    	}
+			trees[i].position.z += speed;
+		}
 }
 
 
