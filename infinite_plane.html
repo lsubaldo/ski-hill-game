@@ -10,14 +10,14 @@
 
 <script type='text/javascript' src='js/DAT.GUI.min.js'></script>
 
-<script src="js/Three.js"></script>
-<script src="js/three.min.js"></script>
-<script src="js/Detector.js"></script>
-<script src="js/Stats.js"></script>
-<script src="js/OrbitControls.js"></script>
-<script src="js/THREEx.KeyboardState.js"></script>
-<script src="js/THREEx.FullScreen.js"></script>
-<script src="js/THREEx.WindowResize.js"></script>
+<script src="js/lib/Three.js"></script>
+<script src="js/lib/three.min.js"></script>
+<script src="js/lib/Detector.js"></script>
+<script src="js/lib/Stats.js"></script>
+<script src="js/lib/OrbitControls.js"></script>
+<script src="js/lib/THREEx.KeyboardState.js"></script>
+<script src="js/lib/THREEx.FullScreen.js"></script>
+<script src="js/lib/THREEx.WindowResize.js"></script>
 <script src="js/emrys.js"></script>
 <script src="js/trees.js"></script>
 <script src="js/coin.js"></script>
@@ -129,10 +129,6 @@ function init()
 	scene.add(skyBox);
 	scene.fog = new THREE.FogExp2( 0xE5DFE1, 0.00025 );
 
-	////////////
-	// CUSTOM //
-	////////////
-
 	// create an array with six textures for a cool cube
 	createTerrainMatrix();
 	emrys = createEmrys();
@@ -153,10 +149,6 @@ function init()
 	lineOfCoins(coins, 0);
 	lineOfCoins(coins, 1);
 	lineOfCoins(coins, 1);
-	lineOfCoins(coins, 1);
-	lineOfCoins(coins, 1);
-	lineOfCoins(coins, 2);
-	lineOfCoins(coins, 2);
 	lineOfCoins(coins, 2);
 	lineOfCoins(coins, 2);
 
@@ -194,7 +186,6 @@ function handleKeyDown(event){
 function animate()
 {
 	requestAnimationFrame( animate );
-
 	render();
 	update();
 
@@ -203,15 +194,8 @@ function animate()
 
 function update()
 {
-
-
 	var delta = clock.getDelta(); // seconds.
 	var moveDistance = 200 * delta;
-
-	// local transformations
-
-	// move forwards/backwards/left/right
-	//emrys.translateZ( -moveDistance );
 
 	// rotate left/right/up/down
 
@@ -228,14 +212,21 @@ function update()
 
 	for (var i = 0; i < coins.children.length; i++) {
 		coins.children[i].rotation.y += 0.05;
-		coins.children[i].position.z += 5;
+		if (coins.children[i].position.z >= camera.position.z) {
+			coins.children[i].position.z -= 2000;
+		}
+		coins.children[i].position.z += speed;
 	}
 
 	for (var i = 0; i < branches.children.length; i++) {
-		branches.children[i].position.z += 5;
+		if (branches.children[i].position.z >= camera.position.z) {
+			branches.children[i].position.z -= 2000;
+		}
+		branches.children[i].position.z += speed;
 	}
 
 	stats.update();
+
 	//experiment to get snowFALL
 	particleSystem.rotation.x += 0.01;
 	particleSystem.rotation.y += 0.01;
@@ -254,8 +245,6 @@ function update()
       particle.velocity.x = 0;
     }
 
-
-
     // update the velocity with
     // a splat of randomniz
     particle.velocity.x -= Math.random() * .1;
@@ -272,9 +261,6 @@ function update()
   particleSystem.
     geometry.
     __dirtyVertices = true;
-
-
-
 }
 
 function render()
@@ -337,17 +323,6 @@ function createTerrainMatrix(){
 }
 
 function moveWithCamera(){
-        // loop through each of the 3 floors
-    // for(var i=0; i<ground.length; i++) {
-		// 	ground[i].position.z += 5;
-    //   //if the camera has moved past the entire square, move the square
-    //   if((ground[i].position.z - 1000)>camera.position.z){
-		//
-    //     ground[i].position.z-=2000;
-    //   }
-		//
-    // }
-
 		for (var i=0; i<trees.length; i++) {
 			if (trees[i].position.z >= camera.position.z ) {
 				trees[i].position.z -= 2000;
