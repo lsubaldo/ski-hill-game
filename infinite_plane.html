@@ -62,7 +62,7 @@ var particleSystem;
 loader.crossOrigin = true;
 
 var speed = 5;
-
+var pause = false; 
 
 
 var particleCount = 900,
@@ -172,10 +172,11 @@ function init()
 
 function handleKeyDown(event){
 	console.log(event.key);
-	if (event.key == 'ArrowRight') emrys.position.x += 10;
-	else if (event.key == 'ArrowLeft') emrys.position.x -= 10;
-	else if (event.key == 'ArrowUp') speed += 2;
-	else if (event.key == 'ArrowDown') speed -= 2;
+	if (event.code == 'ArrowRight') emrys.position.x += 10;
+	else if (event.code == 'ArrowLeft') emrys.position.x -= 10;
+	else if (event.code == 'ArrowUp') speed += 2;
+	else if (event.code == 'ArrowDown') speed -= 2;
+	else if (event.code == 'Space') pause = !pause; 
 
 	if (emrys.position.x > 100) emrys.position.x = 100;
 	else if (emrys.position.x < -100) emrys.position.x = -100;
@@ -187,7 +188,7 @@ function animate()
 {
 	requestAnimationFrame( animate );
 	render();
-	update();
+	if (!pause) update();
 
 }
 
