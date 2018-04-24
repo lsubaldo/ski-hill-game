@@ -93,6 +93,9 @@ function init()
 	camera = new THREE.PerspectiveCamera( VIEW_ANGLE, ASPECT, NEAR, FAR);
 	scene.add(camera);
 	camera.position.set(0,150,400);
+
+	
+
 	camera.lookAt(scene.position);
 	// RENDERER
 	if ( Detector.webgl )
@@ -107,8 +110,8 @@ function init()
 	THREEx.FullScreen.bindKey({ charCode : 'm'.charCodeAt(0) });
 
 	// CONTROLS
-	// MUST REMOVE THIS LINE!!!
-	// controls = ...
+	controls = new THREE.OrbitControls( camera );
+	controls.enableZoom = true; 
 
 	// STATS
 	stats = new Stats();
@@ -135,6 +138,8 @@ function init()
 	emrys.position.y+=50;
 	emrys.scale.set(10,10,10);
 	scene.add(emrys);
+
+	camera.lookAt(emrys); 
 
 	trees = generateRandomTrees();
 
@@ -172,8 +177,8 @@ function init()
 
 function handleKeyDown(event){
 	console.log(event.key);
-	if (event.code == 'ArrowRight') emrys.position.x += 10;
-	else if (event.code == 'ArrowLeft') emrys.position.x -= 10;
+	if (event.code == 'ArrowRight') emrys.position.x += 10; 
+	else if (event.code == 'ArrowLeft') emrys.position.x -= 10; 
 	else if (event.code == 'ArrowUp') speed += 2;
 	else if (event.code == 'ArrowDown') speed -= 2;
 	else if (event.code == 'Space') pause = !pause; 
@@ -190,11 +195,14 @@ function animate()
 	render();
 	if (!pause) update();
 
+
 }
 
 
 function update()
 {
+	//controls.update();
+
 	var delta = clock.getDelta(); // seconds.
 	var moveDistance = 200 * delta;
 
@@ -205,8 +213,9 @@ function update()
 	var cameraOffset = relativeCameraOffset.applyMatrix4( emrys.matrixWorld );
 
 	//camera.position.x = emrys.position.x;
-	camera.position.y = emrys.position.y+100;
-	camera.position.z = emrys.position.z+200;
+	//camera.position.y = emrys.position.y+100;
+	//camera.position.z = emrys.position.z+200;
+	controls.update();
 	moveWithCamera();
 	//camera.updateMatrix();
 	//camera.updateProjectionMatrix();
@@ -262,10 +271,18 @@ function update()
   particleSystem.
     geometry.
     __dirtyVertices = true;
+
+
 }
 
 function render()
 {
+/*
+	for (var i = 0; i < coins.children.length; i++) {
+		var coin = coins.children[i]; 
+	}
+*/
+
 	renderer.render( scene, camera );
 }
 
@@ -300,6 +317,20 @@ function createTerrainMatrix(){
 	floor.position.z = 1000;
 	terrain.add(floor);
 	terrain.add(particleSystem);
+
+	//mirror
+	var mirrorGeom = new THREE.CircleBufferGeometry( 200, 64);
+	var groundMirror = new THREE.Reflector( mirrorGeom, {
+	    clipBias: 0.003,
+	    textureWidth: 2,
+	    textureHeight: 2,
+	    color: 0x777777,
+	    recursion: 1
+	  } );
+	 groundMirror.position.y = -0.5;
+	groundMirror.rotation.x = Math.PI / 2;
+	groundMirror.position.z = 1000;
+	terrain.add(groundMirror);
 
 	scene.add(terrain);
 	ground.push(floor);
