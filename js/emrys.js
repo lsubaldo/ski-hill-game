@@ -262,10 +262,16 @@ function createEmrys(){
   edge2.position.z = 1.9; 
   edge2.scale.set(0.2, 0.1, 0.35); 
   sled.add(edge2); 
-
+  
+  
   emrysOnSled.add(sled); 
 
   emrysOnSled.rotation.y = Math.PI; 
+  
+  var BB = new THREE.Box3(new THREE.Vector3(1, 1, 1), new THREE.Vector3(-1,-1,-1));
+  BB.setFromObject(emrysOnSled); 
+  emrysOnSled.add(BB);
+
 
   return emrysOnSled; 
 

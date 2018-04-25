@@ -51,6 +51,11 @@ var clock = new THREE.Clock();
 var ground = [];
 // custom global variables
 var cube;
+var emrysBbox;
+var box;
+
+
+
 
 var emrys;
 var trees = [];
@@ -134,6 +139,9 @@ function init()
 	emrys = createEmrys();
 	emrys.position.y+=50;
 	emrys.scale.set(10,10,10);
+	box = new THREE.BoxHelper( emrys, 0xffff00 );
+	emrysBbox = new THREE.Box3().setFromObject(emrys);
+	scene.add( box );
 	scene.add(emrys);
 
 	trees = generateRandomTrees();
@@ -172,13 +180,13 @@ function init()
 
 function handleKeyDown(event){
 	console.log(event.key);
-	if (event.key == 'ArrowRight') emrys.position.x += 10;
-	else if (event.key == 'ArrowLeft') emrys.position.x -= 10;
+	if (event.key == 'ArrowRight') {emrys.position.x += 10}
+	else if (event.key == 'ArrowLeft') {emrys.position.x -= 10}
 	else if (event.key == 'ArrowUp') speed += 2;
 	else if (event.key == 'ArrowDown') speed -= 2;
 
-	if (emrys.position.x > 100) emrys.position.x = 100;
-	else if (emrys.position.x < -100) emrys.position.x = -100;
+	if (emrys.position.x > 100) {emrys.position.x = 100}
+	else if (emrys.position.x < -100) {emrys.position.x = -100}
 	if (speed < 0) speed = 0;
 }
 
@@ -188,7 +196,6 @@ function animate()
 	requestAnimationFrame( animate );
 	render();
 	update();
-
 }
 
 
@@ -196,7 +203,8 @@ function update()
 {
 	var delta = clock.getDelta(); // seconds.
 	var moveDistance = 200 * delta;
-
+	emrysBbox.setFromObject(emrys);
+	box.update();
 	// rotate left/right/up/down
 
 	var relativeCameraOffset = new THREE.Vector3(0,100, 400);
@@ -209,13 +217,19 @@ function update()
 	moveWithCamera();
 	//camera.updateMatrix();
 	//camera.updateProjectionMatrix();
+	var len = coins.children.length;
 
-	for (var i = 0; i < coins.children.length; i++) {
+	for (var i = 0; i < len; i++) {
 		coins.children[i].rotation.y += 0.05;
 		if (coins.children[i].position.z >= camera.position.z) {
 			coins.children[i].position.z -= 2000;
 		}
 		coins.children[i].position.z += speed;
+		var coinBbox = new THREE.Box3().setFromObject(coins.children[i]);
+		if ((emrysBbox).intersectsBox(coinBbox)){
+			console.log("Collision");
+			coins.remove(coins.children[i]);
+		}
 	}
 
 	for (var i = 0; i < branches.children.length; i++) {
@@ -223,9 +237,16 @@ function update()
 			branches.children[i].position.z -= 2000;
 		}
 		branches.children[i].position.z += speed;
+		var branchBbox = new THREE.Box3().setFromObject(branches.children[i]);
+		if ((emrysBbox).intersectsBox(branchBbox)){
+			console.log("Collision");
+			branches.remove(branches.children[i]);
+		}
 	}
 
-	stats.update();
+
+
+  stats.update();
 
 	//experiment to get snowFALL
 	particleSystem.rotation.x += 0.01;

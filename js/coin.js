@@ -23,6 +23,10 @@ function createCoin(image) {
   );
 
   base.rotateX(190);
+  
+  var BB = new THREE.Box3(new THREE.Vector3(1, 1, 1), new THREE.Vector3(-1,-1,-1));
+  BB.setFromObject(base); 
+  coin.add(BB);
 
   coin.add(base);
   return coin;
