@@ -16,7 +16,7 @@ function createCoin(image) {
   materials.push(new THREE.MeshLambertMaterial({ color: 0xC19A6B }));
   materials.push(new THREE.MeshLambertMaterial({ map: coinTexture, transparent: false, color: 0xC19A6B }));
   materials.push(new THREE.MeshLambertMaterial({ map: coinTexture, color: 0xC19A6B }));
-i
+
   var base = new THREE.Mesh(
        new THREE.CylinderGeometry(2.5, 2.5, 0.75, 64, 1),
        new THREE.MeshFaceMaterial( materials ) // color: 0xC19A6B
@@ -36,7 +36,7 @@ i
 	  } );
 	  groundMirror.position.z = 0.5;
 
-	  //coin.add(groundMirror); 
+	  //coin.add(groundMirror);
 
 
   coin.add(base);
@@ -396,5 +396,3 @@ THREE.Reflector.ReflectorShader = {
 		'}'
 	].join( '\n' )
 };
-
-
