@@ -31,6 +31,7 @@ var particleSystem;
 loader.crossOrigin = true;
 
 var speed = 5;
+var pause = false;
 
 
 
@@ -122,8 +123,10 @@ function init()
 	lineOfCoins(coins, 0);
 	lineOfCoins(coins, 1);
 	lineOfCoins(coins, 1);
+  lineOfCoins(coins, 1);
 	lineOfCoins(coins, 2);
 	lineOfCoins(coins, 2);
+  lineOfCoins(coins, 2);
 
 	scene.add(coins);
 
@@ -161,7 +164,7 @@ function animate()
 {
 	requestAnimationFrame( animate );
 	render();
-	update();
+	if (!pause) update();
 }
 
 
