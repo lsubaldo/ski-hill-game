@@ -90,7 +90,7 @@ function lineOfCoins(model, level) {
   var num = 10; // getRandomInt(1, 10);
   var coin = createCoin(tokens[level]);
   var x = getRandomInt(-120, 120);
-  var y = 40;
+  var y = 15;
   var z = getRandomInt(-1500 * (level + 1), -3000 * (level + 1));
   var scale = 5;
   for (var i = 0; i < num; i++) {

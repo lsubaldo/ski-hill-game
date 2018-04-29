@@ -89,6 +89,18 @@ function init()
 	var light = new THREE.PointLight(0xffffff);
 	light.position.set(0,250,0);
 	scene.add(light);
+
+	var light2 = new THREE.SpotLight(0x808080);
+	light2.position.set(0,60,-50);
+	scene.add(light2);
+	var light2_helper = new THREE.SpotLightHelper( light2 );
+	scene.add( light2_helper );
+
+	var light3 = new THREE.SpotLight(0x808080, 1, 200, 0.8, 0, 1);
+	light3.position.set(0,60,50);
+	scene.add(light3);
+	var light3_helper = new THREE.SpotLightHelper( light3 );
+	scene.add( light3_helper );
 	// FLOOR
 
 	// SKYBOX/FOG
@@ -101,7 +113,7 @@ function init()
 	// create an array with six textures for a cool cube
 	createTerrainMatrix();
 	emrys = createEmrys();
-	emrys.position.y+=50;
+	emrys.position.y+=20;
 	emrys.scale.set(10,10,10);
 	box = new THREE.BoxHelper( emrys, 0xffff00 );
 	emrysBbox = new THREE.Box3().setFromObject(emrys);
