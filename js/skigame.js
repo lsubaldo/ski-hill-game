@@ -218,6 +218,10 @@ function update()
 			coins.remove(coins.children[i]);
 			score += 20; 
 			fieldScore.innerHTML = score;
+
+			if (score >= 1000){
+				console.log("WIN"); 
+			}
 		}
 	}
 
