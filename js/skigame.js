@@ -35,6 +35,8 @@ var pause = false;
 
 var score = 0; 
 var fieldScore; 
+var branchesHit = 0; 
+var fieldBranch; 
 
 
 var particleCount = 900,
@@ -56,6 +58,7 @@ function init()
 {
 	//UI
 	fieldScore = document.getElementById("scoreValue");
+	fieldBranch = document.getElementById("branchValue");
 
 	// SCENE
 	scene = new THREE.Scene();
@@ -102,7 +105,7 @@ function init()
 	scene.add( light2_helper );
 
 	var light3 = new THREE.SpotLight(0x808080, 1, 200, 0.8, 0, 1);
-	light3.position.set(0,60,50);
+	light3.position.set(0,60,140);
 	scene.add(light3);
 	var light3_helper = new THREE.SpotLightHelper( light3 );
 	scene.add( light3_helper );
@@ -220,7 +223,8 @@ function update()
 			fieldScore.innerHTML = score;
 
 			if (score >= 1000){
-				console.log("WIN"); 
+				pause = true; 
+				alert("WIN"); 
 			}
 		}
 	}
@@ -235,7 +239,13 @@ function update()
 			console.log("Collision");
 			branches.remove(branches.children[i]);
 			score -= 20; 
+			branchesHit += 1; 
 			fieldScore.innerHTML = score;
+			fieldBranch.innerHTML = branchesHit; 
+			if (branchesHit >= 10){
+				pause = true; 
+				alert("LOST"); 
+			}
 		}
 	}
 
