@@ -1,14 +1,15 @@
 <!doctype html>
 <html lang="en">
 <head>
-	<title>Infinite plane on top of Chase Camera demo (Three.js)</title>
+	<title>Ski Hill Game</title>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<!--<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 	<link rel=stylesheet href="css/base.css"/>
-</head>
-<body>
+-->
+<link rel=stylesheet href="css/game.css"/>
+<link rel=stylesheet href="css/demo.css"/>
 
-<script type='text/javascript' src='js/DAT.GUI.min.js'></script>
+	<script type='text/javascript' src='js/DAT.GUI.min.js'></script>
 
 <script src="js/lib/Three.js"></script>
 <script src="js/lib/three.min.js"></script>
@@ -23,26 +24,60 @@
 <script src="js/coin.js"></script>
 <script src="js/skigame.js"></script>
 
-<!-- jQuery code to display an information button and box when clicked. -->
+<!-- jQuery code to display an information button and box when clicked. 
 <script src="js/jquery-1.9.1.js"></script>
-<script src="js/jquery-ui.js"></script>
-<link rel=stylesheet href="css/jquery-ui.css" />
-<link rel=stylesheet href="css/info.css"/>
+<script src="js/jquery-ui.js"></script>-->
+<!--<link rel=stylesheet href="css/jquery-ui.css" />-->
+<!--<link rel=stylesheet href="css/info.css"/>-->
 <script src="js/info.js"></script>
-<div id="infoButton"></div>
-<div id="infoBox" title="Demo Information">
-Infinite plane with Emrys and Chase camera
-</div>
-<!-- ------------------------------------------------------------ -->
-
-<div id="ThreeJS" style="position: absolute; left:0px; top:0px"></div>
-
+<!--
 <script>
 init();
 animate();
 
 window.addEventListener('load', init, false);
-</script>
+</script>-->
+
+</head>
+<body>
+	<div class="world" id="ThreeJS"></div>
+
+	<!--<div class="game-holder" id="gameHolder">-->
+			<div class="header">
+				<h1>Emrys </h1>
+				<h2>on Ski Hill</h2>
+
+				<div class="scoreBoard" id="scoreBoard">
+					<div class="score__content" id="score">
+						<div class="score__label">Score</div>
+						<div class="score__value score__value--score" id="scoreValue">000</div>
+
+					</div>
+				</div>
+			</div>
+
+
+	<!--</div>-->
+
+	<!--<div class="game-holder" id="gameHolder">
+		<div class="header">
+			<h1>Emrys on Ski Hill</h1>
+
+		
+
+
+<div id="infoButton"></div>
+<div id="infoBox" title="Demo Information">
+Infinite plane with Emrys and Chase camera
+</div>-->
+
+		<div class="partisan">
+
+<a class="partisan__link" href="https://goo.gl/oECseP" rel="nofollow">
+				<img class="partisan__img" src="img/Partisan_Bushel.png" alt="Bushel: Easily manage all your Apple devices at work"/>
+				<h3 class="partisan__title">Bushel: Easily manage all your Apple devices at work</h3>
+			</a>
+	    </div>
 
 </body>
 </html>

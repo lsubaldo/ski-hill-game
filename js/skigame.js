@@ -33,6 +33,8 @@ loader.crossOrigin = true;
 var speed = 5;
 var pause = false;
 
+var score = 0; 
+var fieldScore; 
 
 
 var particleCount = 900,
@@ -52,6 +54,9 @@ var particleCount = 900,
 // FUNCTIONS
 function init()
 {
+	//UI
+	fieldScore = document.getElementById("scoreValue");
+
 	// SCENE
 	scene = new THREE.Scene();
 	// CAMERA
@@ -108,12 +113,13 @@ function init()
 	var skyBoxMaterial = new THREE.MeshBasicMaterial( { color: 0xD5CFDD, side: THREE.BackSide } );
 	var skyBox = new THREE.Mesh( skyBoxGeometry, skyBoxMaterial );
 	scene.add(skyBox);
-	scene.fog = new THREE.FogExp2( 0xE5DFE1, 0.00025 );
+	scene.fog = new THREE.Fog( 0xE5DFE1, 1000, 2000 );
 
 	// create an array with six textures for a cool cube
 	createTerrainMatrix();
 	emrys = createEmrys();
 	emrys.position.y+=20;
+	emrys.position.z+=100;
 	emrys.scale.set(10,10,10);
 	box = new THREE.BoxHelper( emrys, 0xffff00 );
 	emrysBbox = new THREE.Box3().setFromObject(emrys);
@@ -154,6 +160,8 @@ function init()
 	document.addEventListener('keydown', handleKeyDown, false);
 
 	//var gui = new dat.GUI();
+
+	animate(); 
 
 }
 
@@ -208,6 +216,8 @@ function update()
 		if ((emrysBbox).intersectsBox(coinBbox)){
 			console.log("Collision");
 			coins.remove(coins.children[i]);
+			score += 20; 
+			fieldScore.innerHTML = score;
 		}
 	}
 
@@ -220,6 +230,8 @@ function update()
 		if ((emrysBbox).intersectsBox(branchBbox)){
 			console.log("Collision");
 			branches.remove(branches.children[i]);
+			score -= 20; 
+			fieldScore.innerHTML = score;
 		}
 	}
 
@@ -344,3 +356,35 @@ function moveWithCamera(){
 			trees[i].position.z += speed;
 		}
 }
+
+
+/*function init(event){
+
+  // UI
+
+  fieldDistance = document.getElementById("distValue");
+  energyBar = document.getElementById("energyBar");
+  replayMessage = document.getElementById("replayMessage");
+  fieldLevel = document.getElementById("levelValue");
+  levelCircle = document.getElementById("levelCircleStroke");
+
+  resetGame();
+  createScene();
+
+  createLights();
+  createPlane();
+  createSea();
+  createSky();
+  createCoins();
+  createEnnemies();
+  createParticles();
+
+  document.addEventListener('mousemove', handleMouseMove, false);
+  document.addEventListener('touchmove', handleTouchMove, false);
+  document.addEventListener('mouseup', handleMouseUp, false);
+  document.addEventListener('touchend', handleTouchEnd, false);
+
+  loop();
+}*/
+
+window.addEventListener('load', init, false);
