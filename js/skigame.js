@@ -202,7 +202,7 @@ function updateCoins() {
 			score += 20;
 			fieldScore.innerHTML = score;
 
-			if (score >= 2000){
+			if (score >= 1000){
 				pause = true;
 				alert("WIN");
 			}
