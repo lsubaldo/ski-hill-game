@@ -17,8 +17,8 @@
 	position: absolute;
 	/*top: 8vh;*/
 	/*left: 0;*/
-	padding-top: 1.5em; 
-	padding-left: 3em; 
+	padding-top: 1.5em;
+	padding-left: 3em;
 	width: 100%;
 	/*text-align: center;*/
 	pointer-events: none;
@@ -30,7 +30,7 @@
 	line-height: 1;
 	margin: 0;
 	letter-spacing: -0.025em;
-	color: #24e5d2;
+	color: #DCAE4B;
 }
 
 .header h1 span {
@@ -54,7 +54,6 @@
 .score {
 	width: 100%;
 	margin: 2em 0 0;
-	text-align: center;
 	white-space: nowrap;
 }
 
@@ -74,7 +73,6 @@
 	font-size: 9px;
 	position: relative;
 	margin: 0 0 0.5em 0;
-	text-align: center;
 	letter-spacing: 3px;
 	text-transform: uppercase;
 	color: #e0552f;

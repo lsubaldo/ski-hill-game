@@ -14,12 +14,9 @@ var keyboard = new THREEx.KeyboardState();
 var clock = new THREE.Clock();
 var ground = [];
 // custom global variables
-var cube;
+
 var emrysBbox;
 var box;
-
-
-
 
 var emrys;
 var trees = [];
@@ -33,11 +30,10 @@ loader.crossOrigin = true;
 var speed = 5;
 var pause = false;
 
-var score = 0; 
-var fieldScore; 
-var branchesHit = 0; 
-var fieldBranch; 
-
+var score = 0;
+var fieldScore;
+var branchesHit = 0;
+var fieldBranch;
 
 var particleCount = 900,
 
@@ -164,7 +160,7 @@ function init()
 
 	//var gui = new dat.GUI();
 
-	animate(); 
+	animate();
 
 }
 
@@ -190,24 +186,8 @@ function animate()
 	if (!pause) update();
 }
 
-
-function update()
-{
-	var delta = clock.getDelta(); // seconds.
-	var moveDistance = 200 * delta;
-	emrysBbox.setFromObject(emrys);
-	box.update();
-	// rotate left/right/up/down
-
-	var relativeCameraOffset = new THREE.Vector3(0,100, 400);
-
-	var cameraOffset = relativeCameraOffset.applyMatrix4( emrys.matrixWorld );
-
-	controls.update();
-	moveWithCamera();
-	//camera.updateMatrix();
-	//camera.updateProjectionMatrix();
-	var len = coins.children.length;
+function updateCoins() {
+  var len = coins.children.length;
 
 	for (var i = 0; i < len; i++) {
 		coins.children[i].rotation.y += 0.05;
@@ -219,46 +199,43 @@ function update()
 		if ((emrysBbox).intersectsBox(coinBbox)){
 			console.log("Collision");
 			coins.remove(coins.children[i]);
-			score += 20; 
+			score += 20;
 			fieldScore.innerHTML = score;
 
-			if (score >= 1000){
-				pause = true; 
-				alert("WIN"); 
+			if (score >= 2000){
+				pause = true;
+				alert("WIN");
 			}
 		}
 	}
+}
 
-	for (var i = 0; i < branches.children.length; i++) {
-		if (branches.children[i].position.z >= camera.position.z) {
-			branches.children[i].position.z -= 2000;
-		}
-		branches.children[i].position.z += speed;
-		var branchBbox = new THREE.Box3().setFromObject(branches.children[i]);
-		if ((emrysBbox).intersectsBox(branchBbox)){
-			console.log("Collision");
-			branches.remove(branches.children[i]);
-			score -= 20; 
-			branchesHit += 1; 
-			fieldScore.innerHTML = score;
-			fieldBranch.innerHTML = branchesHit; 
-			if (branchesHit >= 10){
-				pause = true; 
-				alert("LOST"); 
-			}
-		}
-	}
+function updateBranches() {
+  for (var i = 0; i < branches.children.length; i++) {
+    if (branches.children[i].position.z >= camera.position.z) {
+      branches.children[i].position.z -= 2000;
+    }
+    branches.children[i].position.z += speed;
+    var branchBbox = new THREE.Box3().setFromObject(branches.children[i]);
+    if ((emrysBbox).intersectsBox(branchBbox)){
+      console.log("Collision");
+      branches.remove(branches.children[i]);
+      score -= 10;
+      branchesHit += 1;
+      fieldScore.innerHTML = score;
+      fieldBranch.innerHTML = branchesHit;
+      if (branchesHit >= 10){
+        pause = true;
+        alert("LOST");
+      }
+    }
+  }
+}
 
-
-
-  stats.update();
-
-	//experiment to get snowFALL
-	particleSystem.rotation.x += 0.01;
+function updateParticles() {
+  particleSystem.rotation.x += 0.01;
 	particleSystem.rotation.y += 0.01;
 	particleSystem.rotation.z += 0.01;
-
-
 
   var pCount = particleCount--;
   while (pCount >= 0) {
@@ -281,12 +258,36 @@ function update()
 
 		pCount--;
   }
-
   // flag to the particle system
   // that we've changed its vertices.
   particleSystem.
     geometry.
     __dirtyVertices = true;
+}
+
+function update()
+{
+	var delta = clock.getDelta(); // seconds.
+	var moveDistance = 200 * delta;
+	emrysBbox.setFromObject(emrys);
+	box.update();
+	// rotate left/right/up/down
+
+	var relativeCameraOffset = new THREE.Vector3(0,100, 400);
+
+	var cameraOffset = relativeCameraOffset.applyMatrix4( emrys.matrixWorld );
+
+	controls.update();
+	moveWithCamera();
+  updateCoins();
+  updateBranches();
+	//camera.updateMatrix();
+	//camera.updateProjectionMatrix();
+
+  stats.update();
+
+	//experiment to get snowFALL
+  updateParticles();
 }
 
 function render()
@@ -342,24 +343,6 @@ function createTerrainMatrix(){
 
 	scene.add(terrain);
 	ground.push(floor);
-
-// 	for (var z = 1000; z > -3000; z-=1000) {
-// 		var terrain = new THREE.Object3D();
-// 		// var floorTexture = new THREE.ImageUtils.loadTexture( 'images/checkerboard.jpg' );
-// 		// floorTexture.wrapS = floorTexture.wrapT = THREE.RepeatWrapping;
-// 		// floorTexture.repeat.set( 10, 10 );
-// 		var floorMaterial = new THREE.MeshBasicMaterial( { color: 0xA7C3D1, side: THREE.DoubleSide } );
-// 		var floorGeometry = new THREE.PlaneGeometry(300, 2000, 10, 10);
-// 		var floor = new THREE.Mesh(floorGeometry, floorMaterial);
-// 		floor.position.y = -0.5;
-// 		floor.rotation.x = Math.PI / 2;
-// 		floor.position.z = z
-// 		terrain.add(floor);
-// 		terrain.add(particleSystem);
-//
-// 		scene.add(terrain);
-// 		ground.push(floor);
-// 	}
 }
 
 function moveWithCamera(){
@@ -370,35 +353,5 @@ function moveWithCamera(){
 			trees[i].position.z += speed;
 		}
 }
-
-
-/*function init(event){
-
-  // UI
-
-  fieldDistance = document.getElementById("distValue");
-  energyBar = document.getElementById("energyBar");
-  replayMessage = document.getElementById("replayMessage");
-  fieldLevel = document.getElementById("levelValue");
-  levelCircle = document.getElementById("levelCircleStroke");
-
-  resetGame();
-  createScene();
-
-  createLights();
-  createPlane();
-  createSea();
-  createSky();
-  createCoins();
-  createEnnemies();
-  createParticles();
-
-  document.addEventListener('mousemove', handleMouseMove, false);
-  document.addEventListener('touchmove', handleTouchMove, false);
-  document.addEventListener('mouseup', handleMouseUp, false);
-  document.addEventListener('touchend', handleTouchEnd, false);
-
-  loop();
-}*/
 
 window.addEventListener('load', init, false);
