@@ -2,8 +2,8 @@
 
 /*
 	Colgate Slide
-	Author: Lee Stemkoski
-	Date: July 2013 (three.js v59dev)
+	Author: Asad J, Jingxian, Leslie, Zoila
+	Date: Spring 2018
 */
 
 // MAIN
@@ -32,6 +32,7 @@ loader.crossOrigin = true;
 
 var speed = 5;
 var pause = false;
+
 var waitingReplay = false; 
 var won = false; 
 var rotateEmrys; 
@@ -45,6 +46,19 @@ var replayMessage;
 var youWon;
 var youLost; 
 
+var waitingReplay = false;
+var won = false;
+
+var tree_angle;
+
+var score = 0;
+var fieldScore;
+var branchesHit = 0;
+var fieldBranch;
+
+var replayMessage;
+var youWon;
+var youLost;
 
 var particleCount = 900,
 
@@ -65,20 +79,20 @@ var particleCount = 900,
 function resetGame(){
 	speed = 5;
 	pause = false;
-	waitingReplay = false; 
+	waitingReplay = false;
 
-	score = 0; 
-	branchesHit = 0; 
+	score = 0;
+	branchesHit = 0;
 
 	fieldScore.innerHTML = score;
-	fieldBranch.innerHTML = branchesHit; 
+	fieldBranch.innerHTML = branchesHit;
 
 }
 
 function showReplay(){
-	console.log("showReplay"); 
+	console.log("showReplay");
 	if (won) youWon.style.display="block";
-	else youLost.style.display="block"; 
+	else youLost.style.display="block";
   replayMessage.style.display="block";
 }
 
@@ -169,6 +183,7 @@ function init()
   camera.lookAt(emrys);
 
 	trees = generateRandomTrees();
+  tree_angle = trees[0].rotation.x;
 
 	for (var i=0; i<trees.length; i++) {
 		scene.add(trees[i]);
@@ -200,12 +215,23 @@ function init()
 	//handle mouse and key events
 	document.addEventListener('keydown', handleKeyDown, false);
 	document.addEventListener('mouseup', handleMouseUp, false);
-  	document.addEventListener('touchend', handleTouchEnd, false);
+  document.addEventListener('touchend', handleTouchEnd, false);
 
-	//var gui = new dat.GUI();
+	// var gui = new dat.GUI();
+  guiHelper();
 
-	animate(); 
+	animate();
 
+}
+
+
+function guiHelper() {
+  var gui = new dat.GUI();
+  var box = gui.addFolder('Trees');
+  // var params = { tree_angle: 5000 };
+  // box.add(tree_angle, 'tree_angle', -45, 45).name('Angle').listen();
+  // var params = { interaction: 5000 };
+  // gui.add(params, 'interaction')
 }
 
 
@@ -225,7 +251,7 @@ function handleKeyDown(event){
 function handleMouseUp(event){
   if (waitingReplay == true){
     resetGame();
-    console.log("hiding message"); 
+    console.log("hiding message");
     hideReplay();
   }
 }
@@ -233,7 +259,7 @@ function handleMouseUp(event){
 function handleTouchEnd(event){
   if (waitingReplay == true){
     resetGame();
-    console.log("hiding message"); 
+    console.log("hiding message");
     hideReplay();
   }
 }
@@ -262,9 +288,9 @@ function updateCoins() {
 			fieldScore.innerHTML = score;
 
 			if (score >= 1000){
-				pause = true; 
-				won = true; 
-				waitingReplay = true; 
+				pause = true;
+				won = true;
+				waitingReplay = true;
 				showReplay();
 			}
 		}
@@ -287,9 +313,9 @@ function updateBranches() {
       fieldScore.innerHTML = score;
       fieldBranch.innerHTML = branchesHit;
       if (branchesHit >= 10){
-        pause = true; 
-		won = false; 
-		waitingReplay = true; 
+        pause = true;
+		won = false;
+		waitingReplay = true;
 		showReplay();
       }
     }
@@ -365,6 +391,53 @@ function update()
 	updateEmrys();   
 	//camera.updateMatrix();
 	//camera.updateProjectionMatrix();
+
+	var len = coins.children.length;
+
+	for (var i = 0; i < len; i++) {
+		coins.children[i].rotation.y += 0.05;
+		if (coins.children[i].position.z >= camera.position.z) {
+			coins.children[i].position.z -= 2000;
+		}
+		coins.children[i].position.z += speed;
+		var coinBbox = new THREE.Box3().setFromObject(coins.children[i]);
+		if ((emrysBbox).intersectsBox(coinBbox)){
+			console.log("Collision");
+			coins.remove(coins.children[i]);
+			score += 20;
+			fieldScore.innerHTML = score;
+
+			if (score >= 1000){
+				pause = true;
+				won = true;
+				waitingReplay = true;
+				showReplay();
+			}
+		}
+	}
+
+	for (var i = 0; i < branches.children.length; i++) {
+		if (branches.children[i].position.z >= camera.position.z) {
+			branches.children[i].position.z -= 2000;
+		}
+		branches.children[i].position.z += speed;
+		var branchBbox = new THREE.Box3().setFromObject(branches.children[i]);
+		if ((emrysBbox).intersectsBox(branchBbox)){
+			console.log("Collision");
+			branches.remove(branches.children[i]);
+			score -= 20;
+			branchesHit += 1;
+			fieldScore.innerHTML = score;
+			fieldBranch.innerHTML = branchesHit;
+			if (branchesHit >= 10){
+				pause = true;
+				won = false;
+				waitingReplay = true;
+				showReplay();
+			}
+		}
+	}
+
 
   stats.update();
 
