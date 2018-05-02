@@ -85,7 +85,7 @@ function createBranch() {
 }
 
 function lineOfCoins(model, level) {
-  var num = 10; // getRandomInt(1, 10);
+  var num = 5; // getRandomInt(1, 10);
   var coin = createCoin(tokens[level]);
   var x = getRandomInt(-120, 120);
   var y = 15;

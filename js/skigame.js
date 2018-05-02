@@ -36,8 +36,12 @@ var tree_angle;
 
 var score = 0;
 var fieldScore;
-var bracnheesHit = 0;
+var branchesHit = 0;
 var fieldBranch;
+
+var replayMessage;
+var youWon;
+var youLost;
 
 var particleCount = 900,
 
@@ -194,22 +198,24 @@ function init()
 	//handle mouse and key events
 	document.addEventListener('keydown', handleKeyDown, false);
 	document.addEventListener('mouseup', handleMouseUp, false);
-  	document.addEventListener('touchend', handleTouchEnd, false);
+  document.addEventListener('touchend', handleTouchEnd, false);
 
 	// var gui = new dat.GUI();
+  guiHelper();
 
 	animate();
 
 }
 
 
-// function guiHelper() {
-//   var gui = new dat.GUI();
-//   var box = gui.addFolder('Trees');
-//   box.add(tree_angle, 'tree_angle', -45, 45).name('Angle').listen();
-//   var params = { interaction: 5000 };
-//   gui.add(params, 'interaction')
-// }
+function guiHelper() {
+  var gui = new dat.GUI();
+  var box = gui.addFolder('Trees');
+  // var params = { tree_angle: 5000 };
+  // box.add(tree_angle, 'tree_angle', -45, 45).name('Angle').listen();
+  // var params = { interaction: 5000 };
+  // gui.add(params, 'interaction')
+}
 
 
 function handleKeyDown(event){
