@@ -35,7 +35,7 @@ var pause = false;
 
 var waitingReplay = false; 
 var won = false; 
-var rotateEmrys; 
+var rotateEmrys = false; 
 var rotationCounter = 0; 
 
 var score = 0; 
@@ -282,7 +282,7 @@ function updateCoins() {
 		coins.children[i].position.z += speed;
 		var coinBbox = new THREE.Box3().setFromObject(coins.children[i]);
 		if ((emrysBbox).intersectsBox(coinBbox)){
-			console.log("Collision");
+			console.log("Coin collision");
 			coins.remove(coins.children[i]);
 			score += 20;
 			fieldScore.innerHTML = score;
@@ -305,8 +305,13 @@ function updateBranches() {
     branches.children[i].position.z += speed;
     var branchBbox = new THREE.Box3().setFromObject(branches.children[i]);
     if ((emrysBbox).intersectsBox(branchBbox)){
-      console.log("Collision");
+      console.log("Branch collision");
+      console.log("!!!"); 
+   
       rotateEmrys = true; 
+      console.log("???"); 
+      console.log(rotateEmrys);
+
       branches.remove(branches.children[i]);
       score -= 10;
       branchesHit += 1;
@@ -385,59 +390,12 @@ function update()
 
 	controls.update();
 	moveWithCamera();
-  updateCoins();
-  updateBranches();
+   updateCoins();
+   updateBranches();
 
 	updateEmrys();   
 	//camera.updateMatrix();
 	//camera.updateProjectionMatrix();
-
-	var len = coins.children.length;
-
-	for (var i = 0; i < len; i++) {
-		coins.children[i].rotation.y += 0.05;
-		if (coins.children[i].position.z >= camera.position.z) {
-			coins.children[i].position.z -= 2000;
-		}
-		coins.children[i].position.z += speed;
-		var coinBbox = new THREE.Box3().setFromObject(coins.children[i]);
-		if ((emrysBbox).intersectsBox(coinBbox)){
-			console.log("Collision");
-			coins.remove(coins.children[i]);
-			score += 20;
-			fieldScore.innerHTML = score;
-
-			if (score >= 1000){
-				pause = true;
-				won = true;
-				waitingReplay = true;
-				showReplay();
-			}
-		}
-	}
-
-	for (var i = 0; i < branches.children.length; i++) {
-		if (branches.children[i].position.z >= camera.position.z) {
-			branches.children[i].position.z -= 2000;
-		}
-		branches.children[i].position.z += speed;
-		var branchBbox = new THREE.Box3().setFromObject(branches.children[i]);
-		if ((emrysBbox).intersectsBox(branchBbox)){
-			console.log("Collision");
-			branches.remove(branches.children[i]);
-			score -= 20;
-			branchesHit += 1;
-			fieldScore.innerHTML = score;
-			fieldBranch.innerHTML = branchesHit;
-			if (branchesHit >= 10){
-				pause = true;
-				won = false;
-				waitingReplay = true;
-				showReplay();
-			}
-		}
-	}
-
 
   stats.update();
 
