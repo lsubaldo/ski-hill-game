@@ -2,8 +2,8 @@
 
 /*
 	Colgate Slide
-	Author: Lee Stemkoski
-	Date: July 2013 (three.js v59dev)
+	Author: Asad J, Jingxian, Leslie, Zoila
+	Date: Spring 2018
 */
 
 // MAIN
@@ -19,8 +19,6 @@ var emrysBbox;
 var box;
 
 
-
-
 var emrys;
 var trees = [];
 var coins;
@@ -33,7 +31,7 @@ loader.crossOrigin = true;
 var speed = 5;
 var pause = false;
 
-
+var tree_angle;
 
 var particleCount = 900,
 
@@ -123,6 +121,7 @@ function init()
   camera.lookAt(emrys);
 
 	trees = generateRandomTrees();
+  tree_angle = trees[0].rotation.x;
 
 	for (var i=0; i<trees.length; i++) {
 		scene.add(trees[i]);
@@ -153,9 +152,19 @@ function init()
 
 	document.addEventListener('keydown', handleKeyDown, false);
 
-	//var gui = new dat.GUI();
+	// var gui = new dat.GUI();
 
+  // guiHelper();
 }
+
+
+// function guiHelper() {
+//   var gui = new dat.GUI();
+//   var box = gui.addFolder('Trees');
+//   box.add(tree_angle, 'tree_angle', -45, 45).name('Angle').listen();
+//   var params = { interaction: 5000 };
+//   gui.add(params, 'interaction')
+// }
 
 
 function handleKeyDown(event){
