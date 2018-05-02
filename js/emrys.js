@@ -1,50 +1,62 @@
+"use strict";
+
+var colors = {
+  yellow: 0xfdd276,
+  red: 0xad3525,
+  pink: 0xe55d2b,
+  white: 0xffffff,
+  purple: 0x451954,
+  grey: 0x653f4c,
+  black: 0x302925
+};
+
 function createEmrys(){
-  var emrysOnSled = new THREE.Object3D(); 
+  var emrysOnSled = new THREE.Object3D();
 
   var emrys = new THREE.Object3D();
 
   var yellowMat = new THREE.MeshLambertMaterial ({
-    color: 0xfdd276, 
+    color: colors.yellow,
     shading:THREE.FlatShading
   });
   var redMat = new THREE.MeshLambertMaterial ({
-    color: 0xad3525, 
+    color: colors.red,
     shading:THREE.FlatShading
   });
-  
+
   var pinkMat = new THREE.MeshLambertMaterial ({
-    color: 0xe55d2b, 
+    color: colors.pink,
     shading:THREE.FlatShading
   });
-  
+
   var whiteMat = new THREE.MeshLambertMaterial ({
-    color: 0xffffff, 
+    color: colors.white,
     shading:THREE.FlatShading
   });
-  
+
   var purpleMat = new THREE.MeshLambertMaterial ({
-    color: 0x451954, 
+    color: colors.purple,
     shading:THREE.FlatShading
   });
-  
+
   var greyMat = new THREE.MeshLambertMaterial ({
-    color: 0x653f4c, 
+    color: colors.grey,
     shading:THREE.FlatShading
   });
-  
+
   var blackMat = new THREE.MeshLambertMaterial ({
-    color: 0x302925, 
+    color: colors.black,
     shading:THREE.FlatShading
   });
-  
-  
-  //var bodyGeom = new THREE.CylinderGeometry(30,80, 140, 4); 
+
+
+  //var bodyGeom = new THREE.CylinderGeometry(30,80, 140, 4);
   var maneGeom = new THREE.BoxGeometry(40,40,15);
   //var faceGeom = new THREE.BoxGeometry(80,80,80);
   var spotGeom = new THREE.BoxGeometry(4,4,4);
   var mustacheGeom = new THREE.BoxGeometry(30,2,1);
   mustacheGeom.applyMatrix( new THREE.Matrix4().makeTranslation( 15, 0, 0 ) );
-  
+
   //var earGeom = new THREE.BoxGeometry(20,20,20);
   //var noseGeom = new THREE.BoxGeometry(40,40,20);
   //var eyeGeom = new THREE.BoxGeometry(5,30,30);
@@ -64,32 +76,32 @@ function createEmrys(){
   var noseGeom = new THREE.BoxGeometry(0.2,0.2,0.2);
 
   var bodyGeom = new THREE.ConeGeometry(0.9, 3, 7);
-  var bodyGeom2 = new THREE.SphereGeometry(0.8, 6, 6); 
+  var bodyGeom2 = new THREE.SphereGeometry(0.8, 6, 6);
   var tailGeom = new THREE.CylinderGeometry(0.15, 0.2, 0.7);
   var tail2Geom = new THREE.ConeGeometry(0.18, 0.7, 10);
 
   var kneeGeom = new THREE.BoxGeometry(0.4, 0.8, 0.4);
   var footGeom = new THREE.BoxGeometry(0.5, 0.3, 0.3);
-  
+
 
   //face
-  var face = new THREE.Mesh(faceGeom, yellowMat); 
-  face.position.y = 1; 
-  face.position.z = 0.2; 
-  emrys.add(face); 
+  var face = new THREE.Mesh(faceGeom, yellowMat);
+  face.position.y = 1;
+  face.position.z = 0.2;
+  emrys.add(face);
 
-  //ear 
-  var leftEar = new THREE.Mesh(earGeom, yellowMat); 
-  leftEar.position.x = -0.8; 
-  leftEar.position.y = 1.9; 
+  //ear
+  var leftEar = new THREE.Mesh(earGeom, yellowMat);
+  leftEar.position.x = -0.8;
+  leftEar.position.y = 1.9;
   leftEar.position.z = -0.2;
-  emrys.add(leftEar); 
+  emrys.add(leftEar);
 
-  var rightEar = new THREE.Mesh(earGeom, yellowMat); 
-  rightEar.position.x = 0.8; 
-  rightEar.position.y = 1.9; 
+  var rightEar = new THREE.Mesh(earGeom, yellowMat);
+  rightEar.position.x = 0.8;
+  rightEar.position.y = 1.9;
   rightEar.position.z = -0.2;
-  emrys.add(rightEar); 
+  emrys.add(rightEar);
 
   // eyes
   var irisGeom2 = new THREE.CylinderGeometry(0.25,0.2,0.2, 20);
@@ -97,55 +109,55 @@ function createEmrys(){
   e.position.x = 0.4;
   e.position.y = 1.2;
   e.position.z = 0.9;
-  e.rotation.x = 1.5; 
-  emrys.add(e); 
-  
+  e.rotation.x = 1.5;
+  emrys.add(e);
+
   var rightEye = new THREE.Mesh(irisGeom2, whiteMat);
   rightEye.position.x = -0.4;
   rightEye.position.y = 1.2;
   rightEye.position.z = 0.9;
-  rightEye.rotation.x = 1.5; 
-  emrys.add(rightEye); 
-  
+  rightEye.rotation.x = 1.5;
+  emrys.add(rightEye);
+
 
   // iris
   var leftIris = new THREE.Mesh(irisGeom, greyMat);
   leftIris.position.x = 0.4;
   leftIris.position.y = 1.2;
   leftIris.position.z = 0.95;
-  leftIris.rotation.x = 1.5; 
-  emrys.add(leftIris); 
-  
+  leftIris.rotation.x = 1.5;
+  emrys.add(leftIris);
+
   var rightIris = new THREE.Mesh(irisGeom, greyMat);
   rightIris.position.x = -0.4;
   rightIris.position.y = 1.2;
   rightIris.position.z = 0.95;
-  rightIris.rotation.x = 1.5; 
-  emrys.add(rightIris);  
+  rightIris.rotation.x = 1.5;
+  emrys.add(rightIris);
 
-  //nose 
-  var nose = new THREE.Mesh(noseGeom, greyMat); 
-  nose.position.x = 0; 
-  nose.position.y = 0.8; 
+  //nose
+  var nose = new THREE.Mesh(noseGeom, greyMat);
+  nose.position.x = 0;
+  nose.position.y = 0.8;
   nose.position.z = 0.9;
-  emrys.add(nose); 
-  
+  emrys.add(nose);
+
   // body
-  var body = new THREE.Mesh(bodyGeom, yellowMat); 
+  var body = new THREE.Mesh(bodyGeom, yellowMat);
 
   /*
   var body = new THREE.Mesh(bodyGeom2, yellowMat);
   body.position.x = 0;
   body.position.y = -0.4;
   body.position.z = 0.1;
-  body.scale.set(1, 1.2, 1); 
+  body.scale.set(1, 1.2, 1);
   */
 
   /*
   body.position.z = -60;
   body.position.y = -30;
   var bodyVertices = [0,1,2,3,4,10];
-  
+
   for (var i=0;i<bodyVertices.length; i++){
     var tv = this.body.geometry.vertices[this.bodyVertices[i]];
     tv.z =70;
@@ -153,39 +165,39 @@ function createEmrys(){
     this.bodyInitPositions.push({x:tv.x, y:tv.y, z:tv.z});
   }*/
 
-  emrys.add(body); 
-  
-  //tail
-  var tail = new THREE.Mesh(tailGeom, yellowMat); 
-  tail.position.x = 0; 
-  tail.position.y = -1.2; 
-  tail.position.z = -1;
-  tail.rotation.x = -1; 
-  emrys.add(tail); 
+  emrys.add(body);
 
-  var tail2 = new THREE.Mesh(tail2Geom, yellowMat); 
-  tail2.position.x = 0; 
-  tail2.position.y = -0.8; 
+  //tail
+  var tail = new THREE.Mesh(tailGeom, yellowMat);
+  tail.position.x = 0;
+  tail.position.y = -1.2;
+  tail.position.z = -1;
+  tail.rotation.x = -1;
+  emrys.add(tail);
+
+  var tail2 = new THREE.Mesh(tail2Geom, yellowMat);
+  tail2.position.x = 0;
+  tail2.position.y = -0.8;
   tail2.position.z = -1.35;
-  tail2.rotation.x = -0.5; 
-  emrys.add(tail2); 
-  
+  tail2.rotation.x = -0.5;
+  emrys.add(tail2);
+
   // knee
   var leftKnee = new THREE.Mesh(kneeGeom, yellowMat);
-  
+
   leftKnee.position.x = -1;
   leftKnee.position.y = -0.9;
   leftKnee.position.z = 0.3;
   leftKnee.rotation.z = .3;
-  emrys.add(leftKnee); 
-  
+  emrys.add(leftKnee);
+
   var rightKnee = new THREE.Mesh(kneeGeom, yellowMat);
   rightKnee.position.x = 1;
   rightKnee.position.y = -0.9;
   rightKnee.position.z = 0.3;
   rightKnee.rotation.z = -.3;
-  emrys.add(rightKnee); 
-  
+  emrys.add(rightKnee);
+
 
   // feet
   var backLeftFoot = new THREE.Mesh(footGeom, yellowMat);
@@ -193,80 +205,80 @@ function createEmrys(){
   backLeftFoot.position.y = -1.3;
   backLeftFoot.position.z = 0.3;
 
-  emrys.add(backLeftFoot); 
-  
+  emrys.add(backLeftFoot);
+
   var backRightFoot = new THREE.Mesh(footGeom, yellowMat);
   backRightFoot.position.x = 1;
   backRightFoot.position.y = -1.3;
   backRightFoot.position.z = 0.3;
 
-  emrys.add(backRightFoot); 
-  
+  emrys.add(backRightFoot);
+
 
   var frontRightFoot = new THREE.Mesh(footGeom, yellowMat);
   frontRightFoot.position.x = -0.3;
   frontRightFoot.position.y = -1.3;
   frontRightFoot.position.z = 0.9;
 
-  emrys.add(frontRightFoot); 
-  
+  emrys.add(frontRightFoot);
+
   var frontLeftFoot = new THREE.Mesh(footGeom, yellowMat);
   frontLeftFoot.position.x = 0.3;
   frontLeftFoot.position.y = -1.3;
   frontLeftFoot.position.z = 0.9;
 
-  emrys.add(frontLeftFoot); 
+  emrys.add(frontLeftFoot);
 
-  emrysOnSled.add(emrys); 
+  emrysOnSled.add(emrys);
 
 
 
 
   //sled
-  var sled = new THREE.Object3D(); 
+  var sled = new THREE.Object3D();
 
   var maroonMat = new THREE.MeshLambertMaterial ({
-    color: 0x800000, 
+    color: 0x800000,
     shading:THREE.FlatShading,
     side: THREE.DoubleSide
   });
 
 
-  var botGeom = new THREE.CylinderGeometry(2, 2, 0.3, 20); 
+  var botGeom = new THREE.CylinderGeometry(2, 2, 0.3, 20);
 
-  var bot = new THREE.Mesh(botGeom, maroonMat); 
+  var bot = new THREE.Mesh(botGeom, maroonMat);
   bot.position.x = 0;
   bot.position.y = -1.6;
-  bot.position.z = 0; 
-  bot.scale.set(1, 1, 1.6); 
-  sled.add(bot); 
+  bot.position.z = 0;
+  bot.scale.set(1, 1, 1.6);
+  sled.add(bot);
 
   var points = [];
   for ( var i = 0; i < 10; i ++ ) {
     points.push( new THREE.Vector2( Math.sin( i * 0.2 ) * 10 + 5, ( i - 5 ) * 2 ) );
   }
-  var edgeGeom1 = new THREE.LatheGeometry(points, 6, -0.64, 1.2); 
+  var edgeGeom1 = new THREE.LatheGeometry(points, 6, -0.64, 1.2);
 
-  var edge1 = new THREE.Mesh(edgeGeom1, maroonMat); 
+  var edge1 = new THREE.Mesh(edgeGeom1, maroonMat);
   edge1.position.x = 0;
   edge1.position.y = -1.8;
-  edge1.position.z = -2; 
-  edge1.scale.set(0.2, 0.1, 0.35); 
-  sled.add(edge1); 
+  edge1.position.z = -2;
+  edge1.scale.set(0.2, 0.1, 0.35);
+  sled.add(edge1);
 
-  var edgeGeom2 = new THREE.LatheGeometry(points, 6, 2.6, 1); 
+  var edgeGeom2 = new THREE.LatheGeometry(points, 6, 2.6, 1);
 
-  var edge2 = new THREE.Mesh(edgeGeom2, maroonMat); 
+  var edge2 = new THREE.Mesh(edgeGeom2, maroonMat);
   edge2.position.x = -0.1;
   edge2.position.y = -1.8;
-  edge2.position.z = 1.9; 
-  edge2.scale.set(0.2, 0.1, 0.35); 
-  sled.add(edge2); 
+  edge2.position.z = 1.9;
+  edge2.scale.set(0.2, 0.1, 0.35);
+  sled.add(edge2);
 
-  emrysOnSled.add(sled); 
+  emrysOnSled.add(sled);
 
-  emrysOnSled.rotation.y = Math.PI; 
+  emrysOnSled.rotation.y = Math.PI;
 
-  return emrysOnSled; 
+  return emrysOnSled;
 
 }

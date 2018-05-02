@@ -26,7 +26,7 @@ function createCoin(image) {
 
 
   //mirror
-  	var geometry = new THREE.CircleBufferGeometry( 2.5, 64);
+  var geometry = new THREE.CircleBufferGeometry( 2.5, 64);
 	var groundMirror = new THREE.Reflector( geometry, {
 	    clipBias: 0.003,
 	    textureWidth: 2,
@@ -37,25 +37,23 @@ function createCoin(image) {
 	  groundMirror.position.z = 0.5;
 
 	  //coin.add(groundMirror);
-
-
   coin.add(base);
   return coin;
 }
 
-function createPaper() {
-  var paper = new THREE.Object3D();
-  var white = new THREE.MeshPhongMaterial({
-       color: "white",
-       specular: 0x080808,
-       shininess: 8,
-       shading: THREE.FlatShading
-  });
-  var stack = new THREE.Mesh(new THREE.BoxGeometry(3,0.5,2.5), white);
-  stack.position.set(0.5,1.4,0);
-  paper.add(stack);
-  return paper;
-}
+// function createPaper() {
+//   var paper = new THREE.Object3D();
+//   var white = new THREE.MeshPhongMaterial({
+//        color: "white",
+//        specular: 0x080808,
+//        shininess: 8,
+//        shading: THREE.FlatShading
+//   });
+//   var stack = new THREE.Mesh(new THREE.BoxGeometry(3,0.5,2.5), white);
+//   stack.position.set(0.5,1.4,0);
+//   paper.add(stack);
+//   return paper;
+// }
 
 function createBranch() {
   var branch = new THREE.Object3D();
@@ -121,23 +119,6 @@ function obstacle(model, level) {
   }
 }
 
-// function render() {
-//     renderer.render(scene, camera);
-// }
-//
-// function updateForFrame() {
-//   models[STARTER].rotation.y += 0.025;
-// }
-//
-// function doFrame() {
-//   controls.update();
-//   if (animating) {
-//     updateForFrame();
-//   }
-//   render();
-//   requestAnimationFrame(doFrame);
-// }
-
 THREE.Reflector = function ( geometry, options ) {
 
 	THREE.Mesh.call( this, geometry );
@@ -183,16 +164,13 @@ THREE.Reflector = function ( geometry, options ) {
 	var renderTarget = new THREE.WebGLRenderTarget( textureWidth, textureHeight, parameters );
 
 	if ( ! THREE.Math.isPowerOfTwo( textureWidth ) || ! THREE.Math.isPowerOfTwo( textureHeight ) ) {
-
 		renderTarget.texture.generateMipmaps = false;
-
 	}
 
 	var material = new THREE.ShaderMaterial( {
 		uniforms: THREE.UniformsUtils.clone( shader.uniforms ),
 		fragmentShader: shader.fragmentShader,
 		vertexShader: shader.vertexShader,
-
 	} );
 
 	material.uniforms.tDiffuse.value = renderTarget.texture;
