@@ -136,13 +136,22 @@
 	pointer-events: none;
 }
 
-.message--replay {
-	font-size: 1.25vw;
-	bottom: 40vh;
+.message--winOrLose {
+	font-size: 3.25vw;
+	bottom: 60vh;
 	display: none;
 	text-indent: 0.5em;
 	letter-spacing: 0.5em;
-	color: #d1b790;
+	color: #f45a22;
+}
+
+.message--replay {
+	font-size: 3.25vw;
+	bottom: 30vh;
+	display: none;
+	text-indent: 0.5em;
+	letter-spacing: 0.5em;
+	color: #ed9c47;
 }
 
 .message--instructions {
@@ -150,7 +159,7 @@
 	font-size: 0.85em;
 	bottom: 8vh;
 	letter-spacing: 0.2em;
-	color: #68c3c0;
+	color: #1fa0b7;
 }
 
 .message--instructions span {

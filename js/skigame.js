@@ -14,9 +14,9 @@ var keyboard = new THREEx.KeyboardState();
 var clock = new THREE.Clock();
 var ground = [];
 // custom global variables
-
 var emrysBbox;
 var box;
+
 
 var emrys;
 var trees = [];
@@ -29,11 +29,17 @@ loader.crossOrigin = true;
 
 var speed = 5;
 var pause = false;
+var waitingReplay = false; 
+var won = false; 
 
-var score = 0;
-var fieldScore;
-var branchesHit = 0;
-var fieldBranch;
+var score = 0; 
+var fieldScore; 
+var branchesHit = 0; 
+var fieldBranch; 
+var replayMessage; 
+var youWon;
+var youLost; 
+
 
 var particleCount = 900,
 
@@ -50,11 +56,41 @@ var particleCount = 900,
 
 
 // FUNCTIONS
+
+function resetGame(){
+	speed = 5;
+	pause = false;
+	waitingReplay = false; 
+
+	score = 0; 
+	branchesHit = 0; 
+
+	fieldScore.innerHTML = score;
+	fieldBranch.innerHTML = branchesHit; 
+
+}
+
+function showReplay(){
+	console.log("showReplay"); 
+	if (won) youWon.style.display="block";
+	else youLost.style.display="block"; 
+  replayMessage.style.display="block";
+}
+
+function hideReplay(){
+	youWon.style.display="none";
+	youLost.style.display="none";
+  replayMessage.style.display="none";
+}
+
 function init()
 {
 	//UI
 	fieldScore = document.getElementById("scoreValue");
 	fieldBranch = document.getElementById("branchValue");
+	replayMessage = document.getElementById("replayMessage");
+	youWon = document.getElementById("youWon");
+	youLost = document.getElementById("youLost");
 
 	// SCENE
 	scene = new THREE.Scene();
@@ -156,11 +192,14 @@ function init()
 
 	// create the particle system
 
+	//handle mouse and key events
 	document.addEventListener('keydown', handleKeyDown, false);
+	document.addEventListener('mouseup', handleMouseUp, false);
+  	document.addEventListener('touchend', handleTouchEnd, false);
 
 	//var gui = new dat.GUI();
 
-	animate();
+	animate(); 
 
 }
 
@@ -171,13 +210,28 @@ function handleKeyDown(event){
 	else if (event.code == 'ArrowLeft') {emrys.position.x -= 10}
 	else if (event.code == 'ArrowUp') speed += 2;
 	else if (event.code == 'ArrowDown') speed -= 2;
-  else if (event.code == 'Space') pause = !pause;
+  else if (event.code == 'Space' && !waitingReplay) pause = !pause;
 
 	if (emrys.position.x > 100) {emrys.position.x = 100}
 	else if (emrys.position.x < -100) {emrys.position.x = -100}
 	if (speed < 0) speed = 0;
 }
 
+function handleMouseUp(event){
+  if (waitingReplay == true){
+    resetGame();
+    console.log("hiding message"); 
+    hideReplay();
+  }
+}
+
+function handleTouchEnd(event){
+  if (waitingReplay == true){
+    resetGame();
+    console.log("hiding message"); 
+    hideReplay();
+  }
+}
 
 function animate()
 {
@@ -203,8 +257,10 @@ function updateCoins() {
 			fieldScore.innerHTML = score;
 
 			if (score >= 1000){
-				pause = true;
-				alert("WIN");
+				pause = true; 
+				won = true; 
+				waitingReplay = true; 
+				showReplay();
 			}
 		}
 	}
@@ -225,8 +281,10 @@ function updateBranches() {
       fieldScore.innerHTML = score;
       fieldBranch.innerHTML = branchesHit;
       if (branchesHit >= 10){
-        pause = true;
-        alert("LOST");
+        pause = true; 
+		won = false; 
+		waitingReplay = true; 
+		showReplay();
       }
     }
   }
@@ -289,6 +347,110 @@ function update()
 	//experiment to get snowFALL
   updateParticles();
 }
+
+/*
+function update()
+{
+	var delta = clock.getDelta(); // seconds.
+	var moveDistance = 200 * delta;
+	emrysBbox.setFromObject(emrys);
+	box.update();
+	// rotate left/right/up/down
+
+	var relativeCameraOffset = new THREE.Vector3(0,100, 400);
+
+	var cameraOffset = relativeCameraOffset.applyMatrix4( emrys.matrixWorld );
+
+	controls.update();
+	moveWithCamera();
+	//camera.updateMatrix();
+	//camera.updateProjectionMatrix();
+	var len = coins.children.length;
+
+	for (var i = 0; i < len; i++) {
+		coins.children[i].rotation.y += 0.05;
+		if (coins.children[i].position.z >= camera.position.z) {
+			coins.children[i].position.z -= 2000;
+		}
+		coins.children[i].position.z += speed;
+		var coinBbox = new THREE.Box3().setFromObject(coins.children[i]);
+		if ((emrysBbox).intersectsBox(coinBbox)){
+			console.log("Collision");
+			coins.remove(coins.children[i]);
+			score += 20; 
+			fieldScore.innerHTML = score;
+
+			if (score >= 1000){
+				pause = true; 
+				won = true; 
+				waitingReplay = true; 
+				showReplay();
+			}
+		}
+	}
+
+	for (var i = 0; i < branches.children.length; i++) {
+		if (branches.children[i].position.z >= camera.position.z) {
+			branches.children[i].position.z -= 2000;
+		}
+		branches.children[i].position.z += speed;
+		var branchBbox = new THREE.Box3().setFromObject(branches.children[i]);
+		if ((emrysBbox).intersectsBox(branchBbox)){
+			console.log("Collision");
+			branches.remove(branches.children[i]);
+			score -= 20; 
+			branchesHit += 1; 
+			fieldScore.innerHTML = score;
+			fieldBranch.innerHTML = branchesHit; 
+			if (branchesHit >= 10){
+				pause = true; 
+				won = false; 
+				waitingReplay = true; 
+				showReplay();
+			}
+		}
+	}
+
+
+
+  stats.update();
+
+	//experiment to get snowFALL
+	particleSystem.rotation.x += 0.01;
+	particleSystem.rotation.y += 0.01;
+	particleSystem.rotation.z += 0.01;
+
+
+
+  var pCount = particleCount--;
+  while (pCount >= 0) {
+    // get the particle
+    var particle = particles.vertices[pCount];
+		//console.log(particle);
+    // check if we need to reset
+    if (particle.position.x < -200) {
+      particle.position.x = 200;
+      particle.velocity.x = 0;
+    }
+
+    // update the velocity with
+    // a splat of randomniz
+    particle.velocity.x -= Math.random() * .1;
+
+    // and the position
+    particle.position.addSelf(
+      particle.velocity);
+
+		pCount--;
+  }
+
+  // flag to the particle system
+  // that we've changed its vertices.
+  particleSystem.
+    geometry.
+    __dirtyVertices = true;
+}
+*/
 
 function render()
 {
@@ -353,5 +515,6 @@ function moveWithCamera(){
 			trees[i].position.z += speed;
 		}
 }
+
 
 window.addEventListener('load', init, false);
