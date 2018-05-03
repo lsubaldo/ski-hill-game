@@ -19,7 +19,7 @@ var box;
 
 
 var light2;
-var light3; 
+var light3;
 
 var emrys;
 var trees = [];
@@ -33,32 +33,25 @@ loader.crossOrigin = true;
 var speed = 5;
 var pause = false;
 
-var waitingReplay = false; 
-var won = false; 
-var rotateEmrys = false; 
-var rotationCounter = 0; 
+var waitingReplay = false;
+var won = false;
+var rotateEmrys = false;
+var rotationCounter = 0;
 
-var score = 0; 
-var fieldScore; 
-var branchesHit = 0; 
-var fieldBranch; 
-var replayMessage; 
+var score = 0;
+var fieldScore;
+var branchesHit = 0;
+var fieldBranch;
+var replayMessage;
 var youWon;
-var youLost; 
+var youLost;
 
 var waitingReplay = false;
 var won = false;
 
 var tree_angle;
 
-var score = 0;
-var fieldScore;
-var branchesHit = 0;
-var fieldBranch;
-
-var replayMessage;
-var youWon;
-var youLost;
+var numCoins = 0;
 
 var particleCount = 900,
 
@@ -285,9 +278,19 @@ function updateCoins() {
 			console.log("Coin collision");
 			coins.remove(coins.children[i]);
 			score += 20;
+      numCoins += 1;
 			fieldScore.innerHTML = score;
+      if (numCoins%5 === 0) {
+        var randomInt = getRandomInt(0,3);
+        console.log(Math.floor(randomInt));
+        lineOfCoins(coins, Math.floor(randomInt));
+      }
 
-			if (score >= 1000){
+      if (numCoins%10 === 0) {
+        speed += 2;
+      }
+
+			if (score >= 2000){
 				pause = true;
 				won = true;
 				waitingReplay = true;
@@ -306,14 +309,15 @@ function updateBranches() {
     var branchBbox = new THREE.Box3().setFromObject(branches.children[i]);
     if ((emrysBbox).intersectsBox(branchBbox)){
       console.log("Branch collision");
-      console.log("!!!"); 
-   
-      rotateEmrys = true; 
-      console.log("???"); 
+      console.log("!!!");
+
+      rotateEmrys = true;
+      console.log("???");
       console.log(rotateEmrys);
 
       branches.remove(branches.children[i]);
       score -= 10;
+      speed -= 1;
       branchesHit += 1;
       fieldScore.innerHTML = score;
       fieldBranch.innerHTML = branchesHit;
@@ -363,17 +367,17 @@ function updateParticles() {
 function updateEmrys(){
 	if (rotateEmrys) {
 		if (rotationCounter < 10 || rotationCounter > 20){
-			emrys.rotation.y = (emrys.rotation.y + Math.PI/10) % (2*Math.PI); 
+			emrys.rotation.y = (emrys.rotation.y + Math.PI/10) % (2*Math.PI);
 		}
-		rotationCounter += 1; 
+		rotationCounter += 1;
 	}
-	//console.log(rotationCounter); 
+	//console.log(rotationCounter);
 	if (emrys.rotation.y == Math.PI) {
-		rotateEmrys = false; 
-		rotationCounter = 0; 
+		rotateEmrys = false;
+		rotationCounter = 0;
 	}
-	light2.position.x = emrys.position.x; 
-	light3.position.x = emrys.position.x; 
+	light2.position.x = emrys.position.x;
+	light3.position.x = emrys.position.x;
 }
 
 function update()
@@ -393,7 +397,7 @@ function update()
    updateCoins();
    updateBranches();
 
-	updateEmrys();   
+	updateEmrys();
 	//camera.updateMatrix();
 	//camera.updateProjectionMatrix();
 
