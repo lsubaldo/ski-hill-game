@@ -22,6 +22,7 @@ var light2;
 var light3;
 
 var emrys;
+var heart; 
 var trees = [];
 var coins;
 var branches;
@@ -37,6 +38,8 @@ var waitingReplay = false;
 var won = false;
 var rotateEmrys = false;
 var rotationCounter = 0;
+var showHeart = false; 
+var showHeartCounter = 0; 
 
 var score = 0;
 var fieldScore;
@@ -175,6 +178,9 @@ function init()
 
   camera.lookAt(emrys);
 
+
+	heart = createHeart(); 
+
 	trees = generateRandomTrees();
   tree_angle = trees[0].rotation.x;
 
@@ -276,19 +282,21 @@ function updateCoins() {
 		var coinBbox = new THREE.Box3().setFromObject(coins.children[i]);
 		if ((emrysBbox).intersectsBox(coinBbox)){
 			console.log("Coin collision");
+			showHeart = true; 
 			coins.remove(coins.children[i]);
 			score += 20;
-      numCoins += 1;
+      		numCoins += 1;
 			fieldScore.innerHTML = score;
-      if (numCoins%5 === 0) {
-        var randomInt = getRandomInt(0,3);
-        console.log(Math.floor(randomInt));
-        lineOfCoins(coins, Math.floor(randomInt));
-      }
 
-      if (numCoins%10 === 0) {
-        speed += 2;
-      }
+	      if (numCoins%5 === 0) {
+	        var randomInt = getRandomInt(0,3);
+	        console.log(Math.floor(randomInt));
+	        lineOfCoins(coins, Math.floor(randomInt));
+	      }
+
+	      if (numCoins%10 === 0) {
+	        speed += 2;
+	      }
 
 			if (score >= 2000){
 				pause = true;
@@ -380,6 +388,25 @@ function updateEmrys(){
 	light3.position.x = emrys.position.x;
 }
 
+function updateHeart(){
+	if (showHeart){
+		heart.position.x = emrys.position.x + 23; 
+		heart.position.y = emrys.position.y + 27; 
+		heart.position.z = emrys.position.z; 
+		if (showHeartCounter == 0){
+			scene.add(heart); 
+		}
+		showHeartCounter ++; 
+		console.log(showHeartCounter); 
+	}
+	if (showHeartCounter >= 10){
+		showHeart = false; 
+		showHeartCounter = 0;
+		scene.remove(heart); 
+	}
+
+}
+
 function update()
 {
 	var delta = clock.getDelta(); // seconds.
@@ -398,6 +425,7 @@ function update()
    updateBranches();
 
 	updateEmrys();
+	updateHeart(); 
 	//camera.updateMatrix();
 	//camera.updateProjectionMatrix();
 
