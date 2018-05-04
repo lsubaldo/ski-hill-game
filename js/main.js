@@ -1,6 +1,8 @@
 const canvas = document.getElementById("canvas"); 
 
-window.onresize = resizeCanvas(); 
+window.onresize = resizeCanvas;
+
+resizeCanvas();  
 
 var sceneManager = new SceneManager(canvas);  
 
@@ -19,6 +21,8 @@ function resizeCanvas(){
 	canvas.style.width = window.innerWidth+"px"; 
 	canvas.style.height = window.innerHeight+"px";
 
-	if (sceneManager) 
+	if (sceneManager) {
+		console.log("resizing"); 
 		sceneManager.onWindowResize(); 
+	}
 }
