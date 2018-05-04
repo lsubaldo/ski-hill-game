@@ -1,5 +1,7 @@
 var loader = new THREE.TextureLoader();
 var particleSystem;
+var particleCount;
+var velocity = new THREE.Vector3(0, 0, 0);
 //allow cross origin loading
 loader.crossOrigin = true;
 var particles = new THREE.Geometry(),
@@ -16,24 +18,22 @@ function updateParticles() {
 	particleSystem.rotation.y += 0.01;
 	particleSystem.rotation.z += 0.01;
 
-  var pCount = particleCount--;
-  while (pCount >= 0) {
+  var pCount = particleCount-1;
+  while (pCount && pCount >= 0) {
     // get the particle
     var particle = particles.vertices[pCount];
 		//console.log(particle);
     // check if we need to reset
-    if (particle.position.x < -200) {
-      particle.position.x = 200;
-      particle.velocity.x = 0;
+    if (particle.x < -200) {
+      particle.x = 200;
     }
 
     // update the velocity with
     // a splat of randomniz
-    particle.velocity.x -= Math.random() * .1;
+    velocity.x -= Math.random() * .1;
 
     // and the position
-    particle.position.addSelf(
-      particle.velocity);
+    particle.add(velocity);
 
 		pCount--;
   }
@@ -42,7 +42,8 @@ function updateParticles() {
   particleSystem.geometry.__dirtyVertices = true;
 }
 
-function createParticles(particleCount) {
+function createParticles(count, img) {
+  particleCount = count;
   particleSystem = new THREE.Points(particles, pMaterial);
   for (var p = 0; p < particleCount; p++) {
     var pX = Math.random() * 500 - 250,
