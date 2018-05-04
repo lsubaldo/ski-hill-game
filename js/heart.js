@@ -1,4 +1,4 @@
-function createHeart() {
+function Heart(scene) {
 	var x = 0, y = 0;
 	var heartShape = new THREE.Shape(); // From http://blog.burlock.org/html5/130-paths
 	heartShape.moveTo( x + 2.5, y + 2.5 );
@@ -19,6 +19,28 @@ function createHeart() {
       }));
 	heart.rotation.z = Math.PI; 
 
-	return heart; 
+	//scene.add(heart); 
+
+	var showHeartCounter = 0; 
+
+	this.update = function(camera, game, keyEvent, sceneSubjects){
+		var emrys = sceneSubjects[0].getEmrys(); 
+		if (game.showHeart){
+			heart.position.x = emrys.position.x + 23; 
+			heart.position.y = emrys.position.y + 27; 
+			heart.position.z = emrys.position.z; 
+			if (showHeartCounter == 0){
+				scene.add(heart); 
+			}
+			showHeartCounter ++; 
+			//console.log(showHeartCounter); 
+		}
+		if (showHeartCounter >= 10){
+			game.showHeart = false; 
+			showHeartCounter = 0;
+			scene.remove(heart); 
+		}
+
+	}
 
 }

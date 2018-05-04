@@ -9,28 +9,13 @@
 <link rel=stylesheet href="css/game.css"/>
 <link rel=stylesheet href="css/demo.css"/>
 
-<script type='text/javascript' src='js/lib/DAT.GUI.min.js'></script>
 
-<script src="js/lib/Three.js"></script>
-<script src="js/lib/three.min.js"></script>
-<script src="js/lib/Detector.js"></script>
-<script src="js/lib/Stats.js"></script>
-<script src="js/lib/OrbitControls.js"></script>
-<script src="js/lib/THREEx.KeyboardState.js"></script>
-<script src="js/lib/THREEx.FullScreen.js"></script>
-<script src="js/lib/THREEx.WindowResize.js"></script>
-<script src="js/emrys.js"></script>
-<script src="js/heart.js"></script>
-<script src="js/trees.js"></script>
-<script src="js/coin.js"></script>
-<script src="js/skigame.js"></script>
 
-<!-- jQuery code to display an information button and box when clicked.
-<script src="js/jquery-1.9.1.js"></script>
-<script src="js/jquery-ui.js"></script>-->
-<!--<link rel=stylesheet href="css/jquery-ui.css" />-->
-<!--<link rel=stylesheet href="css/info.css"/>-->
-<script src="js/info.js"></script>
+
+
+<!--<script src="js/skigame.js"></script>-->
+
+
 <!--
 <script>
 init();
@@ -39,9 +24,13 @@ animate();
 window.addEventListener('load', init, false);
 </script>-->
 
+
 </head>
 <body>
-	<div class="world" id="ThreeJS"></div>
+	<!--<div class="world" id="canvas"></div>-->
+
+	
+
 	<div class="message message--winOrLose" id="youWon">You won !</div>
 	<div class="message message--winOrLose" id="youLost">You lost !</div>
 	<div class="message message--replay" id="replayMessage">Click to Replay</div>
@@ -63,6 +52,30 @@ window.addEventListener('load', init, false);
 				</div>
 			</div>
 
+<canvas id="canvas"></canvas>
+
+<script type='text/javascript' src='js/lib/DAT.GUI.min.js'></script>
+
+<script src="js/lib/Three.js"></script>
+<script src="js/lib/three.min.js"></script>
+<script src="js/lib/Detector.js"></script>
+<script src="js/lib/Stats.js"></script>
+<script src="js/lib/OrbitControls.js"></script>
+<script src="js/lib/THREEx.KeyboardState.js"></script>
+<script src="js/lib/THREEx.FullScreen.js"></script>
+<script src="js/lib/THREEx.WindowResize.js"></script>
+
+
+<script src="js/game.js"></script>
+<script src="js/emrys.js"></script>
+<script src="js/heart.js"></script>
+<script src="js/trees.js"></script>
+<script src="js/coin.js"></script>
+<script src="js/branches.js"></script>
+<script src="js/particles.js"></script>
+
+<script src="js/SceneManager.js"></script>
+<script src="js/main.js"></script>
 
 	<!--</div>-->
 

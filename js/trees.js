@@ -1,5 +1,55 @@
 "use strict";
 
+function Trees(scene) {
+
+  var trees = [];
+
+  var tree = createTree();
+  for (var i = 0; i < 400; i++) {
+    var newTree = tree.clone();
+    var x = getRandomInt(-300,-150);
+    var y = 0.01;
+    var z = getRandomInt(-2000,300);
+    var scale = 30;
+    newTree.position.x = x;
+    newTree.position.y = y;
+    newTree.position.z = z;
+    newTree.scale.set(scale,scale,scale);
+    newTree.rotation.x = Math.PI/6;
+    trees.push(newTree);
+  }
+
+  for (var i = 0; i < 400; i++) {
+    var newTree = tree.clone();
+    var x = getRandomInt(150,300);
+    var y = 0.01;
+    var z = getRandomInt(-2000,300);
+    var scale = 30;
+    newTree.position.x = x;
+    newTree.position.y = y;
+    newTree.position.z = z;
+    newTree.scale.set(scale,scale,scale);
+    newTree.rotation.x = Math.PI/6;
+    trees.push(newTree);
+  }
+
+  for (var i=0; i<trees.length; i++) {
+    scene.add(trees[i]);
+  }
+
+  this.update = function(camera, game, keyEvent, sceneSubjects){
+    var speed = game.getSpeed(); 
+
+    for (var i=0; i<trees.length; i++) {
+      if (trees[i].position.z >= camera.position.z ) {
+        trees[i].position.z -= 2000;
+      }
+      trees[i].position.z += speed;
+    }
+  }
+
+}
+
 function getRandomInt(min, max) {
   return Math.random() * (max - min) + min; //The maximum is exclusive and the minimum is inclusive
 }
@@ -41,37 +91,4 @@ function createTree() {
   return tree;
 }
 
-function generateRandomTrees() {
-  var trees = [];
 
-  var tree = createTree();
-  for (var i = 0; i < 400; i++) {
-    var newTree = tree.clone();
-    var x = getRandomInt(-300,-150);
-    var y = 0.01;
-    var z = getRandomInt(-2000,300);
-    var scale = 30;
-    newTree.position.x = x;
-    newTree.position.y = y;
-    newTree.position.z = z;
-    newTree.scale.set(scale,scale,scale);
-    newTree.rotation.x = Math.PI/6;
-    trees.push(newTree);
-  }
-
-  for (var i = 0; i < 400; i++) {
-    var newTree = tree.clone();
-    var x = getRandomInt(150,300);
-    var y = 0.01;
-    var z = getRandomInt(-2000,300);
-    var scale = 30;
-    newTree.position.x = x;
-    newTree.position.y = y;
-    newTree.position.z = z;
-    newTree.scale.set(scale,scale,scale);
-    newTree.rotation.x = Math.PI/6;
-    trees.push(newTree);
-  }
-
-  return trees;
-}
