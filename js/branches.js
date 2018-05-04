@@ -34,7 +34,6 @@ this.update = function(camera, game, keyEvent, sceneSubjects){
        if (game.getHit() >= 1){
          game.pause();
          console.log("lose"); 
-         game.end = true;
          game.win = false; 
          game.waitingReplay = true;
     //     showReplay();

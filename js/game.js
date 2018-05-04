@@ -6,7 +6,6 @@ function Game(){
 	var rotateEmrys = false; 
 	var showHeart = false; 
 
-	var end = false; 
 	var won = false; 
 	var waitingReplay = false; 
 
@@ -15,6 +14,7 @@ function Game(){
 	}
 	this.increaseSpeed = function(inc){
 		speed = speed + inc; 
+		if (speed < 0) speed = 0;
 	}
 
 	this.getScore = function(){
@@ -47,7 +47,6 @@ function Game(){
 		hit = 0; 
 		pause = false; 
 
-		end = false; 
 		won = false; 
 		waitingReplay = false; 
 

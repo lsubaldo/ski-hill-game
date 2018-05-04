@@ -1,14 +1,12 @@
 const canvas = document.getElementById("canvas"); 
 
-window.onresize = resizeCanvas;
+window.addEventListener('resize', resizeCanvas, false); 
+//window.onresize = resizeCanvas(); 
 
-resizeCanvas();  
-
+//resizeCanvas();
 var sceneManager = new SceneManager(canvas);  
 
 render(); 
-
-
 function render()
 {
 	requestAnimationFrame( render );
@@ -20,9 +18,9 @@ function resizeCanvas(){
 	var canvas = document.getElementById("canvas"); 
 	canvas.style.width = window.innerWidth+"px"; 
 	canvas.style.height = window.innerHeight+"px";
-
-	if (sceneManager) {
-		console.log("resizing"); 
+    console.log()
+	if (sceneManager != null) {
+		//console.log("resizing"); 
 		sceneManager.onWindowResize(); 
 	}
 }

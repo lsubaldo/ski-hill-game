@@ -60,7 +60,6 @@ this.update = function(camera, game, keyEvent, sceneSubjects) {
 		 	if (game.getScore() >= 100){
 		 		game.pause();
 		 		console.log("won"); 
-		 		game.end = true; 
 		 		game.won = true;
 		 		game.waitingReplay = true;
 		// 		showReplay();
@@ -73,7 +72,6 @@ function createCoin(image) {
 
   var coin = new THREE.Object3D();
   var coinTexture = new THREE.TextureLoader().load(image);  //'images/GN.png'
-  console.log(coinTexture);
   var materials = [];
   materials.push(new THREE.MeshLambertMaterial({ color: 0xC19A6B }));
   materials.push(new THREE.MeshLambertMaterial({ map: coinTexture, transparent: false, color: 0xC19A6B }));

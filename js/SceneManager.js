@@ -59,17 +59,31 @@ function SceneManager(canvas){
 		}
 
 		renderer.render(scene, camera); 
+		//console.log("draw"); 
 
 		keyEvent = null; 
 
 		fieldScore.innerHTML = game.getScore();
 		fieldHit.innerHTML = game.getHit(); 
 
-		if (game.end){
+		if (game.waitingReplay){
 			showReplay(); 
 		}
 
 
+	}
+
+	this.onWindowResize = function(){
+		console.log("resize"); 
+		width = document.body.clientWidth;
+		height = document.body.clientHeight; 
+		canvas.width = width; 
+		canvas.height = height; 
+
+		camera.aspect = width/height; 
+		camera.updateProjectionMatrix(); 
+
+		renderer.setSize(width, height); 
 	}
 
 	function showReplay(){
@@ -81,9 +95,10 @@ function SceneManager(canvas){
 
 
 	function hideReplay(){
+		console.log("hiding message");
 		youWon.style.display="none";
 		youLost.style.display="none";
-	  replayMessage.style.display="none";
+	  	replayMessage.style.display="none";
 	}
 
 
@@ -93,35 +108,32 @@ function SceneManager(canvas){
 
 		if (event.code == 'ArrowUp') game.increaseSpeed(2); 
 		else if (event.code == 'ArrowDown') game.increaseSpeed(-2); 
-	  	else if (event.code == 'Space' && !waitingReplay) game.pauseOrResume();
+	  	else if (event.code == 'Space' && !game.waitingReplay) game.pauseOrResume();
 
-		var speed = game.getSpeed(); 
-		if (speed < 0) speed = 0;
+		
 	}
 
 	function handleMouseUp(event){
 	  if (game.waitingReplay == true){
-	  	console.log("here!"); 
+	  	game.waitingReplay = false; 
 	    game.resetGame();
-	    console.log("here! 2"); 
 
-	    fieldScore.innerHTML = game.score;
-		fieldBranch.innerHTML = game.hit;
-
-	    console.log("hiding message");
 	    hideReplay();
+
+	    fieldScore.innerHTML = game.getScore();
+		fieldBranch.innerHTML = game.getHit();
+
+	    
 	  }
 	}
 
 	function handleTouchEnd(event){
 	  if (game.waitingReplay == true){
-	  	console.log("here!"); 
+	  	game.waitingReplay = false; 
 	    game.resetGame();
-	    console.log("here! 2"); 
-	    fieldScore.innerHTML = game.score;
-		fieldBranch.innerHTML = game.hit;
+	    fieldScore.innerHTML = game.getScore();
+		fieldBranch.innerHTML = game.getHit();
 
-	    console.log("hiding message");
 	    hideReplay();
 	  }
 	}
