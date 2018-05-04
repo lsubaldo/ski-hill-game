@@ -22,7 +22,7 @@ var light2;
 var light3;
 
 var emrys;
-var heart; 
+var heart;
 var trees = [];
 var coins;
 var branches;
@@ -38,8 +38,8 @@ var waitingReplay = false;
 var won = false;
 var rotateEmrys = false;
 var rotationCounter = 0;
-var showHeart = false; 
-var showHeartCounter = 0; 
+var showHeart = false;
+var showHeartCounter = 0;
 
 var score = 0;
 var fieldScore;
@@ -179,7 +179,7 @@ function init()
   camera.lookAt(emrys);
 
 
-	heart = createHeart(); 
+	heart = createHeart();
 
 	trees = generateRandomTrees();
   tree_angle = trees[0].rotation.x;
@@ -282,7 +282,7 @@ function updateCoins() {
 		var coinBbox = new THREE.Box3().setFromObject(coins.children[i]);
 		if ((emrysBbox).intersectsBox(coinBbox)){
 			console.log("Coin collision");
-			showHeart = true; 
+			showHeart = true;
 			coins.remove(coins.children[i]);
 			score += 20;
       		numCoins += 1;
@@ -339,39 +339,6 @@ function updateBranches() {
   }
 }
 
-function updateParticles() {
-  particleSystem.rotation.x += 0.01;
-	particleSystem.rotation.y += 0.01;
-	particleSystem.rotation.z += 0.01;
-
-  var pCount = particleCount--;
-  while (pCount >= 0) {
-    // get the particle
-    var particle = particles.vertices[pCount];
-		//console.log(particle);
-    // check if we need to reset
-    if (particle.position.x < -200) {
-      particle.position.x = 200;
-      particle.velocity.x = 0;
-    }
-
-    // update the velocity with
-    // a splat of randomniz
-    particle.velocity.x -= Math.random() * .1;
-
-    // and the position
-    particle.position.addSelf(
-      particle.velocity);
-
-		pCount--;
-  }
-  // flag to the particle system
-  // that we've changed its vertices.
-  particleSystem.
-    geometry.
-    __dirtyVertices = true;
-}
-
 function updateEmrys(){
 	if (rotateEmrys) {
 		if (rotationCounter < 10 || rotationCounter > 20){
@@ -390,19 +357,19 @@ function updateEmrys(){
 
 function updateHeart(){
 	if (showHeart){
-		heart.position.x = emrys.position.x + 23; 
-		heart.position.y = emrys.position.y + 27; 
-		heart.position.z = emrys.position.z; 
+		heart.position.x = emrys.position.x + 23;
+		heart.position.y = emrys.position.y + 27;
+		heart.position.z = emrys.position.z;
 		if (showHeartCounter == 0){
-			scene.add(heart); 
+			scene.add(heart);
 		}
-		showHeartCounter ++; 
-		console.log(showHeartCounter); 
+		showHeartCounter ++;
+		console.log(showHeartCounter);
 	}
 	if (showHeartCounter >= 10){
-		showHeart = false; 
+		showHeart = false;
 		showHeartCounter = 0;
-		scene.remove(heart); 
+		scene.remove(heart);
 	}
 
 }
@@ -425,9 +392,7 @@ function update()
    updateBranches();
 
 	updateEmrys();
-	updateHeart(); 
-	//camera.updateMatrix();
-	//camera.updateProjectionMatrix();
+	updateHeart();
 
   stats.update();
 
