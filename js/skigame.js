@@ -29,16 +29,16 @@ loader.crossOrigin = true;
 
 var speed = 5;
 var pause = false;
-var waitingReplay = false; 
-var won = false; 
+var waitingReplay = false;
+var won = false;
 
-var score = 0; 
-var fieldScore; 
-var branchesHit = 0; 
-var fieldBranch; 
-var replayMessage; 
+var score = 0;
+var fieldScore;
+var branchesHit = 0;
+var fieldBranch;
+var replayMessage;
 var youWon;
-var youLost; 
+var youLost;
 
 
 var particleCount = 900,
@@ -60,20 +60,20 @@ var particleCount = 900,
 function resetGame(){
 	speed = 5;
 	pause = false;
-	waitingReplay = false; 
+	waitingReplay = false;
 
-	score = 0; 
-	branchesHit = 0; 
+	score = 0;
+	branchesHit = 0;
 
 	fieldScore.innerHTML = score;
-	fieldBranch.innerHTML = branchesHit; 
+	fieldBranch.innerHTML = branchesHit;
 
 }
 
 function showReplay(){
-	console.log("showReplay"); 
+	console.log("showReplay");
 	if (won) youWon.style.display="block";
-	else youLost.style.display="block"; 
+	else youLost.style.display="block";
   replayMessage.style.display="block";
 }
 
@@ -199,7 +199,7 @@ function init()
 
 	//var gui = new dat.GUI();
 
-	animate(); 
+	animate();
 
 }
 
@@ -220,7 +220,7 @@ function handleKeyDown(event){
 function handleMouseUp(event){
   if (waitingReplay == true){
     resetGame();
-    console.log("hiding message"); 
+    console.log("hiding message");
     hideReplay();
   }
 }
@@ -228,7 +228,7 @@ function handleMouseUp(event){
 function handleTouchEnd(event){
   if (waitingReplay == true){
     resetGame();
-    console.log("hiding message"); 
+    console.log("hiding message");
     hideReplay();
   }
 }
@@ -257,9 +257,9 @@ function updateCoins() {
 			fieldScore.innerHTML = score;
 
 			if (score >= 1000){
-				pause = true; 
-				won = true; 
-				waitingReplay = true; 
+				pause = true;
+				won = true;
+				waitingReplay = true;
 				showReplay();
 			}
 		}
@@ -281,9 +281,9 @@ function updateBranches() {
       fieldScore.innerHTML = score;
       fieldBranch.innerHTML = branchesHit;
       if (branchesHit >= 10){
-        pause = true; 
-		won = false; 
-		waitingReplay = true; 
+        pause = true;
+		won = false;
+		waitingReplay = true;
 		showReplay();
       }
     }
@@ -377,13 +377,13 @@ function update()
 		if ((emrysBbox).intersectsBox(coinBbox)){
 			console.log("Collision");
 			coins.remove(coins.children[i]);
-			score += 20; 
+			score += 20;
 			fieldScore.innerHTML = score;
 
 			if (score >= 1000){
-				pause = true; 
-				won = true; 
-				waitingReplay = true; 
+				pause = true;
+				won = true;
+				waitingReplay = true;
 				showReplay();
 			}
 		}
@@ -398,14 +398,14 @@ function update()
 		if ((emrysBbox).intersectsBox(branchBbox)){
 			console.log("Collision");
 			branches.remove(branches.children[i]);
-			score -= 20; 
-			branchesHit += 1; 
+			score -= 20;
+			branchesHit += 1;
 			fieldScore.innerHTML = score;
-			fieldBranch.innerHTML = branchesHit; 
+			fieldBranch.innerHTML = branchesHit;
 			if (branchesHit >= 10){
-				pause = true; 
-				won = false; 
-				waitingReplay = true; 
+				pause = true;
+				won = false;
+				waitingReplay = true;
 				showReplay();
 			}
 		}
@@ -459,22 +459,6 @@ function render()
 
 
 function createTerrainMatrix(){
-	particleSystem = new THREE.Points(
-			particles,
-			pMaterial);
-	for (var p = 0; p < particleCount; p++) {
-
-		// create a particle with random
-		// position values, -250 -> 250
-		var pX = Math.random() * 500 - 250,
-				pY = Math.random() * 500 - 250,
-				pZ = Math.random() * 500 - 250,
-				particle = new THREE.Vector3(pX, pY, pZ);
-
-		// add it to the geometry
-		particles.vertices.push(particle);
-	}
-	particleSystem.sortParticles = true;
 
 	var terrain = new THREE.Object3D();
 	// var floorTexture = new THREE.ImageUtils.loadTexture( 'images/checkerboard.jpg' );
@@ -487,6 +471,7 @@ function createTerrainMatrix(){
 	floor.rotation.x = Math.PI / 2;
 	floor.position.z = 1000;
 	terrain.add(floor);
+  var particleSystem = createParticles(900);
 	terrain.add(particleSystem);
 
   // Mirror
@@ -515,6 +500,7 @@ function moveWithCamera(){
 			trees[i].position.z += speed;
 		}
 }
+
 
 
 window.addEventListener('load', init, false);
