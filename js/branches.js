@@ -6,9 +6,9 @@ function Branches(scene){
     obstacle(branches, 0);
     obstacle(branches, 1);
     obstacle(branches, 2);
-    //obstacle(branches, 0);
-    //obstacle(branches, 1);
-    //obstacle(branches, 2);
+
+    obstacle(branches, 0);
+    obstacle(branches, 1);
 
     scene.add(branches);
 
@@ -20,22 +20,27 @@ this.update = function(camera, game, keyEvent, sceneSubjects){
     branches.children[i].position.z += game.getSpeed();
     var branchBbox = new THREE.Box3().setFromObject(branches.children[i]);
 
-    var emrys = sceneSubjects[0]; 
-    var emrysBbox = emrys.getBbox(); 
+    var emrys = sceneSubjects[0];
+    var emrysBbox = emrys.getBbox();
      if ((emrysBbox).intersectsBox(branchBbox)){
        console.log("Branch collision");
        game.rotateEmrys = true;
-       game.waitingRotate = true; 
+       game.waitingRotate = true;
 
        branches.remove(branches.children[i]);
        game.increaseScore(-10);
        game.increaseSpeed(-1);
        game.increaseHit(1);
 
+      if (game.getHit()%5 === 0) {
+        var randomInt = getRandomInt(0,3);
+        obstacle(branches, Math.floor(randomInt));
+      }
+
        if (game.getHit() >= 10){
          game.pause();
-         console.log("lose"); 
-         game.won = false; 
+         console.log("lose");
+         game.won = false;
          game.waitingReplay = true;
     //     showReplay();
        }
