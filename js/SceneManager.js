@@ -1,41 +1,41 @@
 function SceneManager(canvas){
 	canvas.width = document.body.clientWidth;
-	canvas.height = document.body.clientHeight; 
+	canvas.height = document.body.clientHeight;
 
 	var width = canvas.width;
-	var height = canvas.height; 
+	var height = canvas.height;
 
 	//scene setup
-	var scene = new THREE.Scene(); 
+	var scene = new THREE.Scene();
 	scene.fog = new THREE.Fog( 0xE5DFE1, 1000, 2000 );
 
-	var renderer = buildRenderer(width, height); 
-	var camera = buildCamera(width, height); 
-	var light = buildLights(scene); 
-	var orbitControl = buildOrbitControl(camera); 
+	var renderer = buildRenderer(width, height);
+	var camera = buildCamera(width, height);
+	var light = buildLights(scene);
+	var orbitControl = buildOrbitControl(camera);
 
-	var skyBox = buildSkyBox(scene); 
-	var terrain = buildTerrain(scene); 
+	var skyBox = buildSkyBox(scene);
+	var terrain = buildTerrain(scene);
 
 	var sceneSubjects = [];
-	sceneSubjects.push(new Emrys(scene)); 
-	sceneSubjects.push(new Heart(scene)); 
-	sceneSubjects.push(new Trees(scene)); 
-	sceneSubjects.push(new Branches(scene)); 
-	sceneSubjects.push(new Coins(scene)); 
-	//sceneSubjects.push(new Particles(scene)); 
+	sceneSubjects.push(new Emrys(scene));
+	sceneSubjects.push(new Heart(scene));
+	sceneSubjects.push(new Trees(scene));
+	sceneSubjects.push(new Branches(scene));
+	sceneSubjects.push(new Coins(scene));
+	//sceneSubjects.push(new Particles(scene));
 
-	var game = new Game(); 
+	var game = new Game();
 
 	//handle key and mouse events
 	document.addEventListener('keydown', handleKeyDown, false);
 	document.addEventListener('mouseup', handleMouseUp, false);
-  	document.addEventListener('touchend', handleTouchEnd, false);
+  document.addEventListener('touchend', handleTouchEnd, false);
 
-  	 
-  	var waitingReplay = false; 
-  	var pause = false; 
-  	var keyEvent = null; 
+
+  	var waitingReplay = false;
+  	var pause = false;
+  	var keyEvent = null;
 
   	var fieldScore = document.getElementById("scoreValue");
   	var fieldHit = document.getElementById("branchValue");
@@ -50,43 +50,43 @@ function SceneManager(canvas){
 
 		if (!game.isPaused()){
 
-			orbitControl.update(); 
+			orbitControl.update();
 
 			for (var i=0; i<sceneSubjects.length; i++){
-				sceneSubjects[i].update(camera, game, keyEvent, sceneSubjects); 
+				sceneSubjects[i].update(camera, game, keyEvent, sceneSubjects);
 			}
 
 		}
 
-		renderer.render(scene, camera); 
-		//console.log("draw"); 
+		renderer.render(scene, camera);
+		//console.log("draw");
 
-		keyEvent = null; 
+		keyEvent = null;
 
-		var scoreStr = game.getScore().toString(); 
-		var hitStr = game.getHit().toString(); 
+		var scoreStr = game.getScore().toString();
+		var hitStr = game.getHit().toString();
 
-		fieldScore.innerHTML = scoreStr.concat("\xa0\xa0\xa0\xa0\xa0").concat(hitStr); 
-		//fieldHit.innerHTML = game.getHit(); 
+		fieldScore.innerHTML = scoreStr.concat("\xa0\xa0\xa0\xa0\xa0").concat(hitStr);
+		//fieldHit.innerHTML = game.getHit();
 
 		if (game.waitingReplay){
-			showReplay(); 
+			showReplay();
 		}
 
 
 	}
 
 	this.onWindowResize = function(){
-		console.log("resize"); 
+		console.log("resize");
 		width = document.body.clientWidth;
-		height = document.body.clientHeight; 
-		canvas.width = width; 
-		canvas.height = height; 
+		height = document.body.clientHeight;
+		canvas.width = width;
+		canvas.height = height;
 
-		camera.aspect = width/height; 
-		camera.updateProjectionMatrix(); 
+		camera.aspect = width/height;
+		camera.updateProjectionMatrix();
 
-		renderer.setSize(width, height); 
+		renderer.setSize(width, height);
 	}
 
 	function showReplay(){
@@ -101,24 +101,24 @@ function SceneManager(canvas){
 		console.log("hiding message");
 		youWon.style.display="none";
 		youLost.style.display="none";
-	  	replayMessage.style.display="none";
+	  replayMessage.style.display="none";
 	}
 
 
 	function handleKeyDown(event){
-		keyEvent = event; 
+		keyEvent = event;
 		//console.log(event.key);
 
-		if (event.code == 'ArrowUp') game.increaseSpeed(2); 
-		else if (event.code == 'ArrowDown') game.increaseSpeed(-2); 
+		if (event.code == 'ArrowUp') game.increaseSpeed(2);
+		else if (event.code == 'ArrowDown') game.increaseSpeed(-2);
 	  	else if (event.code == 'Space' && !game.waitingReplay) game.pauseOrResume();
 
-		
+
 	}
 
 	function handleMouseUp(event){
 	  if (game.waitingReplay == true){
-	  	game.waitingReplay = false; 
+	  	game.waitingReplay = false;
 	    game.resetGame();
 
 	    hideReplay();
@@ -126,13 +126,13 @@ function SceneManager(canvas){
 	    fieldScore.innerHTML = game.getScore();
 		fieldBranch.innerHTML = game.getHit();
 
-	    
+
 	  }
 	}
 
 	function handleTouchEnd(event){
 	  if (game.waitingReplay == true){
-	  	game.waitingReplay = false; 
+	  	game.waitingReplay = false;
 	    game.resetGame();
 	    fieldScore.innerHTML = game.getScore();
 		fieldBranch.innerHTML = game.getHit();
@@ -141,27 +141,27 @@ function SceneManager(canvas){
 	  }
 	}
 
-	function buildRenderer(width, height){  
+	function buildRenderer(width, height){
 		renderer = new THREE.WebGLRenderer( {canvas: canvas, antialias:true, alpha: true} );
-		var DPR = (window.devicePixelRatio) ? window.devicePixelRatio : 1; 
-		renderer.setPixelRatio(DPR); 
-		renderer.setSize(width, height); 
+		var DPR = (window.devicePixelRatio) ? window.devicePixelRatio : 1;
+		renderer.setPixelRatio(DPR);
+		renderer.setSize(width, height);
 
 		//renderer.gammaInput = true;
-		//renderer.gammaOutput = true; 
+		//renderer.gammaOutput = true;
 
-		return renderer; 
+		return renderer;
 	}
 
 	function buildCamera(width, height){
-		var aspectRatio = width/height; 
+		var aspectRatio = width/height;
 		var VIEW_ANGLE = 45, ASPECT = width / height, NEAR = 0.1, FAR = 20000;
 		var camera = new THREE.PerspectiveCamera( VIEW_ANGLE, ASPECT, NEAR, FAR);
 
 		camera.position.set(0,150,400);
 		camera.lookAt(scene.position);
 
-		return camera; 
+		return camera;
 	}
 
 	function buildLights(scene){
@@ -169,13 +169,13 @@ function SceneManager(canvas){
 		light.position.set(0,250,0);
 		scene.add(light);
 
-		return light; 
+		return light;
 	}
 
 	function buildOrbitControl(camera){
 		var controls = new THREE.OrbitControls(camera);
   		controls.enableZoom = true;
-  		return controls; 
+  		return controls;
 	}
 
 	function buildSkyBox(scene){
@@ -197,7 +197,7 @@ function SceneManager(canvas){
 		terrain.add(floor);
 
 		scene.add(terrain);
-		return terrain; 
+		return terrain;
 
 	}
 

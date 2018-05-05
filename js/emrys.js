@@ -2,11 +2,12 @@
 
 function Emrys(scene){
 
-  var emrys = createEmrys(); 
-  var rotationCounter = 0; 
+  var emrys = createEmrys();
+  var rotationCounter = 0;
 
-  var rotateLeft = false; 
-  var rotateRight = false; 
+  var rotateLeft = false;
+  var rotateRight = false;
+  var showBox = false;
 
   //set emrys to fit in the scene
   emrys.position.y+=20;
@@ -20,39 +21,38 @@ function Emrys(scene){
     frontLight.position.set(0,60,-20);
     scene.add(frontLight);
     var frontLight_helper = new THREE.SpotLightHelper( frontLight );
-    scene.add( frontLight_helper );
+    // scene.add( frontLight_helper );
 
     var backLight = new THREE.SpotLight(0x808080, 2, 200, 0.5, 0, 1);
     backLight.position.set(0,60,180);
     scene.add(backLight);
     var backLight_helper = new THREE.SpotLightHelper( backLight );
-    scene.add( backLight_helper ); 
+    // scene.add( backLight_helper );
 
   //bounding box
   var boundingBoxHelper = new THREE.BoxHelper( emrys, 0xffff00 );
   var emrysBbox = new THREE.Box3().setFromObject(emrys);
-  scene.add( boundingBoxHelper );
 
   this.getEmrys = function(){
-    return emrys; 
+    return emrys;
   }
 
   this.getBbox = function(){
-    return emrysBbox; 
+    return emrysBbox;
   }
 
   this.update = function(camera, game, keyEvent, sceneSubjects){
     if (keyEvent != null){
       if (game.waitingRotate){
         if (keyEvent.code == 'ArrowRight'){
-          game.waitingRotate = false; 
-          rotateRight = true; 
-          rotateLeft = false; 
+          game.waitingRotate = false;
+          rotateRight = true;
+          rotateLeft = false;
         }
         if (keyEvent.code == 'ArrowLeft'){
-          game.waitingRotate = false; 
-          rotateLeft = true; 
-          rotateRight = false; 
+          game.waitingRotate = false;
+          rotateLeft = true;
+          rotateRight = false;
         }
       }
 
@@ -61,6 +61,18 @@ function Emrys(scene){
         else if (keyEvent.code == 'ArrowLeft') {emrys.position.x -= 10}
         if (emrys.position.x > 100) {emrys.position.x = 100}
         else if (emrys.position.x < -100) {emrys.position.x = -100}
+        if (keyEvent.code == 'KeyD') {
+          showBox = !showBox;
+          if (showBox) {
+            scene.add( boundingBoxHelper );
+            scene.add( frontLight_helper );
+            scene.add( backLight_helper );
+          } else {
+            scene.remove( boundingBoxHelper );
+            scene.remove( frontLight_helper );
+            scene.remove( backLight_helper );
+          }
+        }
       }
     }
 
@@ -69,7 +81,7 @@ function Emrys(scene){
         emrys.rotation.y = (emrys.rotation.y + Math.PI/10) % (2*Math.PI);
       }
       else {
-        game.waitingRotate = true; 
+        game.waitingRotate = true;
         if (rotateRight) emrys.rotation.y = (emrys.rotation.y + Math.PI/10) % (2*Math.PI);
         else if (rotateLeft) emrys.rotation.y = (emrys.rotation.y - Math.PI/10);
 
@@ -81,15 +93,15 @@ function Emrys(scene){
     if (emrys.rotation.y == Math.PI || emrys.rotation.y == -Math.PI) {
       game.rotateEmrys = false;
       rotationCounter = 0;
-      rotateRight = false; 
+      rotateRight = false;
       rotateLeft = false;
     }
 
     //update lights and bounding box helper
     frontLight.position.x = emrys.position.x;
     backLight.position.x = emrys.position.x;
-    emrysBbox.setFromObject(emrys); 
-    boundingBoxHelper.update(); 
+    emrysBbox.setFromObject(emrys);
+    boundingBoxHelper.update();
   }
 
 
@@ -372,7 +384,7 @@ function Emrys(scene){
 
       emrysOnSled.rotation.y = Math.PI;
 
-      return emrysOnSled; 
+      return emrysOnSled;
 
   }
 
