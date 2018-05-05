@@ -43,20 +43,20 @@ function Emrys(scene){
 
   this.update = function(camera, game, keyEvent, sceneSubjects){
     if (keyEvent != null){
-      if (game.waitingRotate){
-        if (keyEvent.code == 'ArrowRight'){
+      //if (game.waitingRotate){
+        if (keyEvent.code == 'KeyS'){
           game.waitingRotate = false;
           rotateRight = true;
           rotateLeft = false;
         }
-        if (keyEvent.code == 'ArrowLeft'){
+        if (keyEvent.code == 'KeyA'){
           game.waitingRotate = false;
           rotateLeft = true;
           rotateRight = false;
         }
-      }
+      //}
 
-      else {
+      //else {
         if (keyEvent.code == 'ArrowRight') {emrys.position.x += 10}
         else if (keyEvent.code == 'ArrowLeft') {emrys.position.x -= 10}
         if (emrys.position.x > 100) {emrys.position.x = 100}
@@ -73,7 +73,7 @@ function Emrys(scene){
             scene.remove( backLight_helper );
           }
         }
-      }
+      //}
     }
 
     if (game.rotateEmrys) {
@@ -92,6 +92,7 @@ function Emrys(scene){
     //console.log(rotationCounter);
     if (emrys.rotation.y == Math.PI || emrys.rotation.y == -Math.PI) {
       game.rotateEmrys = false;
+      game.waitingRotate = false; 
       rotationCounter = 0;
       rotateRight = false;
       rotateLeft = false;

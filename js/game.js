@@ -2,13 +2,21 @@ function Game(){
 	var speed = 5;
 	var score = 0 ; 
 	var hit = 0; 
-	var pause = false; 
+	var pause = true; 
 	var rotateEmrys = false; 
 	var showHeart = false; 
 	var waitingRotate = false; 
 
+	var waitingStart = true; 
 	var won = false; 
 	var waitingReplay = false; 
+
+	this.getIntro = function(){
+		return waitingStart; 
+	}
+	this.startGame = function(){
+		waitingStart = false; 
+	}
 
 	this.getSpeed = function(){
 		return speed; 
@@ -34,6 +42,9 @@ function Game(){
 
 	this.pause = function(){
 		pause = true; 
+	}
+	this.unpause = function(){
+		pause = false; 
 	}
 	this.pauseOrResume = function(){
 		pause = !pause; 

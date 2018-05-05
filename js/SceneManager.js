@@ -42,12 +42,25 @@ function SceneManager(canvas){
   	var fieldHit = document.getElementById("branchValue");
   	var youWon = document.getElementById("youWon");
 	var youLost = document.getElementById("youLost");
-
+	var intro_0 = document.getElementById("intro_0");
+	var intro_1 = document.getElementById("intro_1");
+	var intro_2 = document.getElementById("intro_2");
+	var intro_3 = document.getElementById("intro_3");
 
   	//var game = new Game();
 
+  	function showIntro(){
+  		intro_0.style.display="block"; 
+  		intro_1.style.display="block"; 
+  		intro_2.style.display="block"; 
+  		intro_3.style.display="block"; 
+  	}
 
 	this.update = function(){
+
+		if (game.getIntro()){
+			showIntro(); 
+		}
 
 		if (!game.isPaused()){
 
@@ -73,6 +86,8 @@ function SceneManager(canvas){
 		if (game.waitingReplay){
 			showReplay();
 		}
+
+
 
 
 	}
@@ -117,6 +132,13 @@ function SceneManager(canvas){
 
 	}
 
+	function hideIntro(){
+		intro_0.style.display="none"; 
+  		intro_1.style.display="none"; 
+  		intro_2.style.display="none"; 
+  		intro_3.style.display="none"; 
+	}	
+
 	function handleMouseUp(event){
 	  if (game.waitingReplay == true){
 	  	game.waitingReplay = false;
@@ -129,6 +151,15 @@ function SceneManager(canvas){
 
 
 	  }
+
+	  if (game.getIntro()){
+	  	console.log("here"); 
+	  	game.startGame(); 
+	  	game.unpause(); 
+
+	  	hideIntro(); 
+	  	console.log("start! "); 
+	  }
 	}
 
 	function handleTouchEnd(event){
@@ -139,6 +170,14 @@ function SceneManager(canvas){
 		fieldBranch.innerHTML = game.getHit();
 
 	    hideReplay();
+	  }
+	  if (game.getIntro()){
+	  	console.log("here"); 
+	  	game.startGame(); 
+	  	game.unpause(); 
+
+	  	hideIntro(); 
+	  	console.log("start! "); 
 	  }
 	}
 

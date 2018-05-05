@@ -136,6 +136,51 @@
 	pointer-events: none;
 }
 
+.message--intro-0{
+	font-size: 2.25vw;
+	bottom: 65vh;
+	display: none;
+	text-indent: 0.5em;
+	letter-spacing: 0.5em;
+	color: #f45a22;
+}
+
+.message--intro-1{
+	font-size: 2.25vw;
+	bottom: 50vh;
+	display: none;
+	text-indent: 0.5em;
+	letter-spacing: 0.5em;
+	color: #e26d2b;
+}
+
+.message--intro-2{
+	font-size: 2.25vw;
+	bottom: 35vh;
+	display: none;
+	text-indent: 0.5em;
+	letter-spacing: 0.5em;
+	color: #b25a29;
+}
+
+.message--intro-3{
+	font-size: 4.25vw;
+	bottom: 20vh;
+	display: none;
+	text-indent: 0.5em;
+	letter-spacing: 0.5em;
+	color: #f95c07;
+}
+
+.message--clickToStart{
+	font-size: 3.25vw;
+	bottom: 30vh;
+	display: none;
+	text-indent: 0.5em;
+	letter-spacing: 0.5em;
+	color: #ed9c47;
+}
+
 .message--winOrLose {
 	font-size: 3.25vw;
 	bottom: 60vh;

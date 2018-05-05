@@ -6,9 +6,9 @@ function Branches(scene){
     obstacle(branches, 0);
     obstacle(branches, 1);
     obstacle(branches, 2);
-    obstacle(branches, 0);
-    obstacle(branches, 1);
-    obstacle(branches, 2);
+    //obstacle(branches, 0);
+    //obstacle(branches, 1);
+    //obstacle(branches, 2);
 
     scene.add(branches);
 
