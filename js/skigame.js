@@ -2,8 +2,8 @@
 
 /*
 	Colgate Slide
-	Author: Lee Stemkoski
-	Date: July 2013 (three.js v59dev)
+	Author: Asad J, Jingxian, Leslie, Zoila
+	Date: Spring 2018
 */
 
 // MAIN
@@ -18,15 +18,24 @@ var emrysBbox;
 var box;
 
 
+var light2;
+var light3;
+
 var emrys;
+var heart; 
 var trees = [];
 var coins;
 var branches;
 
 var speed = 5;
 var pause = false;
+
 var waitingReplay = false;
 var won = false;
+var rotateEmrys = false;
+var rotationCounter = 0;
+var showHeart = false; 
+var showHeartCounter = 0; 
 
 var score = 0;
 var fieldScore;
@@ -36,7 +45,10 @@ var replayMessage;
 var youWon;
 var youLost;
 
+var waitingReplay = false;
+var won = false;
 
+var numCoins = 0;
 
 
 // FUNCTIONS
@@ -114,14 +126,14 @@ function init()
 	light.position.set(0,250,0);
 	scene.add(light);
 
-	var light2 = new THREE.SpotLight(0x808080);
-	light2.position.set(0,60,-50);
+	light2 = new THREE.SpotLight(0x808080, 2, 200, 1.2, 0, 1);
+	light2.position.set(0,60,-20);
 	scene.add(light2);
 	var light2_helper = new THREE.SpotLightHelper( light2 );
 	scene.add( light2_helper );
 
-	var light3 = new THREE.SpotLight(0x808080, 1, 200, 0.8, 0, 1);
-	light3.position.set(0,60,140);
+	light3 = new THREE.SpotLight(0x808080, 2, 200, 0.5, 0, 1);
+	light3.position.set(0,60,180);
 	scene.add(light3);
 	var light3_helper = new THREE.SpotLightHelper( light3 );
 	scene.add( light3_helper );
@@ -147,7 +159,11 @@ function init()
 
   camera.lookAt(emrys);
 
+
+	heart = createHeart(); 
+
 	trees = generateRandomTrees();
+  tree_angle = trees[0].rotation.x;
 
 	for (var i=0; i<trees.length; i++) {
 		scene.add(trees[i]);
@@ -179,12 +195,23 @@ function init()
 	//handle mouse and key events
 	document.addEventListener('keydown', handleKeyDown, false);
 	document.addEventListener('mouseup', handleMouseUp, false);
-  	document.addEventListener('touchend', handleTouchEnd, false);
+  document.addEventListener('touchend', handleTouchEnd, false);
 
-	//var gui = new dat.GUI();
+	// var gui = new dat.GUI();
+  guiHelper();
 
 	animate();
 
+}
+
+
+function guiHelper() {
+  var gui = new dat.GUI();
+  var box = gui.addFolder('Trees');
+  // var params = { tree_angle: 5000 };
+  // box.add(tree_angle, 'tree_angle', -45, 45).name('Angle').listen();
+  // var params = { interaction: 5000 };
+  // gui.add(params, 'interaction')
 }
 
 
@@ -235,12 +262,25 @@ function updateCoins() {
 		coins.children[i].position.z += speed;
 		var coinBbox = new THREE.Box3().setFromObject(coins.children[i]);
 		if ((emrysBbox).intersectsBox(coinBbox)){
-			console.log("Collision");
+			console.log("Coin collision");
+			showHeart = true; 
 			coins.remove(coins.children[i]);
 			score += 20;
+      		numCoins += 1;
 			fieldScore.innerHTML = score;
 
 			if (score >= 1000){
+	      if (numCoins%5 === 0) {
+	        var randomInt = getRandomInt(0,3);
+	        console.log(Math.floor(randomInt));
+	        lineOfCoins(coins, Math.floor(randomInt));
+	      }
+
+	      if (numCoins%10 === 0) {
+	        speed += 2;
+	      }
+
+			if (score >= 2000){
 				pause = true;
 				won = true;
 				waitingReplay = true;
@@ -258,9 +298,16 @@ function updateBranches() {
     branches.children[i].position.z += speed;
     var branchBbox = new THREE.Box3().setFromObject(branches.children[i]);
     if ((emrysBbox).intersectsBox(branchBbox)){
-      console.log("Collision");
+      console.log("Branch collision");
+      console.log("!!!");
+
+      rotateEmrys = true;
+      console.log("???");
+      console.log(rotateEmrys);
+
       branches.remove(branches.children[i]);
       score -= 10;
+      speed -= 1;
       branchesHit += 1;
       fieldScore.innerHTML = score;
       fieldBranch.innerHTML = branchesHit;
@@ -275,6 +322,41 @@ function updateBranches() {
 }
 
 
+function updateEmrys(){
+	if (rotateEmrys) {
+		if (rotationCounter < 10 || rotationCounter > 20){
+			emrys.rotation.y = (emrys.rotation.y + Math.PI/10) % (2*Math.PI);
+		}
+		rotationCounter += 1;
+	}
+	//console.log(rotationCounter);
+	if (emrys.rotation.y == Math.PI) {
+		rotateEmrys = false;
+		rotationCounter = 0;
+	}
+	light2.position.x = emrys.position.x;
+	light3.position.x = emrys.position.x;
+}
+
+function updateHeart(){
+	if (showHeart){
+		heart.position.x = emrys.position.x + 23; 
+		heart.position.y = emrys.position.y + 27; 
+		heart.position.z = emrys.position.z; 
+		if (showHeartCounter == 0){
+			scene.add(heart); 
+		}
+		showHeartCounter ++; 
+		console.log(showHeartCounter); 
+	}
+	if (showHeartCounter >= 10){
+		showHeart = false; 
+		showHeartCounter = 0;
+		scene.remove(heart); 
+	}
+
+}
+
 function update()
 {
 	var delta = clock.getDelta(); // seconds.
@@ -289,120 +371,17 @@ function update()
 
 	controls.update();
 	moveWithCamera();
-  updateCoins();
-  updateBranches();
-	//camera.updateMatrix();
-	//camera.updateProjectionMatrix();
+   updateCoins();
+   updateBranches();
+
+	updateEmrys();
+	updateHeart(); 
 
   stats.update();
 
 	//experiment to get snowFALL
   updateParticles();
 }
-
-/*
-function update()
-{
-	var delta = clock.getDelta(); // seconds.
-	var moveDistance = 200 * delta;
-	emrysBbox.setFromObject(emrys);
-	box.update();
-	// rotate left/right/up/down
-
-	var relativeCameraOffset = new THREE.Vector3(0,100, 400);
-
-	var cameraOffset = relativeCameraOffset.applyMatrix4( emrys.matrixWorld );
-
-	controls.update();
-	moveWithCamera();
-	//camera.updateMatrix();
-	//camera.updateProjectionMatrix();
-	var len = coins.children.length;
-
-	for (var i = 0; i < len; i++) {
-		coins.children[i].rotation.y += 0.05;
-		if (coins.children[i].position.z >= camera.position.z) {
-			coins.children[i].position.z -= 2000;
-		}
-		coins.children[i].position.z += speed;
-		var coinBbox = new THREE.Box3().setFromObject(coins.children[i]);
-		if ((emrysBbox).intersectsBox(coinBbox)){
-			console.log("Collision");
-			coins.remove(coins.children[i]);
-			score += 20;
-			fieldScore.innerHTML = score;
-
-			if (score >= 1000){
-				pause = true;
-				won = true;
-				waitingReplay = true;
-				showReplay();
-			}
-		}
-	}
-
-	for (var i = 0; i < branches.children.length; i++) {
-		if (branches.children[i].position.z >= camera.position.z) {
-			branches.children[i].position.z -= 2000;
-		}
-		branches.children[i].position.z += speed;
-		var branchBbox = new THREE.Box3().setFromObject(branches.children[i]);
-		if ((emrysBbox).intersectsBox(branchBbox)){
-			console.log("Collision");
-			branches.remove(branches.children[i]);
-			score -= 20;
-			branchesHit += 1;
-			fieldScore.innerHTML = score;
-			fieldBranch.innerHTML = branchesHit;
-			if (branchesHit >= 10){
-				pause = true;
-				won = false;
-				waitingReplay = true;
-				showReplay();
-			}
-		}
-	}
-
-
-
-  stats.update();
-
-	//experiment to get snowFALL
-	particleSystem.rotation.x += 0.01;
-	particleSystem.rotation.y += 0.01;
-	particleSystem.rotation.z += 0.01;
-
-
-
-  var pCount = particleCount--;
-  while (pCount >= 0) {
-    // get the particle
-    var particle = particles.vertices[pCount];
-		//console.log(particle);
-    // check if we need to reset
-    if (particle.position.x < -200) {
-      particle.position.x = 200;
-      particle.velocity.x = 0;
-    }
-
-    // update the velocity with
-    // a splat of randomniz
-    particle.velocity.x -= Math.random() * .1;
-
-    // and the position
-    particle.position.addSelf(
-      particle.velocity);
-
-		pCount--;
-  }
-
-  // flag to the particle system
-  // that we've changed its vertices.
-  particleSystem.
-    geometry.
-    __dirtyVertices = true;
-}
-*/
 
 function render()
 {
