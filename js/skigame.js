@@ -26,10 +26,6 @@ var heart;
 var trees = [];
 var coins;
 var branches;
-var loader = new THREE.TextureLoader();
-var particleSystem;
-//allow cross origin loading
-loader.crossOrigin = true;
 
 var speed = 5;
 var pause = false;
@@ -52,22 +48,7 @@ var youLost;
 var waitingReplay = false;
 var won = false;
 
-var tree_angle;
-
 var numCoins = 0;
-
-var particleCount = 900,
-
-    particles = new THREE.Geometry(),
-    pMaterial = new THREE.PointsMaterial({
-	  color: 0xFFFFFF,
-	  size: 10,
-	  map: loader.load( 'images/particle.png' ),
-		blending: THREE.AdditiveBlending,
-		transparent: true
-		});
-
-
 
 
 // FUNCTIONS
@@ -288,6 +269,7 @@ function updateCoins() {
       		numCoins += 1;
 			fieldScore.innerHTML = score;
 
+			if (score >= 1000){
 	      if (numCoins%5 === 0) {
 	        var randomInt = getRandomInt(0,3);
 	        console.log(Math.floor(randomInt));
@@ -339,6 +321,10 @@ function updateBranches() {
   }
 }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 900e2de911219265b73aebf8ba533f8498e5f9db
 function updateEmrys(){
 	if (rotateEmrys) {
 		if (rotationCounter < 10 || rotationCounter > 20){
@@ -392,14 +378,16 @@ function update()
    updateBranches();
 
 	updateEmrys();
+<<<<<<< HEAD
 	updateHeart();
+=======
+	updateHeart(); 
+>>>>>>> 900e2de911219265b73aebf8ba533f8498e5f9db
 
   stats.update();
 
 	//experiment to get snowFALL
   updateParticles();
-
-
 }
 
 function render()
@@ -409,22 +397,6 @@ function render()
 
 
 function createTerrainMatrix(){
-	particleSystem = new THREE.Points(
-			particles,
-			pMaterial);
-	for (var p = 0; p < particleCount; p++) {
-
-		// create a particle with random
-		// position values, -250 -> 250
-		var pX = Math.random() * 500 - 250,
-				pY = Math.random() * 500 - 250,
-				pZ = Math.random() * 500 - 250,
-				particle = new THREE.Vector3(pX, pY, pZ);
-
-		// add it to the geometry
-		particles.vertices.push(particle);
-	}
-	particleSystem.sortParticles = true;
 
 	var terrain = new THREE.Object3D();
 	// var floorTexture = new THREE.ImageUtils.loadTexture( 'images/checkerboard.jpg' );
@@ -437,6 +409,7 @@ function createTerrainMatrix(){
 	floor.rotation.x = Math.PI / 2;
 	floor.position.z = 1000;
 	terrain.add(floor);
+  var particleSystem = createParticles(900, "images/particle.png");
 	terrain.add(particleSystem);
 
   // Mirror
@@ -465,6 +438,7 @@ function moveWithCamera(){
 			trees[i].position.z += speed;
 		}
 }
+
 
 
 window.addEventListener('load', init, false);
