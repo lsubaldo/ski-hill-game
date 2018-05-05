@@ -23,6 +23,7 @@ function SceneManager(canvas){
 	sceneSubjects.push(new Trees(scene));
 	sceneSubjects.push(new Branches(scene));
 	sceneSubjects.push(new Coins(scene));
+	sceneSubjects.push(new Particles(scene));
 	//sceneSubjects.push(new Particles(scene));
 
 	var game = new Game();

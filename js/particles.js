@@ -29,41 +29,37 @@ function Particles(scene){
 	}
 	particleSystem.sortParticles = true;
 
-	scene.add(particleSystem); 
+	scene.add(particleSystem);
 
 	this.update = function(camera, game, keyEvent, sceneSubjects){
-		console.log("updating particles"); 
+		var velocity = new THREE.Vector3(0, 0, 0);
+		console.log("updating particles");
 		particleSystem.rotation.x += 0.01;
 		particleSystem.rotation.y += 0.01;
 		particleSystem.rotation.z += 0.01;
 
 		  var pCount = particleCount--;
-		  while (pCount >= 0) {
-		    // get the particle
-		    var particle = particles.vertices[pCount];
-				//console.log(particle);
-		    // check if we need to reset
-		    if (particle.position.x < -200) {
-		      particle.position.x = 200;
-		      particle.velocity.x = 0;
-		    }
+			while (pCount && pCount >= 0) {
+			// get the particle
+			var particle = particles.vertices[pCount];
+			//console.log(particle);
+			// check if we need to reset
+			if (particle.x < -200) {
+				particle.x = 200;
+			}
 
-		    // update the velocity with
-		    // a splat of randomniz
-		    particle.velocity.x -= Math.random() * .1;
+			// update the velocity with
+			// a splat of randomniz
+			velocity.x -= Math.random() * .1;
 
-		    // and the position
-		    particle.position.addSelf(
-		      particle.velocity);
+			// and the position
+			particle.add(velocity);
 
-				pCount--;
-		  }
-		  // flag to the particle system
-		  // that we've changed its vertices.
-		  particleSystem.
-		    geometry.
-		    __dirtyVertices = true;
-
+			pCount--;
+		}
+		// flag to the particle system
+		// that we've changed its vertices.
+		particleSystem.geometry.__dirtyVertices = true;
 		}
 
 }
