@@ -1,7 +1,7 @@
 const canvas = document.getElementById("canvas"); 
 
 window.addEventListener('resize', resizeCanvas, false); 
-//window.onresize = resizeCanvas(); 
+window.onresize = resizeCanvas(); 
 
 //resizeCanvas();
 var sceneManager = new SceneManager(canvas);  
