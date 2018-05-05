@@ -30,7 +30,7 @@ function Coins(scene){
 
 this.update = function(camera, game, keyEvent, sceneSubjects) {
 	var speed = game.getSpeed();
-  var len = coins.children.length;
+  	var len = coins.children.length;
 
 	for (var i = 0; i < len; i++) {
 		coins.children[i].rotation.y += rotate;
