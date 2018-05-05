@@ -5,6 +5,7 @@ function Game(){
 	var pause = false; 
 	var rotateEmrys = false; 
 	var showHeart = false; 
+	var waitingRotate = false; 
 
 	var won = false; 
 	var waitingReplay = false; 
@@ -46,6 +47,7 @@ function Game(){
 		score = 0 ; 
 		hit = 0; 
 		pause = false; 
+		waitingRotate = false; 
 
 		won = false; 
 		waitingReplay = false; 

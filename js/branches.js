@@ -25,16 +25,17 @@ this.update = function(camera, game, keyEvent, sceneSubjects){
      if ((emrysBbox).intersectsBox(branchBbox)){
        console.log("Branch collision");
        game.rotateEmrys = true;
+       game.waitingRotate = true; 
 
        branches.remove(branches.children[i]);
        game.increaseScore(-10);
        game.increaseSpeed(-1);
        game.increaseHit(1);
 
-       if (game.getHit() >= 1){
+       if (game.getHit() >= 10){
          game.pause();
          console.log("lose"); 
-         game.win = false; 
+         game.won = false; 
          game.waitingReplay = true;
     //     showReplay();
        }

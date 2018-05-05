@@ -5,6 +5,9 @@ function Emrys(scene){
   var emrys = createEmrys(); 
   var rotationCounter = 0; 
 
+  var rotateLeft = false; 
+  var rotateRight = false; 
+
   //set emrys to fit in the scene
   emrys.position.y+=20;
   emrys.position.z+=100;
@@ -40,23 +43,46 @@ function Emrys(scene){
 
   this.update = function(camera, game, keyEvent, sceneSubjects){
     if (keyEvent != null){
-      if (keyEvent.code == 'ArrowRight') {emrys.position.x += 10}
-      else if (keyEvent.code == 'ArrowLeft') {emrys.position.x -= 10}
+      if (game.waitingRotate){
+        if (keyEvent.code == 'ArrowRight'){
+          game.waitingRotate = false; 
+          rotateRight = true; 
+          rotateLeft = false; 
+        }
+        if (keyEvent.code == 'ArrowLeft'){
+          game.waitingRotate = false; 
+          rotateLeft = true; 
+          rotateRight = false; 
+        }
+      }
 
+      else {
+        if (keyEvent.code == 'ArrowRight') {emrys.position.x += 10}
+        else if (keyEvent.code == 'ArrowLeft') {emrys.position.x -= 10}
         if (emrys.position.x > 100) {emrys.position.x = 100}
         else if (emrys.position.x < -100) {emrys.position.x = -100}
+      }
     }
 
     if (game.rotateEmrys) {
-      if (rotationCounter < 10 || rotationCounter > 20){
+      if (rotationCounter < 10){
         emrys.rotation.y = (emrys.rotation.y + Math.PI/10) % (2*Math.PI);
+      }
+      else {
+        game.waitingRotate = true; 
+        if (rotateRight) emrys.rotation.y = (emrys.rotation.y + Math.PI/10) % (2*Math.PI);
+        else if (rotateLeft) emrys.rotation.y = (emrys.rotation.y - Math.PI/10);
+
       }
         rotationCounter += 1;
     }
+
     //console.log(rotationCounter);
-    if (emrys.rotation.y == Math.PI) {
+    if (emrys.rotation.y == Math.PI || emrys.rotation.y == -Math.PI) {
       game.rotateEmrys = false;
       rotationCounter = 0;
+      rotateRight = false; 
+      rotateLeft = false;
     }
 
     //update lights and bounding box helper

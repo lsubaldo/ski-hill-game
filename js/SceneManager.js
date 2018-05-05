@@ -63,8 +63,11 @@ function SceneManager(canvas){
 
 		keyEvent = null; 
 
-		fieldScore.innerHTML = game.getScore();
-		fieldHit.innerHTML = game.getHit(); 
+		var scoreStr = game.getScore().toString(); 
+		var hitStr = game.getHit().toString(); 
+
+		fieldScore.innerHTML = scoreStr.concat("\xa0\xa0\xa0\xa0\xa0").concat(hitStr); 
+		//fieldHit.innerHTML = game.getHit(); 
 
 		if (game.waitingReplay){
 			showReplay(); 
