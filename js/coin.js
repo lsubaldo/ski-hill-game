@@ -7,7 +7,7 @@ var FS = 1;
 var GN = 2;
 var BR = 3;
 
-var numCoins = 0; 
+var numCoins = 0;
 
 function Coins(scene){
 
@@ -27,7 +27,7 @@ function Coins(scene){
 
 
 this.update = function(camera, game, keyEvent, sceneSubjects) {
-	var speed = game.getSpeed(); 
+	var speed = game.getSpeed();
   	var len = coins.children.length;
 
 	for (var i = 0; i < len; i++) {
@@ -38,11 +38,11 @@ this.update = function(camera, game, keyEvent, sceneSubjects) {
 		coins.children[i].position.z += speed;
 		var coinBbox = new THREE.Box3().setFromObject(coins.children[i]);
 
-		var emrys = sceneSubjects[0]; 
-		var emrysBbox = emrys.getBbox(); 
+		var emrys = sceneSubjects[0];
+		var emrysBbox = emrys.getBbox();
 		 if ((emrysBbox).intersectsBox(coinBbox)){
 		 	console.log("Coin collision");
-		 	game.showHeart = true; 
+		 	game.showHeart = true;
 		 	coins.remove(coins.children[i]);
 		 	if (!game.waitingRotate) game.increaseScore(20);
       else game.increaseScore(-20);
@@ -60,7 +60,7 @@ this.update = function(camera, game, keyEvent, sceneSubjects) {
 
 		 	if (game.getScore() >= 2000){
 		 		game.pause();
-		 		console.log("won"); 
+		 		console.log("won");
 		 		game.won = true;
 		 		game.waitingReplay = true;
 		// 		showReplay();
@@ -169,4 +169,3 @@ function obstacle(model, level) {
 }
 
 }
-
