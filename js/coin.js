@@ -40,11 +40,12 @@ this.update = function(camera, game, keyEvent, sceneSubjects) {
 
 		var emrys = sceneSubjects[0]; 
 		var emrysBbox = emrys.getBbox(); 
-		 if ((emrysBbox).intersectsBox(coinBbox) && !game.waitingRotate){
+		 if ((emrysBbox).intersectsBox(coinBbox)){
 		 	console.log("Coin collision");
 		 	game.showHeart = true; 
 		 	coins.remove(coins.children[i]);
-		 	game.increaseScore(20);
+		 	if (!game.waitingRotate) game.increaseScore(20);
+      else game.increaseScore(-20);
        		numCoins += 1;
 
 	       if (numCoins%5 === 0) {
