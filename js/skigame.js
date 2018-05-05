@@ -45,6 +45,7 @@ var replayMessage;
 var youWon;
 var youLost;
 
+var tree_angle;
 var waitingReplay = false;
 var won = false;
 
@@ -266,19 +267,17 @@ function updateCoins() {
 			showHeart = true;
 			coins.remove(coins.children[i]);
 			score += 20;
-      		numCoins += 1;
+      numCoins += 1;
 			fieldScore.innerHTML = score;
+			if (numCoins%5 === 0) {
+				var randomInt = getRandomInt(0,3);
+				console.log(Math.floor(randomInt));
+				lineOfCoins(coins, Math.floor(randomInt));
+			}
 
-			if (score >= 1000){
-	      if (numCoins%5 === 0) {
-	        var randomInt = getRandomInt(0,3);
-	        console.log(Math.floor(randomInt));
-	        lineOfCoins(coins, Math.floor(randomInt));
-	      }
-
-	      if (numCoins%10 === 0) {
-	        speed += 2;
-	      }
+			if (numCoins%10 === 0) {
+				speed += 2;
+			}
 
 			if (score >= 2000){
 				pause = true;
@@ -313,18 +312,14 @@ function updateBranches() {
       fieldBranch.innerHTML = branchesHit;
       if (branchesHit >= 10){
         pause = true;
-		won = false;
-		waitingReplay = true;
-		showReplay();
+				won = false;
+				waitingReplay = true;
+				showReplay();
       }
     }
   }
 }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 900e2de911219265b73aebf8ba533f8498e5f9db
 function updateEmrys(){
 	if (rotateEmrys) {
 		if (rotationCounter < 10 || rotationCounter > 20){
@@ -374,15 +369,10 @@ function update()
 
 	controls.update();
 	moveWithCamera();
-   updateCoins();
-   updateBranches();
-
+	updateCoins();
+	updateBranches();
 	updateEmrys();
-<<<<<<< HEAD
 	updateHeart();
-=======
-	updateHeart(); 
->>>>>>> 900e2de911219265b73aebf8ba533f8498e5f9db
 
   stats.update();
 

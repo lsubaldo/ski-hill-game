@@ -1,8 +1,5 @@
-<<<<<<< HEAD
-=======
 "use strict";
 
->>>>>>> 900e2de911219265b73aebf8ba533f8498e5f9db
 var loader = new THREE.TextureLoader();
 var particleSystem;
 var particleCount;
