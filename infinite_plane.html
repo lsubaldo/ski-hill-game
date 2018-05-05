@@ -8,12 +8,16 @@
 <link rel=stylesheet href="css/demo.css"/>
 
 
-
 <script type='text/javascript' src='js/lib/DAT.GUI.min.js'></script>
 
-
+<script src="js/lib/Three.js"></script>
 <script src="js/lib/three.min.js"></script>
+<script src="js/lib/Detector.js"></script>
+<script src="js/lib/Stats.js"></script>
 <script src="js/lib/OrbitControls.js"></script>
+<script src="js/lib/THREEx.KeyboardState.js"></script>
+<script src="js/lib/THREEx.FullScreen.js"></script>
+<script src="js/lib/THREEx.WindowResize.js"></script>
 
 
 <script src="js/game.js"></script>
@@ -29,20 +33,15 @@
 </head>
 <body>
 
+	<div id="blocker">
+		<div id="instructions">
+			<span style="font-size:40px">HOW TO PLAY</span>
+			<br/>
+		&larr;  &uarr; &darr; &rarr; = Move, A,S = Turn around, SPACE = pause
+			<br/><br/>
 
-	<div class="message message--intro-0" id="intro_0">
-		How to play: 
-		<p>Press &#8656 or &#8658 to move</p>
+		</div>
 	</div>
-	<div class="message message--intro-1" id="intro_1">
-		<p>if hit by a branch, </p>
-		<p>Press A or S to turn around</p>
-	</div>
-	<div class="message message--intro-2" id="intro_2">
-		<p>Press space to pause/unpause</p>
-		<p>Press D for debug mode</p>
-	</div>
-	<div class="message message--intro-3" id="intro_3">Click to start</div>
 
 
 	<div class="message message--winOrLose" id="intro">XD !</div>
@@ -68,6 +67,7 @@
 
 
 <script src="js/main.js"></script>
+
 
 
 

@@ -60,7 +60,7 @@ this.update = function(camera, game, keyEvent, sceneSubjects) {
 	         game.increaseSpeed(2);
 	       }
 
-		 	if (game.getScore() >= 1500){
+		 	if (game.getScore() >= 1000){
 		 		game.pause();
 		 		console.log("won");
 		 		game.won = true;

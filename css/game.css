@@ -1,17 +1,20 @@
-.game-holder {
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	background: -webkit-linear-gradient(#e4e0ba, #f7d9aa);
-	background: linear-gradient(#e4e0ba, #f7d9aa);
+html {
+    color: #222;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.4;
+    font-family: 'Poppins', sans-serif;
 }
 
-.world {
-	position: absolute;
-	overflow: hidden;
-	width: 100%;
-	height: 100%;
+html, body {
+    overflow: hidden;
+    margin: 0;
 }
+
+.go-on-top {
+	z-index: 10;
+}
+
 
 .header {
 	position: absolute;
@@ -92,14 +95,7 @@
 	font-size: 30px;
 }
 
-.level-circle {
-	position: absolute;
-	left: 50%;
-	width: 46px;
-	margin: -37px 0 0 -23px;
-	-webkit-transform: rotate(-90deg);
-	transform: rotate(-90deg);
-}
+
 
 .score__value--energy {
 	position: relative;
@@ -110,21 +106,44 @@
 	background-color: #d1b790;
 }
 
-.energy-bar {
-	position: absolute;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	margin: 2px;
-	background-color: #f25346;
-	-webkit-animation-name: none;
-	animation-name: none;
-	-webkit-animation-duration: 150ms;
-	animation-duration: 150ms;
-	-webkit-animation-iteration-count: infinite;
-	animation-iteration-count: infinite;
+#blocker { 
+	position: fixed; 
+	
+	width: 100%;
+	
+	padding: 10%;
+
+	top: 45%; 
+	left: 50%; 
+	transform: translate(-50%, -50%);
+
+	background-color: #f7d9aa55;
+
+	text-align: center;
+
+	color: #d6483b;
+	cursor: pointer;
 }
+
+.intro {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+
+	background-color: #f7d9aa;
+}
+
+.intro.fade {
+  -webkit-transition: 4s;
+  -moz-transition: 4s;
+  -ms-transition: 4s;
+  -o-transition: 4s;
+  transition: 4s;
+  background-color: transparent;
+}
+
+
+
 
 .message {
 	font-weight: bold;
@@ -136,50 +155,8 @@
 	pointer-events: none;
 }
 
-.message--intro-0{
-	font-size: 2.25vw;
-	bottom: 65vh;
-	display: none;
-	text-indent: 0.5em;
-	letter-spacing: 0.5em;
-	color: #f45a22;
-}
 
-.message--intro-1{
-	font-size: 2.25vw;
-	bottom: 50vh;
-	display: none;
-	text-indent: 0.5em;
-	letter-spacing: 0.5em;
-	color: #e26d2b;
-}
 
-.message--intro-2{
-	font-size: 2.25vw;
-	bottom: 35vh;
-	display: none;
-	text-indent: 0.5em;
-	letter-spacing: 0.5em;
-	color: #b25a29;
-}
-
-.message--intro-3{
-	font-size: 4.25vw;
-	bottom: 20vh;
-	display: none;
-	text-indent: 0.5em;
-	letter-spacing: 0.5em;
-	color: #f95c07;
-}
-
-.message--clickToStart{
-	font-size: 3.25vw;
-	bottom: 30vh;
-	display: none;
-	text-indent: 0.5em;
-	letter-spacing: 0.5em;
-	color: #ed9c47;
-}
 
 .message--winOrLose {
 	font-size: 3.25vw;

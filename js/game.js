@@ -11,7 +11,7 @@ function Game(){
 	var won = false; 
 	var waitingReplay = false; 
 
-	this.getIntro = function(){
+	this.waitingStart = function(){
 		return waitingStart; 
 	}
 	this.startGame = function(){
