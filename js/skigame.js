@@ -22,7 +22,7 @@ var light2;
 var light3;
 
 var emrys;
-var heart; 
+var heart;
 var trees = [];
 var coins;
 var branches;
@@ -38,8 +38,8 @@ var waitingReplay = false;
 var won = false;
 var rotateEmrys = false;
 var rotationCounter = 0;
-var showHeart = false; 
-var showHeartCounter = 0; 
+var showHeart = false;
+var showHeartCounter = 0;
 
 var score = 0;
 var fieldScore;
@@ -179,7 +179,7 @@ function init()
   camera.lookAt(emrys);
 
 
-	heart = createHeart(); 
+	heart = createHeart();
 
 	trees = generateRandomTrees();
   tree_angle = trees[0].rotation.x;
@@ -220,7 +220,7 @@ function init()
   document.addEventListener('touchend', handleTouchEnd, false);
 
 	// var gui = new dat.GUI();
-  guiHelper();
+  // guiHelper();
 
 	animate();
 
@@ -230,10 +230,6 @@ function init()
 function guiHelper() {
   var gui = new dat.GUI();
   var box = gui.addFolder('Trees');
-  // var params = { tree_angle: 5000 };
-  // box.add(tree_angle, 'tree_angle', -45, 45).name('Angle').listen();
-  // var params = { interaction: 5000 };
-  // gui.add(params, 'interaction')
 }
 
 
@@ -285,7 +281,7 @@ function updateCoins() {
 		var coinBbox = new THREE.Box3().setFromObject(coins.children[i]);
 		if ((emrysBbox).intersectsBox(coinBbox)){
 			console.log("Coin collision");
-			showHeart = true; 
+			showHeart = true;
 			coins.remove(coins.children[i]);
 			score += 20;
       		numCoins += 1;
@@ -393,19 +389,19 @@ function updateEmrys(){
 
 function updateHeart(){
 	if (showHeart){
-		heart.position.x = emrys.position.x + 23; 
-		heart.position.y = emrys.position.y + 27; 
-		heart.position.z = emrys.position.z; 
+		heart.position.x = emrys.position.x + 23;
+		heart.position.y = emrys.position.y + 27;
+		heart.position.z = emrys.position.z;
 		if (showHeartCounter == 0){
-			scene.add(heart); 
+			scene.add(heart);
 		}
-		showHeartCounter ++; 
-		console.log(showHeartCounter); 
+		showHeartCounter ++;
+		console.log(showHeartCounter);
 	}
 	if (showHeartCounter >= 10){
-		showHeart = false; 
+		showHeart = false;
 		showHeartCounter = 0;
-		scene.remove(heart); 
+		scene.remove(heart);
 	}
 
 }
@@ -428,7 +424,7 @@ function update()
    updateBranches();
 
 	updateEmrys();
-	updateHeart(); 
+	updateHeart();
 	//camera.updateMatrix();
 	//camera.updateProjectionMatrix();
 
