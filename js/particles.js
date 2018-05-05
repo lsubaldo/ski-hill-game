@@ -42,7 +42,6 @@ function Particles(scene){
 			while (pCount && pCount >= 0) {
 			// get the particle
 			var particle = particles.vertices[pCount];
-			//console.log(particle);
 			// check if we need to reset
 			if (particle.x < -200) {
 				particle.x = 200;

@@ -21,13 +21,11 @@ function Emrys(scene){
     frontLight.position.set(0,60,-20);
     scene.add(frontLight);
     var frontLight_helper = new THREE.SpotLightHelper( frontLight );
-    // scene.add( frontLight_helper );
 
     var backLight = new THREE.SpotLight(0x808080, 2, 200, 0.5, 0, 1);
     backLight.position.set(0,60,180);
     scene.add(backLight);
     var backLight_helper = new THREE.SpotLightHelper( backLight );
-    // scene.add( backLight_helper );
 
   //bounding box
   var boundingBoxHelper = new THREE.BoxHelper( emrys, 0xffff00 );
@@ -43,7 +41,6 @@ function Emrys(scene){
 
   this.update = function(camera, game, keyEvent, sceneSubjects){
     if (keyEvent != null){
-      //if (game.waitingRotate){
         if (keyEvent.code == 'KeyS'){
           game.waitingRotate = false;
           rotateRight = true;
@@ -54,9 +51,8 @@ function Emrys(scene){
           rotateLeft = true;
           rotateRight = false;
         }
-      //}
 
-      //else {
+
         if (keyEvent.code == 'ArrowRight') {emrys.position.x += 10}
         else if (keyEvent.code == 'ArrowLeft') {emrys.position.x -= 10}
         if (emrys.position.x > 100) {emrys.position.x = 100}
@@ -73,7 +69,7 @@ function Emrys(scene){
             scene.remove( backLight_helper );
           }
         }
-      //}
+
     }
 
     if (game.rotateEmrys) {
@@ -89,7 +85,6 @@ function Emrys(scene){
         rotationCounter += 1;
     }
 
-    //console.log(rotationCounter);
     if (emrys.rotation.y == Math.PI || emrys.rotation.y == -Math.PI) {
       game.rotateEmrys = false;
       game.waitingRotate = false; 
@@ -250,26 +245,6 @@ function Emrys(scene){
 
       // body
       var body = new THREE.Mesh(bodyGeom, yellowMat);
-
-      /*
-      var body = new THREE.Mesh(bodyGeom2, yellowMat);
-      body.position.x = 0;
-      body.position.y = -0.4;
-      body.position.z = 0.1;
-      body.scale.set(1, 1.2, 1);
-      */
-
-      /*
-      body.position.z = -60;
-      body.position.y = -30;
-      var bodyVertices = [0,1,2,3,4,10];
-
-      for (var i=0;i<bodyVertices.length; i++){
-        var tv = this.body.geometry.vertices[this.bodyVertices[i]];
-        tv.z =70;
-        tv.x = 0;
-        this.bodyInitPositions.push({x:tv.x, y:tv.y, z:tv.z});
-      }*/
 
       emrys.add(body);
 

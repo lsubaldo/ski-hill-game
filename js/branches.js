@@ -42,7 +42,6 @@ this.update = function(camera, game, keyEvent, sceneSubjects){
          console.log("lose");
          game.won = false;
          game.waitingReplay = true;
-    //     showReplay();
        }
      }
   }
@@ -58,18 +57,15 @@ function createBranch() {
   });
 
   var piece1 = new THREE.Mesh(new THREE.ConeGeometry(0.75,5, 32), brown);
-  // var piece1 = new THREE.Mesh(new THREE.BoxGeometry(0.5,0.5,0.5), brown);
   piece1.position.set(0.5,1.0,0);
   branch.add(piece1);
 
   var piece2 = new THREE.Mesh(new THREE.ConeGeometry(0.45,1.5, 32), brown);
-  // var piece2 = new THREE.Mesh(new THREE.BoxGeometry(0.5,0.5,0.5), brown);
   piece2.position.set(1.2,1.0,0);
   piece2.rotation.z = -Math.PI/3;
   branch.add(piece2);
 
   var piece3 = new THREE.Mesh(new THREE.ConeGeometry(0.25, 1.25, 32), brown);
-  // var piece3 = new THREE.Mesh(new THREE.BoxGeometry(0.5,0.5,0.5), brown);
   piece3.position.set(0.0,1.75,0);
   piece3.rotation.z = Math.PI/3;
   branch.add(piece3);

@@ -24,7 +24,6 @@ function SceneManager(canvas){
 	sceneSubjects.push(new Branches(scene));
 	sceneSubjects.push(new Coins(scene));
 	sceneSubjects.push(new Particles(scene));
-	//sceneSubjects.push(new Particles(scene));
 
 	var game = new Game();
 
@@ -39,7 +38,6 @@ function SceneManager(canvas){
   	var keyEvent = null;
 
   	var fieldScore = document.getElementById("scoreValue");
-  	var fieldHit = document.getElementById("branchValue");
   	var youWon = document.getElementById("youWon");
 	var youLost = document.getElementById("youLost");
 	var intro_0 = document.getElementById("intro_0");
@@ -81,7 +79,6 @@ function SceneManager(canvas){
 		var hitStr = game.getHit().toString();
 
 		fieldScore.innerHTML = scoreStr.concat("\xa0\xa0\xa0\xa0\xa0").concat(hitStr);
-		//fieldHit.innerHTML = game.getHit();
 
 		if (game.waitingReplay){
 			showReplay();
@@ -146,9 +143,6 @@ function SceneManager(canvas){
 
 	    hideReplay();
 
-	    fieldScore.innerHTML = game.getScore();
-		fieldBranch.innerHTML = game.getHit();
-
 
 	  }
 
@@ -165,9 +159,7 @@ function SceneManager(canvas){
 	function handleTouchEnd(event){
 	  if (game.waitingReplay == true){
 	  	game.waitingReplay = false;
-	    game.resetGame();
-	    fieldScore.innerHTML = game.getScore();
-		fieldBranch.innerHTML = game.getHit();
+	    game.resetGame(); 
 
 	    hideReplay();
 	  }
@@ -186,9 +178,6 @@ function SceneManager(canvas){
 		var DPR = (window.devicePixelRatio) ? window.devicePixelRatio : 1;
 		renderer.setPixelRatio(DPR);
 		renderer.setSize(width, height);
-
-		//renderer.gammaInput = true;
-		//renderer.gammaOutput = true;
 
 		return renderer;
 	}
