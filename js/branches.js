@@ -74,7 +74,7 @@ function createBranch() {
 
 function obstacle(model, level) {
   var num = 2 * (level + 1);
-  var y = 40;
+  var y = 10;
   var scale = 5;
   var branch = createBranch();
   for (var i = 0; i < num; i++) {

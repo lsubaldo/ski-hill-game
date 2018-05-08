@@ -1,4 +1,6 @@
 function Heart(scene) {
+	var heart;
+
 	var x = 0, y = 0;
 	var heartShape = new THREE.Shape(); // From http://blog.burlock.org/html5/130-paths
 	heartShape.moveTo( x + 2.5, y + 2.5 );
@@ -19,43 +21,51 @@ function Heart(scene) {
       }));
 	redHeart.rotation.z = Math.PI; 
 
-	var yellowHeart = new THREE.Mesh( geometry, new THREE.MeshPhongMaterial({
+	var greyHeart = new THREE.Mesh( geometry, new THREE.MeshPhongMaterial({
           color: 0xFFFFFF,
           specular: 0x002000,
           shininess: 5
       }));
-	yellowHeart.rotation.z = Math.PI; 
+	greyHeart.rotation.z = Math.PI; 
 
 	//scene.add(heart); 
 
-	var showHeartCounter = 0; 
+	var counter = -1; 
 
 	this.update = function(camera, game, keyEvent, sceneSubjects){
 		var emrys = sceneSubjects[0].getEmrys(); 
-		var heart; 
-		if (!game.waitingRotate()){
-			if (heart != redHeart) scene.remove(heart); 
-			heart = redHeart;
-		}
-		else{
-			if (heart != yellowHeart) scene.remove(heart); 
-			heart = yellowHeart; 
-		} 
-		
-		if (game.showHeart){
-			heart.position.x = emrys.position.x + 23; 
-			heart.position.y = emrys.position.y + 27; 
-			heart.position.z = emrys.position.z; 
-			if (showHeartCounter == 0){
-				scene.add(heart); 
+
+		if (game.showHeart === "red"){
+			redHeart.position.x = emrys.position.x + 23; 
+			redHeart.position.y = emrys.position.y + 27; 
+			redHeart.position.z = emrys.position.z; 
+			if (counter == 0){
+				scene.add(redHeart); 
 			}
-			showHeartCounter ++; 
+			counter ++; 
+
+			if (counter >= 10){
+				game.showHeart = null; 
+				counter = 0;
+				scene.remove(redHeart); 
+			}
 		}
-		if (showHeartCounter >= 10){
-			game.showHeart = false; 
-			showHeartCounter = 0;
-			scene.remove(heart); 
+		else if (game.showHeart === "grey"){
+			greyHeart.position.x = emrys.position.x + 23; 
+			greyHeart.position.y = emrys.position.y + 27; 
+			greyHeart.position.z = emrys.position.z; 
+			if (counter == 0){
+				scene.add(greyHeart); 
+			}
+			counter ++; 
+
+			if (counter >= 10){
+				game.showHeart = null; 
+				counter = 0;
+				scene.remove(greyHeart); 
+			}
 		}
+		
 
 	}
 

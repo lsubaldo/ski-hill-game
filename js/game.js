@@ -4,7 +4,7 @@ function Game(){
 	var hit = 0; 
 	var pause = true; 
 	var rotateEmrys = false; 
-	var showHeart = false; 
+	var showHeart; 
 	var waitingRotate = false; 
 
 	var waitingStart = true; 

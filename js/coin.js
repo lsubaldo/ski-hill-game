@@ -43,7 +43,8 @@ this.update = function(camera, game, keyEvent, sceneSubjects) {
 		var emrys = sceneSubjects[0];
 		var emrysBbox = emrys.getBbox();
 		 if ((emrysBbox).intersectsBox(coinBbox)){
-		 	game.showHeart = true;
+		 	if (game.waitingRotate()) game.showHeart = "grey";
+      else game.showHeart = "red"; 
 		 	coins.remove(coins.children[i]);
 		 	if (!game.waitingRotate()) game.increaseScore(20);
       else game.increaseScore(-20);
@@ -84,9 +85,9 @@ function createCoin(image) {
   var coin = new THREE.Object3D();
   var coinTexture = new THREE.TextureLoader().load(image);  //'images/GN.png'
   var materials = [];
-  materials.push(new THREE.MeshLambertMaterial({ color: 0xC19A6B }));
-  materials.push(new THREE.MeshLambertMaterial({ map: coinTexture, transparent: false, color: 0xC19A6B }));
-  materials.push(new THREE.MeshLambertMaterial({ map: coinTexture, color: 0xC19A6B }));
+  materials.push(new THREE.MeshPhongMaterial({ color: 0xC19A6B }));
+  materials.push(new THREE.MeshPhongMaterial({ map: coinTexture, transparent: true, color: 0xC19A6B }));
+  materials.push(new THREE.MeshPhongMaterial({ map: coinTexture, color: 0xC19A6B }));
 
   var base = new THREE.Mesh(
        new THREE.CylinderGeometry(2.5, 2.5, 0.75, 64, 1),

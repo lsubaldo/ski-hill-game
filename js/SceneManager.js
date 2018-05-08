@@ -180,6 +180,11 @@ function SceneManager(canvas){
 		light.position.set(0,250,0);
 		scene.add(light);
 
+
+        var light = new THREE.DirectionalLight(0xffffff, 0.4);
+		light.position.set(0,0,1);
+		scene.add(light);
+
 		return light;
 	}
 

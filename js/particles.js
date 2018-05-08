@@ -27,7 +27,7 @@ function Particles(scene){
 		// add it to the geometry
 		particles.vertices.push(particle);
 	}
-	particleSystem.sortParticles = true;
+	//particleSystem.sortParticles = true;
 
 	scene.add(particleSystem);
 

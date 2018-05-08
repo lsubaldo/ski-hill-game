@@ -10,22 +10,34 @@ function Emrys(scene){
   var rotatingDirection = randomDirection(); 
 
   //set emrys to fit in the scene
-  emrys.position.y+=20;
-  emrys.position.z+=100;
-  emrys.scale.set(10,10,10);
+  //emrys.position.y+=20;
+  //emrys.position.z+=100;
+
 
   scene.add(emrys);
 
   //lights
-    var frontLight = new THREE.SpotLight(0x808080, 2, 200, 1.2, 0, 1);
-    frontLight.position.set(0,60,-20);
+    var frontLight = new THREE.SpotLight(0x808080, 2, 150, 0.15);//, 0.2, 0, 1);
+    frontLight.position.set(0,50,-30);
+    frontLight.target = emrys; 
     scene.add(frontLight);
-    var frontLight_helper = new THREE.SpotLightHelper( frontLight );
+    frontLight.target.updateMatrixWorld(); 
+    scene.add(frontLight.target); 
 
-    var backLight = new THREE.SpotLight(0x808080, 2, 200, 0.5, 0, 1);
+    var sideLight = new THREE.SpotLight(0x808080, 2, 120, 0.25);//, 0.2, 0, 1);
+    sideLight.position.set(60,60,100);
+    sideLight.target = emrys; 
+    scene.add(sideLight);
+    sideLight.target.updateMatrixWorld(); 
+    scene.add(sideLight.target); 
+
+    var frontLight_helper = new THREE.SpotLightHelper( frontLight );
+    var sideLight_helper = new THREE.SpotLightHelper( sideLight );
+
+   /* var backLight = new THREE.SpotLight(0x808080, 2, 200, 0.5, 0, 1);
     backLight.position.set(0,60,180);
     scene.add(backLight);
-    var backLight_helper = new THREE.SpotLightHelper( backLight );
+    var backLight_helper = new THREE.SpotLightHelper( backLight );*/
 
   //bounding box
   var boundingBoxHelper = new THREE.BoxHelper( emrys, 0xffff00 );
@@ -67,11 +79,13 @@ function Emrys(scene){
           if (showBox) {
             scene.add( boundingBoxHelper );
             scene.add( frontLight_helper );
-            scene.add( backLight_helper );
+            scene.add( sideLight_helper );
+       //     scene.add( backLight_helper );
           } else {
             scene.remove( boundingBoxHelper );
             scene.remove( frontLight_helper );
-            scene.remove( backLight_helper );
+            scene.remove( sideLight_helper );
+       //     scene.remove( backLight_helper );
           }
         }
 
@@ -97,7 +111,7 @@ function Emrys(scene){
 
     //update lights and bounding box helper
     frontLight.position.x = emrys.position.x;
-    backLight.position.x = emrys.position.x;
+  //  backLight.position.x = emrys.position.x;
     emrysBbox.setFromObject(emrys);
     boundingBoxHelper.update();
   }
@@ -366,6 +380,9 @@ function Emrys(scene){
       emrysOnSled.add(sled);
 
       emrysOnSled.rotation.y = Math.PI;
+
+        emrysOnSled.scale.set(10,10,10);
+  emrysOnSled.position.set(0, 20, 100); 
 
       return emrysOnSled;
 
