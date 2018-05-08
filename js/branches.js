@@ -23,9 +23,7 @@ this.update = function(camera, game, keyEvent, sceneSubjects){
     var emrys = sceneSubjects[0];
     var emrysBbox = emrys.getBbox();
      if ((emrysBbox).intersectsBox(branchBbox)){
-       console.log("Branch collision");
        game.rotateEmrys = true;
-       game.waitingRotate = true;
 
        branches.remove(branches.children[i]);
        game.increaseScore(-10);

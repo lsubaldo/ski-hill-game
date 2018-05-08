@@ -12,12 +12,19 @@ function Heart(scene) {
 
 	var geometry = new THREE.ExtrudeGeometry( heartShape, extrudeSettings );
 
-	var heart = new THREE.Mesh( geometry, new THREE.MeshPhongMaterial({
+	var redHeart = new THREE.Mesh( geometry, new THREE.MeshPhongMaterial({
           color: 0xFF0040,
           specular: 0x002000,
           shininess: 5
       }));
-	heart.rotation.z = Math.PI; 
+	redHeart.rotation.z = Math.PI; 
+
+	var yellowHeart = new THREE.Mesh( geometry, new THREE.MeshPhongMaterial({
+          color: 0xFFFFFF,
+          specular: 0x002000,
+          shininess: 5
+      }));
+	yellowHeart.rotation.z = Math.PI; 
 
 	//scene.add(heart); 
 
@@ -25,6 +32,16 @@ function Heart(scene) {
 
 	this.update = function(camera, game, keyEvent, sceneSubjects){
 		var emrys = sceneSubjects[0].getEmrys(); 
+		var heart; 
+		if (!game.waitingRotate()){
+			if (heart != redHeart) scene.remove(heart); 
+			heart = redHeart;
+		}
+		else{
+			if (heart != yellowHeart) scene.remove(heart); 
+			heart = yellowHeart; 
+		} 
+		
 		if (game.showHeart){
 			heart.position.x = emrys.position.x + 23; 
 			heart.position.y = emrys.position.y + 27; 
@@ -33,7 +50,6 @@ function Heart(scene) {
 				scene.add(heart); 
 			}
 			showHeartCounter ++; 
-			//console.log(showHeartCounter); 
 		}
 		if (showHeartCounter >= 10){
 			game.showHeart = false; 

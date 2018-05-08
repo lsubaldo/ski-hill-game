@@ -5,9 +5,9 @@ function Emrys(scene){
   var emrys = createEmrys();
   var rotationCounter = 0;
 
-  var rotateLeft = false;
-  var rotateRight = false;
   var showBox = false;
+
+  var rotatingDirection = randomDirection(); 
 
   //set emrys to fit in the scene
   emrys.position.y+=20;
@@ -40,16 +40,21 @@ function Emrys(scene){
   }
 
   this.update = function(camera, game, keyEvent, sceneSubjects){
+    // console.log(emrys.rotation.y); 
+    // console.log(game.waitingRotate()); 
+
     if (keyEvent != null){
-        if (keyEvent.code == 'KeyS'){
-          game.waitingRotate = false;
-          rotateRight = true;
-          rotateLeft = false;
-        }
-        if (keyEvent.code == 'KeyA'){
-          game.waitingRotate = false;
-          rotateLeft = true;
-          rotateRight = false;
+        if (game.waitingRotate()){
+          if (keyEvent.code == 'KeyS'){
+            game.setWaitingRotate(false); 
+            game.rotateEmrys = true; 
+            rotatingDirection = 1; 
+          }
+          if (keyEvent.code == 'KeyA'){
+            game.setWaitingRotate(false); 
+            game.rotateEmrys = true; 
+            rotatingDirection = -1; 
+          }
         }
 
 
@@ -73,25 +78,22 @@ function Emrys(scene){
     }
 
     if (game.rotateEmrys) {
-      if (rotationCounter < 10){
-        emrys.rotation.y = (emrys.rotation.y + Math.PI/10) % (2*Math.PI);
-      }
-      else {
-        game.waitingRotate = true;
-        if (rotateRight) emrys.rotation.y = (emrys.rotation.y + Math.PI/10) % (2*Math.PI);
-        else if (rotateLeft) emrys.rotation.y = (emrys.rotation.y - Math.PI/10);
 
-      }
-        rotationCounter += 1;
+        emrys.rotation.y = (emrys.rotation.y + (rotatingDirection)* Math.PI/10 + 2*Math.PI) % (2*Math.PI);
+
+        if (emrys.rotation.y == Math.PI){
+          game.rotateEmrys = false; 
+          game.setWaitingRotate(false); 
+          rotatingDirection = randomDirection(); 
+        }
+        if (emrys.rotation.y == 0){
+          game.rotateEmrys = false; 
+          game.setWaitingRotate(true); 
+        }
+      
+    
     }
 
-    if (emrys.rotation.y == Math.PI || emrys.rotation.y == -Math.PI) {
-      game.rotateEmrys = false;
-      game.waitingRotate = false; 
-      rotationCounter = 0;
-      rotateRight = false;
-      rotateLeft = false;
-    }
 
     //update lights and bounding box helper
     frontLight.position.x = emrys.position.x;
@@ -100,6 +102,11 @@ function Emrys(scene){
     boundingBoxHelper.update();
   }
 
+  function randomDirection(){
+    var ran = Math.random(); 
+    if (ran <= 0.5) return 1; 
+    else return -1; 
+  }
 
   function createEmrys(){
       var colors = {

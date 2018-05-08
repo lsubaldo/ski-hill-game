@@ -33,7 +33,6 @@ function Particles(scene){
 
 	this.update = function(camera, game, keyEvent, sceneSubjects){
 		var velocity = new THREE.Vector3(0, 0, 0);
-		console.log("updating particles");
 		particleSystem.rotation.x += 0.01;
 		particleSystem.rotation.y += 0.01;
 		particleSystem.rotation.z += 0.01;

@@ -111,9 +111,9 @@ html, body {
 	
 	width: 100%;
 	
-	padding: 10%;
+	padding: 5%;
 
-	top: 45%; 
+	top: 40%; 
 	left: 50%; 
 	transform: translate(-50%, -50%);
 
@@ -122,6 +122,7 @@ html, body {
 	text-align: center;
 
 	color: #d6483b;
+	font-size: 20px;
 	cursor: pointer;
 }
 

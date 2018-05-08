@@ -11,6 +11,10 @@ function render()
 {
 	requestAnimationFrame( render );
 	sceneManager.update();
+	if (sceneManager.reset()){
+		console.log("RESET!!"); 
+	 sceneManager = new SceneManager(canvas);
+	}
 }
 
 

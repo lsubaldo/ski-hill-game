@@ -11,6 +11,12 @@ function Game(){
 	var won = false; 
 	var waitingReplay = false; 
 
+	this.waitingRotate = function(){
+		return waitingRotate; 
+	}
+	this.setWaitingRotate = function(bool){
+		waitingRotate = bool; 
+	}
 	this.waitingStart = function(){
 		return waitingStart; 
 	}
@@ -53,15 +59,15 @@ function Game(){
 		return pause; 
 	}
 
-	this.resetGame = function(){
-		speed = 5;
-		score = 0 ; 
-		hit = 0; 
-		pause = false; 
-		waitingRotate = false; 
+	// this.resetGame = function(){
+	// 	speed = 5;
+	// 	score = 0 ; 
+	// 	hit = 0; 
+	// 	pause = false; 
+	// 	waitingRotate = false; 
 
-		won = false; 
-		waitingReplay = false; 
+	// 	won = false; 
+	// 	waitingReplay = false; 
 
-	}
+	// }
 }

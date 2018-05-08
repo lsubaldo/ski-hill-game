@@ -2,6 +2,8 @@ function SceneManager(canvas){
 	canvas.width = document.body.clientWidth;
 	canvas.height = document.body.clientHeight;
 
+	var reset = false; 
+
 	var width = canvas.width;
 	var height = canvas.height;
 
@@ -40,7 +42,13 @@ function SceneManager(canvas){
   	var fieldScore = document.getElementById("scoreValue");
   	var youWon = document.getElementById("youWon");
 	var youLost = document.getElementById("youLost");
+	var intro = document.getElementById("blocker"); 
 
+	blocker.style.display = 'block';
+
+	this.reset = function(){
+		return reset;
+	}
 
 	this.update = function(){
 
@@ -104,21 +112,22 @@ function SceneManager(canvas){
 
 
 	function handleKeyDown(event){
-		keyEvent = event;
+		if (!game.waitingStart()){
+			keyEvent = event;
 
-		if (event.code == 'ArrowUp') game.increaseSpeed(2);
-		else if (event.code == 'ArrowDown') game.increaseSpeed(-2);
-	  	else if (event.code == 'Space' && !game.waitingReplay) game.pauseOrResume();
-
-
+			if (event.code == 'ArrowUp') game.increaseSpeed(2);
+			else if (event.code == 'ArrowDown') game.increaseSpeed(-2);
+		  	else if (event.code == 'Space' && !game.waitingReplay) game.pauseOrResume();
+	  	}
 	}
 
 	function handleMouseUp(event){
 	  if (game.waitingReplay == true){
-	  	game.waitingReplay = false;
-	    game.resetGame();
+	  	reset = true; 
+	  	 game.waitingReplay = false;
+	     //game.resetGame();
 
-	    hideReplay();
+	     hideReplay();
 
 
 	  }
