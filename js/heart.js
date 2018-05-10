@@ -42,13 +42,15 @@ function Heart(scene) {
 			if (counter == 0){
 				scene.add(redHeart); 
 			}
+
+			else if (counter >= 10){
+				game.showHeart = "no"; 
+				counter = -1;
+				scene.remove(redHeart); 
+				scene.remove(greyHeart);
+			}
 			counter ++; 
 
-			if (counter >= 10){
-				game.showHeart = null; 
-				counter = 0;
-				scene.remove(redHeart); 
-			}
 		}
 		else if (game.showHeart === "grey"){
 			greyHeart.position.x = emrys.position.x + 23; 
@@ -57,13 +59,14 @@ function Heart(scene) {
 			if (counter == 0){
 				scene.add(greyHeart); 
 			}
-			counter ++; 
-
-			if (counter >= 10){
-				game.showHeart = null; 
-				counter = 0;
+			else if (counter >= 10){
+				game.showHeart = "no"; 
+				counter = -1;
+				scene.remove(redHeart);
 				scene.remove(greyHeart); 
 			}
+			counter ++; 
+
 		}
 		
 
