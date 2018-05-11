@@ -4,9 +4,9 @@
 
 ## Game Overview
 
-A dog is sledding down a ski hill while controlling moving direction, collecting coins, and avoiding branches! 
+A dog, [Emrys](https://www.instagram.com/emrys_at_colgate/), is sledding down [Colgate University](http://www.colgate.edu)'s ski hill. Moving sideways, changing speed, and Emrys collects tokens from Hamilton local shops while avoiding tree branches. 
 
-## Models
+## Modeling
 
 Models of the dog, trees, coins, and branches are all built from simple shapes. We started with looking for photo of the dog, then drew scratches of the models by hand. Then we coded the models in an starting scene with orbit control, to see the models from different directions and improve them as we go. Two spotlights are placed specifically for Emrys, and the light helpers of them can be made visible by activating debugging mode (key D).
 
@@ -39,7 +39,7 @@ Implemented a replay screen - after winning or losing, the game will waits for t
 
 ## Authors
 
-* **Jingxian Wu** - [GitHub](https://github.com/JingxianWu)
+* **[Jingxian Wu](https://github.com/JingxianWu)**
 * **Asad Jamil** - [GitHub](https://github.com/Asadius)
 * **Leslie Subaldo** - [GitHub](https://github.com/lsubaldo)
 * **Zoila Rodriguez** - [GitHub](https://github.com/zrodriguez)
