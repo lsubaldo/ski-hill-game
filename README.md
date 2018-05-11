@@ -1,4 +1,4 @@
-# Emrys on Ski Hill (### Final Project of cosc435)
+# Emrys on Ski Hill - COSC435 Final Project
 ### Instructor: Elodie Fourquet
 ### Students: Jingxian Wu, Zoila Rodriguez, Asad Jamil, Leslie Subaldo
 
