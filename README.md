@@ -5,6 +5,7 @@
 We developed this WebGL game for our final project in the Introduction to Computer Graphics (COSC 435) course taught by [Elodie Fourquet](http://cs.colgate.edu/~efourquet) at [Colgate University](http://www.colgate.edu). 
 
 [Play our game!](http://cs.colgate.edu/~efourquet/cosc435/gallery/emrys-ski-hill/infinite_plane.html)
+
 [Watch a demo video!](http://cs.colgate.edu/~efourquet/cosc435/gallery/final_project.html) 
 
 ## Game Overview
