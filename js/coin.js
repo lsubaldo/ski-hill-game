@@ -42,30 +42,33 @@ this.update = function(camera, game, keyEvent, sceneSubjects) {
 
 		var emrys = sceneSubjects[0];
 		var emrysBbox = emrys.getBbox();
-		 if ((emrysBbox).intersectsBox(coinBbox)){
+
+		if ((emrysBbox).intersectsBox(coinBbox)){
 		 	if (game.waitingRotate()) game.showHeart = "grey";
-      else game.showHeart = "red"; 
-		 	coins.remove(coins.children[i]);
-		 	if (!game.waitingRotate()) game.increaseScore(20);
-      else game.increaseScore(-20);
-       		numCoins += 1;
+        else game.showHeart = "red"; 
+		 	
+        coins.remove(coins.children[i]);
+		 	
+      if (!game.waitingRotate()) game.increaseScore(20);
+        else game.increaseScore(-20);
+       
+      numCoins += 1;
 
-	       if (numCoins%5 === 0) {
-	         var randomInt = getRandomInt(0,3);
-	         lineOfCoins(coins, Math.floor(randomInt));
-	       }
+	   if (numCoins%5 === 0) {
+	       var randomInt = getRandomInt(0,3);
+	       lineOfCoins(coins, Math.floor(randomInt));
+	    }
 
-	       if (numCoins%10 === 0) {
-	         game.increaseSpeed(2);
-	       }
+	    if (numCoins%10 === 0) {
+	       game.increaseSpeed(2);
+	    }
 
-		 	if (game.getScore() >= 1000){
-		 		game.pause();
-		 		console.log("won");
-		 		game.won = true;
-		 		game.waitingReplay = true;
-		// 		showReplay();
-		 	}
+		 	 if (game.getScore() >= 1000){
+		 		 game.pause();
+		 		 console.log("won");
+		 		 game.won = true;
+		 		 game.waitingReplay = true;
+		 	 }
 		 }
 		 if (keyEvent != null) {
 			 if (keyEvent.code == 'KeyC') {
