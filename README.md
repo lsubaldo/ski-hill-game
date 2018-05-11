@@ -4,7 +4,7 @@
 
 ## Game Overview
 
-Sled down a ski hill while controlling moving direction, collecting coins, and avoiding branches! 
+A dog is sledding down a ski hill while controlling moving direction, collecting coins, and avoiding branches! 
 
 ## Models
 
